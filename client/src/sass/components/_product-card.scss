@@ -1,0 +1,205 @@
+.product-card {
+  padding: 10px 0px;
+  text-align: center;
+  margin-bottom: 30px;
+
+  &_image {
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+
+      &:nth-child(1) {
+        transform: translateX(-50%) scale(1);
+        transition: transform 0.5s ease;
+      }
+
+      &:nth-child(2) {
+        transform: translateX(-50%) scale(0);
+        transition: transform 0.5s ease;
+      }
+    }
+
+    &:hover img {
+      &:nth-child(1) {
+        transform: translateX(-50%) scale(0);
+      }
+
+      &:nth-child(2) {
+        transform: translateX(-50%) scale(1);
+      }
+    }
+  }
+
+  &_name {
+    margin-bottom: 10px;
+    color: var(--txt-second-color);
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+
+  &_price {
+    color: $txt-main-color;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+
+    &_old {
+      color: $txt-second-color;
+      margin-left: 20px;
+      font-weight: 300;
+    }
+  }
+
+  &_btn {
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.container-product-card {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.container-product-card .thumb {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.container-product-card .thumb li {
+  list-style: none;
+  width: 100px;
+  height: 100px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(0px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  // ------------------
+}
+
+.container-product-card .thumb li img {
+  width: 80%;
+  height: 80%;
+  object-fit: fill;
+  transition: 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+}
+
+.container-product-card .thumb li:hover img {
+  transform: scale(1.2);
+}
+
+.container-product-card .imgBox {
+  @include flex(center, space-between);
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 85%;
+  height: 100%;
+  padding: 50px 20px 50px 50px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.container-product-card .imgBox {
+  & h2 {
+    color: $txt-main-color;
+    letter-spacing: 1;
+    // limit 2 lines
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.container-product-card .imgBox img {
+  width: 75%;
+  transition: 0.25s;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.container-product-card .imgBox img:hover {
+  transform: scale(1.1);
+}
+
+.container-product-card .imgBox .size {
+  @include flex(center, center);
+  // margin-top: 10px;
+
+  @include mobile {
+    margin-top: 5px;
+  }
+}
+
+.container-product-card .imgBox .size span {
+  color: $txt-main-color;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-right: 5px;
+}
+
+.container-product-card .imgBox .size li {
+  @include flex(center, center);
+  list-style: none;
+  color: $main-color;
+  letter-spacing: 0.2px;
+  font-weight: 500;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+.container-product-card .imgBox .size li del {
+  font-size: 10px;
+  color: $txt-second-color;
+}
+
+.container-product-card .imgBox button {
+  position: absolute;
+  bottom: -7%;
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded>img {
+  opacity: 1;
+  transition: all 0.3s;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded>.shoess {
+  width: 80% !important;
+  height: 80% !important;
+  max-width: 235px;
+
+  @include mobile {
+    width: 75% !important;
+  }
+}

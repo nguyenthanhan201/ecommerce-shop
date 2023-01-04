@@ -1,0 +1,191 @@
+.header {
+  background-color: var(--main-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  // height: $header-height;
+  height: 100px;
+  transition: height 0.3s ease;
+
+  @include table {
+    height: $header-tablet-height;
+    box-shadow: $box-shadow;
+  }
+
+  @include mobile {
+    height: $header-mobile-height;
+  }
+
+  .container {
+    height: 100%;
+  }
+
+  &.shrink {
+    height: $header-shrink-height;
+    box-shadow: $box-shadow;
+    z-index: 100;
+
+    @include mobile {
+      height: $header-mobile-height;
+    }
+  }
+
+  &_logo {
+    @include flex(center, center);
+    position: absolute;
+    inset: 0;
+    // pointer-events: none;
+
+    img {
+      height: 28px;
+    }
+  }
+
+  &_menu {
+    @include flex(center, space-between);
+    height: 100%;
+    font-size: 1.5rem;
+
+    &_item~&_item {
+      margin-left: 25px;
+
+      @include table {
+        margin-left: 20px;
+      }
+
+      @include mobile {
+        margin-left: 10px;
+      }
+    }
+
+    &_item.active {
+      font-weight: 600;
+      color: $main-color;
+    }
+
+    &_item:hover {
+      color: $main-color;
+    }
+
+    &_left,
+    &_right {
+      @include flex(center, center);
+      height: 100%;
+      z-index: 9;
+    }
+
+    &_right {
+      // font-size: 2.25rem;
+      position: relative;
+
+      &_item {
+        @include flex(center, center);
+        cursor: pointer;
+        height: 100%;
+
+        & svg {
+          font-size: 2.25rem;
+        }
+
+        &:hover .dropdown {
+          display: block;
+        }
+
+        & .dropdown {
+          display: none;
+          position: absolute;
+          top: 70%;
+          right: 0;
+
+          width: fit-content;
+          height: fit-content;
+          background: white;
+          font-size: 1.1rem;
+          white-space: nowrap;
+          color: black;
+          border-radius: 5px;
+          box-shadow: 0 0 3px rgb(0 0 0 / 25%);
+          overflow: hidden;
+
+          &_item {
+            @include flex(center, flex-start);
+            gap: 4px;
+            padding: 12px;
+            cursor: pointer;
+          }
+
+          &_item:hover {
+            background: #f5f5f5;
+            color: $main-color;
+          }
+
+          @include table {
+            top: 80%;
+            right: 0;
+          }
+        }
+
+        @include table {
+          margin-left: 10px;
+        }
+      }
+
+      @include mobile {
+        font-size: 1.5rem;
+      }
+    }
+
+    &_left {
+      &_close {
+        display: none;
+      }
+
+      @include table {
+        flex-direction: column;
+        background: var(--main-bg);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        justify-content: flex-start;
+        padding-top: 30px;
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+
+        &.active {
+          transform: translateX(0);
+          z-index: 10;
+        }
+
+        &_item~&_item {
+          margin-left: unset;
+          margin-top: 20px;
+        }
+
+        &_item {
+          color: var(--main-color);
+        }
+
+        &_close {
+          display: block;
+          position: absolute;
+          left: 20px;
+          font-size: 2.5rem;
+        }
+      }
+    }
+
+    &_mobile-toggle {
+      display: none;
+
+      @include table {
+        display: block;
+        font-size: 2.5rem;
+        z-index: 9;
+      }
+    }
+  }
+}

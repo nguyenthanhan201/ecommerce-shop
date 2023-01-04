@@ -1,0 +1,151 @@
+.wrapper-form-search {
+  @include flex(flex-start, center);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  top: 0;
+  transition: all 0.3s;
+  transform: translateX(-100%);
+
+  &.active {
+    transform: translateX(0%);
+  }
+}
+.form-search {
+  margin-top: 100px;
+  width: 500px;
+  position: relative;
+
+  @include mobile {
+    width: 90%;
+  }
+
+  &_icon {
+    position: absolute;
+    color: $btn-main-color;
+    right: 0;
+    top: -20px;
+    cursor: pointer;
+    font-size: 25px;
+  }
+
+  &_result {
+    margin-top: 10px;
+    height: 70vh;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    &_line {
+      @include flex(center, flex-start);
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: $btn-main-color;
+      position: relative;
+
+      &_image {
+        height: 75px;
+        margin-right: 20px;
+      }
+    }
+
+    &_line::after{
+      content: "";
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 999;
+      height: 2px;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+      background-position: 0% 0%;
+      background: linear-gradient(
+        to right,
+        #b294ff,
+        #57e6e6,
+        #feffb8,
+        #57e6e6,
+        #b294ff,
+        #57e6e6
+      );
+      background-size: 500% auto;
+      animation: gradient 3s linear infinite;
+    }
+  }
+}
+// ?Custom form search
+.input-box {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 2px;
+  padding: 0px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.input-box:after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 999;
+  height: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-position: 0% 0%;
+  background: linear-gradient(
+    to right,
+    #b294ff,
+    #57e6e6,
+    #feffb8,
+    #57e6e6,
+    #b294ff,
+    #57e6e6
+  );
+  background-size: 500% auto;
+  animation: gradient 3s linear infinite;
+}
+.input-box input {
+  flex-grow: 1;
+  color: #bfd2ff;
+  vertical-align: middle;
+  background: none;
+  width: 100%;
+  font-size: 12px;
+  border: none;
+  padding: 10px;
+  outline: none;
+}
+
+.label {
+  font-size: 18px;
+  text-align: left;
+  animation: textColor 5s ease infinite;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+@keyframes textColor {
+  0% {
+    color: #7e0fff;
+  }
+  50% {
+    color: #0fffc1;
+  }
+  100% {
+    color: #7e0fff;
+  }
+}
+.search-none {
+  color: $btn-main-color;
+  text-align: center;
+}

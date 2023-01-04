@@ -1,0 +1,21 @@
+.section {
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+
+  &_title{
+    position: sticky;
+    top: 70px;
+    z-index: 2;
+  }
+
+  & > * ~ * {
+    margin-top: 70px;
+  }
+
+  &_title {
+    font-size: 2rem;
+    text-transform: capitalize;
+    text-align: center;
+  }
+}

@@ -1,0 +1,20 @@
+.vnpay-return {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+
+  &__text {
+    &--success {
+      font-size: 2rem;
+      color: green;
+    }
+
+    &--error {
+      font-size: 2rem;
+      color: red;
+    }
+  }
+}

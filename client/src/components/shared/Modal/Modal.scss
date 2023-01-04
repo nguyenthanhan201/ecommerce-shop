@@ -1,0 +1,8 @@
+.modal {
+  & .MuiBox-root {
+    &::-webkit-scrollbar {
+      width: 10px;
+      display: block !important;
+    }
+  }
+}

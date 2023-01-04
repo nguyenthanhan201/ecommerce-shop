@@ -1,0 +1,31 @@
+.input {
+  margin-top: 1.5rem;
+
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  &__field {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: #333;
+    }
+
+    &::placeholder {
+      color: #ccc;
+    }
+  }
+
+  &__err {
+    color: red;
+  }
+}
