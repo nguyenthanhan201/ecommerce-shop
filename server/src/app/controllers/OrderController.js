@@ -1,4 +1,5 @@
 const ip = require("ip");
+const Order = require("../models/Order");
 class OrderController {
   index(req, res) {
     res.json("Order");
@@ -112,6 +113,11 @@ class OrderController {
     } else {
       res.json({ RspCode: "97", Message: "Confirm Fail" });
     }
+  }
+
+  addOrder(req, res, next) {
+    var order = req.body;
+    res.json({ order });
   }
 }
 
