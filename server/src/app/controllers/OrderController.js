@@ -1,8 +1,21 @@
 const ip = require("ip");
+const CartItem = require("../models/CartItem");
 const Order = require("../models/Order");
 class OrderController {
   index(req, res) {
     res.json("Order");
+  }
+
+  show(req, res, next) {
+    const id = req.params.id;
+    // get orders have idAuth = id
+    Order.find({ idAuth: id })
+      .then((orders) => {
+        res.json(orders);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   }
 
   create(req, res, next) {
@@ -14,22 +27,22 @@ class OrderController {
     var tmnCode = config.vnp_TmnCode;
     var secretKey = config.vnp_HashSecret;
     var vnpUrl = config.vnp_Url;
-    var returnUrl = `http://localhost:3000/order/vnpay_return`;
+    var returnUrl = `${process.env.VNP_RETURNURL}order/vnpay_return`;
 
     var date = new Date();
 
     var createDate =
       date.getFullYear() +
       "" +
-      (date.getMonth() + 1) +
+      ("0" + (date.getMonth() + 1)).slice(-2) +
       "" +
-      date.getDate() +
+      ("0" + date.getDate()).slice(-2) +
       "" +
-      date.getHours() +
+      ("0" + date.getHours()).slice(-2) +
       "" +
-      date.getMinutes() +
+      ("0" + date.getMinutes()).slice(-2) +
       "" +
-      date.getSeconds();
+      ("0" + date.getSeconds()).slice(-2);
     var orderId = dateFormat(date, "HHmmss");
     var amount = req.body.amount;
     var bankCode = "NCB";
@@ -64,7 +77,8 @@ class OrderController {
     var signData = querystring.stringify(vnp_Params, { encode: false });
     var crypto = require("crypto");
     var hmac = crypto.createHmac("sha512", secretKey);
-    var signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
+    // var signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
+    var signed = hmac.update(new Buffer.from(signData, "utf-8")).digest("hex");
     vnp_Params["vnp_SecureHash"] = signed;
     vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: false });
 
@@ -115,9 +129,49 @@ class OrderController {
     }
   }
 
-  addOrder(req, res, next) {
-    var order = req.body;
-    res.json({ order });
+  async addOrder(req, res, next) {
+    const { idAuth } = req.body;
+    // tìm cartItem của user
+    CartItem.find({
+      idAuth,
+    }).then((cartItem) => {
+      CartItem.populate(
+        cartItem,
+        { path: "idProduct" },
+        function (err, cartItems) {
+          if (err || cartItems.length === 0)
+            return res.status(400).json({ error: err });
+          const grouped = {};
+          // gom nhóm các sản phẩm giống nhau
+          cartItems.forEach(function (a) {
+            if (grouped[a.idProduct._id + a.size + a.color]) {
+              grouped[a.idProduct._id + a.size + a.color][0].quantity +=
+                a.quantity;
+            } else {
+              grouped[a.idProduct._id + a.size + a.color] = [a];
+            }
+          });
+          // tạo order
+          const order = new Order({
+            idAuth,
+            order: grouped,
+          });
+          // lưu order
+          order
+            .save()
+            .then((order) => {
+              res.status(200).json({ order });
+              // lưu order thành công thì xóa cartItem
+              // CartItem.deleteMany({
+              //   idAuth,
+              // }).then(() => res.status(200).json({ order }));
+            })
+            .catch((err) => {
+              res.status(400).json({ error: err });
+            });
+        }
+      );
+    });
   }
 }
 

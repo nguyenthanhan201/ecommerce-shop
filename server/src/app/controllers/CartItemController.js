@@ -1,5 +1,4 @@
 const CartItem = require("../models/CartItem");
-const lodash = require("lodash");
 
 class CartItemController {
   // [GET] /cart-items
