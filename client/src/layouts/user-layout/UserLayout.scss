@@ -1,0 +1,13 @@
+.user-layout {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+
+  & .side-bar {
+    width: 20%;
+  }
+
+  & .context {
+    width: 80%;
+  }
+}

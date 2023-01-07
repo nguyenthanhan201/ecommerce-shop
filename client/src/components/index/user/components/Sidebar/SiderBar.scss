@@ -1,0 +1,25 @@
+.side-bar {
+  box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+  padding: 20px;
+
+  &__content {
+    margin-top: 20px;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 12px 0;
+      cursor: pointer;
+
+      &:hover {
+        color: #3498db;
+      }
+
+      &.active {
+        color: #3498db;
+      }
+    }
+  }
+}

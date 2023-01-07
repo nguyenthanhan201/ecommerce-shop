@@ -1,16 +1,17 @@
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { Badge } from "@mui/material";
+import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
-import { memo, useEffect, useRef, useState } from "react";
+import { ColorModeContext } from "lib/theme/theme";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/Logo-2.png";
@@ -25,22 +26,15 @@ const mainNav = [
     display: "Sản Phẩm",
     path: "/catalog",
   },
-  // {
-  //   display: "Phụ Kiện",
-  //   path: "/accessories",
-  // },
 ];
 
 const Defaultheader = () => {
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
   const cartItems = useAppSelector((state) => state.cartItems);
-  // console.log("👌 ~ cartItems", cartItems);
   const auth = useSelector((state: any) => state.auth.auth);
-  // console.log("👌 ~ auth", auth);
   const { pathname } = useLocation();
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
-  const [darkTheme, setDarkTheme] = useState(
-    localStorage.getItem("dark") === "true" ? true : false
-  );
   const menuLeft = useRef<any>(null);
   const [headerShrink, setHeaderShrink] = useState(false);
 
@@ -61,6 +55,7 @@ const Defaultheader = () => {
   }, []);
 
   useEffect(() => {
+    const darkTheme = theme.palette.mode === "dark";
     const root = document.documentElement;
     root?.style.setProperty("--main-bg", darkTheme ? "#262833" : "#fff");
     root?.style.setProperty("--main-color", darkTheme ? "#fff" : "#262833");
@@ -69,16 +64,9 @@ const Defaultheader = () => {
       darkTheme ? "#fff" : "#8d8d8d"
     );
     localStorage.setItem("dark", darkTheme === true ? "true" : "false");
-  }, [darkTheme]);
+  }, [theme.palette.mode]);
 
   const menuToggle = () => menuLeft.current.classList.toggle("active");
-
-  const darkToggle = (e: any) => {
-    e.preventDefault();
-    const dark_toggle: any = document.querySelector(".dark_toggle");
-    dark_toggle.classList.toggle("bx-sun");
-    dark_toggle.classList.toggle("bx-moon");
-  };
 
   const handleLogout = () => {
     signOut(authentication);
@@ -119,12 +107,9 @@ const Defaultheader = () => {
             <div className="header_menu_right">
               <div
                 className="header_menu_item header_menu_right_item"
-                onClick={(e) => {
-                  setDarkTheme(!darkTheme);
-                  darkToggle(e);
-                }}
+                onClick={() => colorMode.toggleColorMode()}
               >
-                {darkTheme ? (
+                {theme.palette.mode === "dark" ? (
                   <DarkModeOutlinedIcon className="dark_toggle" />
                 ) : (
                   <WbSunnyOutlinedIcon className="dark_toggle" />
@@ -153,26 +138,24 @@ const Defaultheader = () => {
                   <>
                     <AccountCircleOutlinedIcon />
                     <div className="dropdown">
-                      <p className="dropdown_item">
+                      <Link to="/user/account" className="dropdown_item">
                         <AccountCircleOutlinedIcon
                           sx={{ fontSize: "80% !important" }}
                         />
                         <span>Tài khoản của tôi</span>
-                      </p>
-                      <p className="dropdown_item">
+                      </Link>
+                      <Link to="/user/orders" className="dropdown_item">
                         <MonetizationOnOutlinedIcon
                           sx={{ fontSize: "80% !important" }}
                         />
                         <span>Đơn hàng của tôi</span>
-                      </p>
-                      <p className="dropdown_item">
-                        <Link to="/admin">
-                          <AdminPanelSettingsOutlinedIcon
-                            sx={{ fontSize: "80% !important" }}
-                          />
-                          <span>Trang Admin</span>
-                        </Link>
-                      </p>
+                      </Link>
+                      <Link to="/admin" className="dropdown_item">
+                        <AdminPanelSettingsOutlinedIcon
+                          sx={{ fontSize: "80% !important" }}
+                        />
+                        <span>Trang Admin</span>
+                      </Link>
                       <p className="dropdown_item" onClick={handleLogout}>
                         <LogoutOutlinedIcon
                           sx={{ fontSize: "80% !important" }}

@@ -1,4 +1,5 @@
 import AdminLayout from "layouts/admin-layout/AdminLayout";
+import UserPlayout from "layouts/user-layout/UserPlayout";
 import { lazy } from "react";
 
 const Dashboard = lazy(() => import("../../pages/Admin/Dashboard"));
@@ -11,6 +12,9 @@ const AdminProduct = lazy(() => import("../../pages/Admin/Products"));
 const AdminHideProduct = lazy(() => import("../../pages/Admin/HideProducts"));
 const AdminAnalytics = lazy(() => import("../../pages/Admin/Analytics"));
 const VNPayReturn = lazy(() => import("../../pages/Order/VNPayReturn"));
+const UserPage = lazy(() => import("../../pages/User"));
+const UserAccount = lazy(() => import("../../pages/User/Account"));
+const UserOrders = lazy(() => import("../../pages/User/Orders"));
 
 type Route = {
   path: string;
@@ -38,6 +42,21 @@ const publicRoutes: Route[] = [
   {
     path: '/order/vnpay_return',
     component: VNPayReturn,
+  },
+  {
+    path: '/user/orders',
+    component: UserOrders,
+    layout: UserPlayout
+  },
+  {
+    path: '/user/account',
+    component: UserAccount,
+    layout: UserPlayout
+  },
+  {
+    path: '/user/*',
+    component: UserPage,
+    layout: UserPlayout
   },
   {
     path: '*',

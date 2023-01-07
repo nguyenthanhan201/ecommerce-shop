@@ -1,4 +1,4 @@
-import { addOrderAPI, createOrderAPI } from "api/orderServices";
+import { createOrderAPI } from "api/orderServices";
 import CartItem from "components/index/cart/components/CartItem";
 import Button from "components/shared/Button";
 import { numberWithCommans } from "lib/helpers/parser";
@@ -22,13 +22,16 @@ const Cart = () => {
       .catch((err) => toast.error(err.message));
   };
 
-  const handleAddOrder = () => {
-    addOrderAPI(cartItems)
-      .then((res) => console.log(res))
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const handleAddOrder = () => {
+  //   addOrderAPI(cartItems)
+  //     .then((res) => {
+  //       // const cartItems: any = Object.values(res)[0];
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
     if (!cartItems) return;
@@ -55,7 +58,7 @@ const Cart = () => {
             </div>
           </div>
           <div className="cart_info_btn">
-            <Button size="block" onClick={handleAddOrder}>
+            <Button size="block" onClick={handleCreateOrder}>
               đặt hàng
             </Button>
             <Link to="/">

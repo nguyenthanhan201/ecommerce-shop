@@ -13,6 +13,7 @@ import { ColorModeContext } from "../../../../../lib/theme/theme";
 const Topbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  console.log("👌 ~ theme", theme);
   const tosat = useToast();
   // console.log(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
