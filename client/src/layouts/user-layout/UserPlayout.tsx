@@ -33,6 +33,7 @@ const UserPlayout = ({ ...props }: any) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <>
       <div id="progressbar"></div>

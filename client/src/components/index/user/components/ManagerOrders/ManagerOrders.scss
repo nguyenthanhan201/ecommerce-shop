@@ -25,6 +25,18 @@
         width: 100px;
         height: 100px;
       }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+
+        img {
+          width: 50%;
+          height: 50%;
+          margin-bottom: 8px;
+        }
+      }
+
     }
   }
 }

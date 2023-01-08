@@ -10,4 +10,19 @@
   & .context {
     width: 80%;
   }
+
+  // css for mobile
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+
+    & .side-bar {
+      width: 100%;
+    }
+
+    & .context {
+      margin-top: 12px;
+      width: 100%;
+    }
+  }
 }
