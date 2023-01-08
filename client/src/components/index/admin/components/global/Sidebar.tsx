@@ -1,3 +1,4 @@
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
@@ -9,7 +10,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from "react-router-dom";
 import avatar from "../../../../../assets/images/user.png";
 import { tokens } from "../../../../../lib/theme/theme";
-import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }: any) => {
   const theme = useTheme();
@@ -135,6 +136,13 @@ const Sidebar = () => {
               title="Sản phẩm ẩn"
               to="/admin/hide-products"
               icon={<VisibilityOffOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Quản lí đơn hàng"
+              to="/admin"
+              icon={<ReceiptLongOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
