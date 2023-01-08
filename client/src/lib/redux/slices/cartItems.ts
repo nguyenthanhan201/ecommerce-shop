@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Auth } from "./auth";
 import { Product } from "./products";
 
-export type CartItems = {
+export type CartItem = {
   idAuth: Auth;
-  idproduct: Product;
+  idProduct: Product;
   size: string;
   color: string;
   quantity: number;

@@ -1,6 +1,8 @@
 import { getOrdersAPI } from "api/orderServices";
+import Helmet from "components/shared/Helmet";
 import Img from "components/shared/Img";
 import Loading from "components/shared/Loading/Loading";
+import { numberWithCommans } from "lib/helpers/parser";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useEffect, useMemo, useState } from "react";
 import "./ManagerOrders.scss";
@@ -20,8 +22,10 @@ const ManagerOrders = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const convertOrders = useMemo(() => {
+    if (!orders.length) return [];
     let arr: TypeRowProduct[] = [];
     orders.forEach((order) => {
+      // console.log("👌 ~ order", order);
       const createdAt = new Date(order.createdAt || "");
       const day = createdAt.getDate();
       const month = createdAt.getMonth() + 1;
@@ -30,7 +34,7 @@ const ManagerOrders = () => {
       Object.values(order.order).forEach((item: any) => {
         // console.log("👌 ~ item", item);
         const { color, size, quantity } = item[0];
-        const { title, image01, price } = item[0].idProduct;
+        const { title, image01, price } = item[0].product;
         arr.push({
           title,
           image01,
@@ -58,10 +62,10 @@ const ManagerOrders = () => {
         console.log(err);
         setIsLoading(false);
       });
-  }, [auth]);
+  }, [auth?._id]);
 
   return (
-    <>
+    <Helmet title="Quản lí đơn hàng">
       {isLoading ? (
         <Loading />
       ) : (
@@ -91,7 +95,7 @@ const ManagerOrders = () => {
                     {title}-{size}-{color}
                   </td>
                   <td>{createdAt || "null"}</td>
-                  <td>{price * quantity}</td>
+                  <td>{numberWithCommans(price * quantity)} ₫</td>
                   <td>Hoàn thành</td>
                 </tr>
               );
@@ -99,7 +103,7 @@ const ManagerOrders = () => {
           </tbody>
         </table>
       )}
-    </>
+    </Helmet>
   );
 };
 

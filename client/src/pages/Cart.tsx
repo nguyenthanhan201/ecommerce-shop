@@ -4,7 +4,8 @@ import Button from "components/shared/Button";
 import { numberWithCommans } from "lib/helpers/parser";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
-import { useEffect, useState } from "react";
+import { CartItem as CartItemType } from "lib/redux/slices/cartItems";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Helmet from "../components/shared/Helmet";
 
@@ -12,7 +13,6 @@ const Cart = () => {
   const toast = useToast();
   const cartItems = useAppSelector((state) => state.cartItems.value);
   // console.log("👌 ~ cartItems", cartItems);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleCreateOrder = () => {
     if (cartItems && Object.keys(cartItems).length === 0)
@@ -22,25 +22,14 @@ const Cart = () => {
       .catch((err) => toast.error(err.message));
   };
 
-  // const handleAddOrder = () => {
-  //   addOrderAPI(cartItems)
-  //     .then((res) => {
-  //       // const cartItems: any = Object.values(res)[0];
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  useEffect(() => {
-    if (!cartItems) return;
+  const totalPrice = useMemo(() => {
     let total = 0;
-    Object.values(cartItems).map((item) => {
+    if (!cartItems) return total;
+    Object.values(cartItems).map((item: [CartItemType]) => {
       const quantity = item[0].quantity;
       return (total += Number(item[0].idProduct.price) * quantity);
     });
-    setTotalPrice(total);
+    return total;
   }, [cartItems]);
 
   return (

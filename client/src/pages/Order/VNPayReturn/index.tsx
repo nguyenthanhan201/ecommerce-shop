@@ -1,8 +1,10 @@
 import { addOrderAPI } from "api/orderServices";
 import Button from "components/shared/Button";
 import Helmet from "components/shared/Helmet";
+import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
+import { GET_CART_ITEMS } from "lib/redux/types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./VNPayReturn.scss";
@@ -12,6 +14,7 @@ const VNPayReturn = () => {
   const auth = useAppSelector((state) => state.auth.auth);
   const [responseCode, setResponseCode] = useState<string>("");
   const query = window.location.search;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const tempParams = JSON.parse(
@@ -28,8 +31,9 @@ const VNPayReturn = () => {
     if (!auth || responseCode !== "00") return;
     toast.promise(
       "Xử lí đơn hàng thành công",
-      addOrderAPI(auth._id).then((res) => {
-        console.log("👌 ~ res", res);
+      addOrderAPI(auth._id).then(() => {
+        // console.log("👌 ~ res", res);
+        dispatch({ type: GET_CART_ITEMS });
       }),
       "Xử lí đơn hàng thất bại"
     );

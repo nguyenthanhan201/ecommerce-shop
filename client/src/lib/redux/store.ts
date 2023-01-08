@@ -3,14 +3,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { rootSaga } from "./sagas";
 import auth from "./slices/auth";
 import cartItems from "./slices/cartItems";
-import productModel from "./slices/productModel";
 import products from "./slices/products";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     cartItems,
-    productModel,
     products,
     auth,
   },

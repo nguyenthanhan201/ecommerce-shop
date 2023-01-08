@@ -11,24 +11,23 @@ function useAuth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authentication, (user) => {
       // console.log("👌 ~ user", user);
-      if (!user) dispatch(setAuthSlice(undefined));
-      else {
-        loginWithGoogleAPI(
-          user.displayName!,
-          user.email!
-        ).then((res) => {
-          dispatch(
-            setAuthSlice({
-              name: user.displayName,
-              email: user.email,
-              _id: res._id,
-            })
-          );
-        }).catch((err) => {
-          console.log("🚀 ~ file: useAuth.ts ~ line 41 ~ .then ~ err", err);
-        });
-      }
+      if (!user) return dispatch(setAuthSlice(undefined));
+      return loginWithGoogleAPI(
+        user.displayName!,
+        user.email!
+      ).then((res) => {
+        dispatch(
+          setAuthSlice({
+            name: user.displayName,
+            email: user.email,
+            _id: res._id,
+          })
+        );
+      }).catch((err) => {
+        console.log("🚀 ~ file: useAuth.ts ~ line 41 ~ .then ~ err", err);
+      });
     });
+    
     return unsubscribe;
   }, [dispatch]);
 }

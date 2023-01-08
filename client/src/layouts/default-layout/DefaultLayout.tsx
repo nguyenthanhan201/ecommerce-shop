@@ -12,9 +12,9 @@ const DefaultLayout = ({ ...props }: any) => {
   const auth = useAppSelector((state) => state.auth.auth);
 
   useEffect(() => {
-    if (!auth) return;
+    if (!auth?._id) return;
     dispatch({ type: GET_CART_ITEMS, payload: auth._id });
-  }, [auth, dispatch]);
+  }, [auth?._id, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => {
