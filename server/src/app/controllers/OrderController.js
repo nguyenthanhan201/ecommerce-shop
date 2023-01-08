@@ -1,6 +1,8 @@
 const ip = require("ip");
 const CartItem = require("../models/CartItem");
+const ItemOrder = require("../models/ItemOrder");
 const Order = require("../models/Order");
+
 class OrderController {
   index(req, res) {
     res.json("Order");
@@ -144,11 +146,17 @@ class OrderController {
           const grouped = {};
           // gom nhóm các sản phẩm giống nhau
           cartItems.forEach(function (a) {
+            const itemOrder = new ItemOrder({
+              product: a.idProduct,
+              quantity: a.quantity,
+              size: a.size,
+              color: a.color,
+            });
             if (grouped[a.idProduct._id + a.size + a.color]) {
               grouped[a.idProduct._id + a.size + a.color][0].quantity +=
                 a.quantity;
             } else {
-              grouped[a.idProduct._id + a.size + a.color] = [a];
+              grouped[a.idProduct._id + a.size + a.color] = [itemOrder];
             }
           });
           // tạo order
@@ -156,15 +164,15 @@ class OrderController {
             idAuth,
             order: grouped,
           });
-          // lưu order
+          //lưu order
           order
             .save()
             .then((order) => {
-              res.status(200).json({ order });
+              // res.status(200).json({ order });
               // lưu order thành công thì xóa cartItem
-              // CartItem.deleteMany({
-              //   idAuth,
-              // }).then(() => res.status(200).json({ order }));
+              CartItem.deleteMany({
+                idAuth,
+              }).then(() => res.status(200).json({ message: "success" }));
             })
             .catch((err) => {
               res.status(400).json({ error: err });
