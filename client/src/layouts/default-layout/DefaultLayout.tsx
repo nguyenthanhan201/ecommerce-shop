@@ -34,8 +34,7 @@ const DefaultLayout = ({ ...props }: any) => {
 
   return (
     <>
-      <div id="progressbar"></div>
-      <div id="scrollPath"></div>
+      <div id="progressbar" />
       <DefaultHeader />
       <div className="container">
         <div className="main">

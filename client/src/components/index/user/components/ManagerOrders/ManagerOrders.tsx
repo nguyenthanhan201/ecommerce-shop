@@ -7,7 +7,8 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useEffect, useMemo, useState } from "react";
 import "./ManagerOrders.scss";
 
-type TypeRowProduct = {
+export type TypeRowProduct = {
+  _id?: number;
   title: string;
   image01: string;
   price: number;
@@ -20,7 +21,6 @@ type TypeRowProduct = {
 const ManagerOrders = () => {
   const auth = useAppSelector((state) => state.auth.auth);
   const [orders, setOrders] = useState<any[]>([]);
-  // console.log("👌 ~ orders", orders);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const convertOrders = useMemo(() => {
     if (!orders.length) return [];
@@ -56,7 +56,7 @@ const ManagerOrders = () => {
     if (!auth?._id) return;
     getOrdersAPI(auth._id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setOrders(res);
         setIsLoading(false);
       })

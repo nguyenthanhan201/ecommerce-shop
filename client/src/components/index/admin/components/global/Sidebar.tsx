@@ -141,7 +141,7 @@ const Sidebar = () => {
             />
             <Item
               title="Quản lí đơn hàng"
-              to="/admin"
+              to="/admin/orders"
               icon={<ReceiptLongOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

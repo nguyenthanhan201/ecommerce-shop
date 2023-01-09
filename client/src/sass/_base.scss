@@ -141,16 +141,6 @@ $val in $colors {
   // pointer-events: none;
 }
 
-#scrollPath {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 10px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  z-index: 999;
-}
-
 #progressbar {
   position: fixed;
   top: 0;

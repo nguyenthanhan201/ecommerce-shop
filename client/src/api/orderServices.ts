@@ -1,5 +1,13 @@
 import { get, post } from "lib/axios/requests";
 
+export const getAllOrdersAPI = async () => {
+  const res = await get(`/order/getAllOrders`, {
+    headers: {
+      "authentication": "Bearer " + localStorage.getItem("token"),
+    }
+  });
+  return res;
+}
 export const createOrderAPI = async (amount: number) => {
   const res = await post(`/order/create_payment_url`, { amount });
   return res;

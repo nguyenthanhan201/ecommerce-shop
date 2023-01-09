@@ -38,7 +38,6 @@
     "utils/data.js",
     "utils/icons.js",
     "pages/_app.tsx",
-    "components/Header/StyleHeader.sass"
   ],
   // "include": ["src"],
   "exclude": ["node_modules"]

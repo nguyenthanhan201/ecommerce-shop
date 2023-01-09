@@ -1,11 +1,7 @@
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useToast } from "lib/providers/toast-provider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ColorModeContext } from "../../../../../lib/theme/theme";
@@ -13,9 +9,6 @@ import { ColorModeContext } from "../../../../../lib/theme/theme";
 const Topbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  // console.log("👌 ~ theme", theme);
-  const tosat = useToast();
-  // console.log(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
   return (
@@ -43,19 +36,19 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton
+        {/* <IconButton
           onClick={() => {
             tosat.success("Hello");
           }}
         >
           <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
+        </IconButton> */}
+        {/* <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
         <IconButton>
           <PersonOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
     </Box>
   );

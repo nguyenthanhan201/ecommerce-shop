@@ -2,19 +2,20 @@ import AdminLayout from "layouts/admin-layout/AdminLayout";
 import UserPlayout from "layouts/user-layout/UserPlayout";
 import { lazy } from "react";
 
-const Dashboard = lazy(() => import("../../pages/Admin/Dashboard"));
-const Cart = lazy(() => import("../../pages/Cart"));
-const Catalog = lazy(() => import("../../pages/Catalog"));
+const Orders = lazy(() => import('pages/Admin/Orders'))
+const Dashboard = lazy(() => import("pages/Admin/Dashboard"));
+const Cart = lazy(() => import("pages/Cart"));
+const Catalog = lazy(() => import("pages/Catalog"));
 const Home = lazy(() => import("pages/Home"));
-const Login = lazy(() => import("../../pages/Login"));
-const ProductDetail = lazy(() => import("../../pages/ProductDetail"));
-const AdminProduct = lazy(() => import("../../pages/Admin/Products"));
-const AdminHideProduct = lazy(() => import("../../pages/Admin/HideProducts"));
-const AdminAnalytics = lazy(() => import("../../pages/Admin/Analytics"));
-const VNPayReturn = lazy(() => import("../../pages/Order/VNPayReturn"));
-const UserPage = lazy(() => import("../../pages/User"));
-const UserAccount = lazy(() => import("../../pages/User/Account"));
-const UserOrders = lazy(() => import("../../pages/User/Orders"));
+const Login = lazy(() => import("pages/Login"));
+const ProductDetail = lazy(() => import("pages/ProductDetail"));
+const AdminProduct = lazy(() => import("pages/Admin/Products"));
+const AdminHideProduct = lazy(() => import("pages/Admin/HideProducts"));
+const AdminAnalytics = lazy(() => import("pages/Admin/Analytics"));
+const VNPayReturn = lazy(() => import("pages/Order/VNPayReturn"));
+const UserPage = lazy(() => import("pages/User"));
+const UserAccount = lazy(() => import("pages/User/Account"));
+const UserOrders = lazy(() => import("pages/User/Orders"));
 
 type Route = {
   path: string;
@@ -83,6 +84,11 @@ const privateRoutes: Route[] = [
   {
     path: '/admin/analytics',
     component: AdminAnalytics,
+    layout: AdminLayout
+  },
+  {
+    path: '/admin/orders',
+    component: Orders,
     layout: AdminLayout
   },
 ]

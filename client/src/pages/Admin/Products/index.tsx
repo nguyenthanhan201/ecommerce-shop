@@ -18,7 +18,7 @@ const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const products: Product[] = useAppSelector(
-    (state) => state.products.products
+    (state:any) => state.products.products
   );
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(

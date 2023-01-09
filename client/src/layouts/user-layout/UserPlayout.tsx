@@ -37,7 +37,6 @@ const UserPlayout = ({ ...props }: any) => {
   return (
     <>
       <div id="progressbar"></div>
-      <div id="scrollPath"></div>
       <DefaultHeader />
       <div className="container">
         <div className="main user-layout">
