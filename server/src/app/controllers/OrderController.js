@@ -4,8 +4,8 @@ const ItemOrder = require("../models/ItemOrder");
 const Order = require("../models/Order");
 
 class OrderController {
-  index(req, res) {
-    res.json("Order");
+  getAllOrders(req, res) {
+    Order.find().then((orders) => res.json(orders));
   }
 
   show(req, res, next) {
