@@ -5,6 +5,7 @@ const Auth = new Scheme(
   {
     email: { type: String, require: true, maxLength: 255, unique: true },
     name: { type: String, require: true, maxLength: 255 },
+    refeshToken: { type: String, require: true, maxLength: 255, default: null },
   },
   {
     timestamps: true,

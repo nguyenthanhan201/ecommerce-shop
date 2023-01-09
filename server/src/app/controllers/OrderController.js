@@ -10,6 +10,7 @@ class OrderController {
 
   show(req, res, next) {
     const id = req.params.id;
+
     // get orders have idAuth = id
     Order.find({ idAuth: id })
       .then((orders) => {

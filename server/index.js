@@ -7,6 +7,7 @@ const path = require("path");
 const route = require("./src/routes/index.js");
 const db = require("./src/config/db");
 const cors = require("cors");
+const verifyToken = require("./src/middleware/auth.js");
 require("dotenv").config();
 
 // Connect to DB

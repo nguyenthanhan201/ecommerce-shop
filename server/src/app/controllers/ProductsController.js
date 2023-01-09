@@ -6,6 +6,7 @@ class ProductsController {
   }
 
   hideProducts(req, res) {
+    // console.log("👌 ~ req", req);
     // get products that have deletedAt
     Product.find({ deletedAt: { $ne: null } }).then((products) =>
       res.json(products)
