@@ -7,7 +7,6 @@ import { useToast } from "lib/providers/toast-provider";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./VNPayReturn.scss";
 
 const VNPayReturn = () => {
   const toast = useToast();

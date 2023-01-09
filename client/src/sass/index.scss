@@ -2,6 +2,7 @@
 @import "./mixins";
 @import "./base";
 
+// components styles
 @import "./components/header";
 @import "./components/footer";
 @import "./components/hero-slider";
@@ -12,12 +13,18 @@
 @import "./components/catalog";
 @import "./components/custom-checkbox";
 @import "./components/product";
-// @import "./components/social-sidebar";
 @import "./components/silde-banner";
 @import "./components/product-view-model";
 @import "./components/cart";
 @import "./components/post-filters-form";
 @import "./components/login";
 @import "./components/contact";
-@import '../layouts/admin-layout/AdminLayout.scss';
+
+// pages styles
+@import './pages/Order/VNPayReturn/VNPayReturn.scss';
+
+// layouts styles
+@import './layouts/index.scss';
+
+// lib styles
 @import "react-toastify/dist/ReactToastify.css";

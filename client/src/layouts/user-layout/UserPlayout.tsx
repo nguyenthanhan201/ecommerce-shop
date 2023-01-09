@@ -6,7 +6,6 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import useAuth from "lib/hooks/useAuth";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import { useEffect } from "react";
-import "./UserLayout.scss";
 
 const UserPlayout = ({ ...props }: any) => {
   useAuth();
