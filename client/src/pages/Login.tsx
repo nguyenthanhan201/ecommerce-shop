@@ -1,3 +1,4 @@
+import { loginAPI } from "api/authServices";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import DefaultLayout from "layouts/default-layout/DefaultLayout";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +13,12 @@ function Login() {
     const googleAuthProvider = new GoogleAuthProvider();
     signInWithPopup(authentication, googleAuthProvider)
       .then((result) => {
-        // console.log("👌 ~ accessToken", result.user);
-        navigate("/");
+        loginAPI(result.user.email!)
+          .then((res) => {
+            localStorage.setItem("token", res.accessToken);
+            navigate("/");
+          })
+          .catch((err) => alert(err));
       })
       .catch((err) => {
         alert("Đăng nhập thất bại");

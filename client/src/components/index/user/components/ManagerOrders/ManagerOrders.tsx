@@ -20,6 +20,7 @@ type TypeRowProduct = {
 const ManagerOrders = () => {
   const auth = useAppSelector((state) => state.auth.auth);
   const [orders, setOrders] = useState<any[]>([]);
+  // console.log("👌 ~ orders", orders);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const convertOrders = useMemo(() => {
     if (!orders.length) return [];
@@ -55,6 +56,7 @@ const ManagerOrders = () => {
     if (!auth?._id) return;
     getOrdersAPI(auth._id)
       .then((res) => {
+        console.log(res);
         setOrders(res);
         setIsLoading(false);
       })

@@ -206,13 +206,16 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState(localStorage.getItem('theme') || 'dark');
 
   const colorMode = useMemo(
     () => ({
-      toggleColorMode: () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light")),
+      toggleColorMode: () => {
+        setMode((prev) => (prev === "light" ? "dark" : "light"))
+        localStorage.setItem('theme', mode === "light" ? "dark" : "light")
+      }
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

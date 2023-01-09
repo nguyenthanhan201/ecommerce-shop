@@ -15,9 +15,9 @@ const App = () => {
   const [theme, colorMode] = useMode();
 
   return (
-    <ToastProvider>
-      <ColorModeContext.Provider value={colorMode as any}>
-        <ThemeProvider theme={theme as any}>
+    <ColorModeContext.Provider value={colorMode as any}>
+      <ThemeProvider theme={theme as any}>
+        <ToastProvider>
           <Router>
             <Provider store={store}>
               <Suspense fallback={<div>Đang tải...</div>}>
@@ -41,9 +41,9 @@ const App = () => {
               </Suspense>
             </Provider>
           </Router>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
-    </ToastProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
 

@@ -4,6 +4,7 @@ export type Auth = {
   _id: string;
   name: string;
   email: string;
+  refeshToken: string | null;
 };
 
 const auth = createSlice({

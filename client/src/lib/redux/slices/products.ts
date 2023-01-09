@@ -18,14 +18,18 @@ const products = createSlice({
   name: "products",
   initialState: {
     products: [],
+    err: null
   },
   reducers: {
     setProductsSlice: (state, action) => {
       state.products = action.payload;
     },
+    setErrProductSlice: (state, action) => {
+      state.err = action.payload;
+    }
   },
 });
 
-export const { setProductsSlice } = products.actions;
+export const { setProductsSlice, setErrProductSlice } = products.actions;
 
 export default products.reducer;

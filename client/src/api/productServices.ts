@@ -36,7 +36,11 @@ export const deleteProductAPI = async (id: string) => {
 };
 
 export const getHideProductsAPI = async () => {
-  const res = await get(`/products/hide`);
+  const res = await get(`/products/hide`, {
+    headers: {
+      "authentication": "Bearer " + localStorage.getItem("token"),
+    }
+  });
   return res;
 }
 

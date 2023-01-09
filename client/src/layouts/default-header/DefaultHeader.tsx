@@ -8,6 +8,7 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
+import { logoutAPI } from "api/authServices";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { ColorModeContext } from "lib/theme/theme";
@@ -33,6 +34,7 @@ const Defaultheader = () => {
   const colorMode = useContext(ColorModeContext);
   const cartItems = useAppSelector((state) => state.cartItems);
   const auth = useSelector((state: any) => state.auth.auth);
+  // console.log("👌 ~ auth", auth);
   const { pathname } = useLocation();
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
   const menuLeft = useRef<any>(null);
@@ -69,7 +71,9 @@ const Defaultheader = () => {
   const menuToggle = () => menuLeft.current.classList.toggle("active");
 
   const handleLogout = () => {
+    if (!auth.email) return;
     signOut(authentication);
+    logoutAPI(auth.email);
   };
 
   return (

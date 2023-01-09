@@ -4,6 +4,7 @@ import {
   Info,
   WarningOutlined,
 } from "@mui/icons-material";
+import { useTheme } from "@mui/material";
 import React, { createContext, ReactNode, useContext } from "react";
 import {
   toast as toastify,
@@ -32,6 +33,8 @@ const ToastContext = createContext<{
 }>(null as any);
 
 export function ToastProvider({ children }: any) {
+  const theme = useTheme();
+
   const defaultOptions: ToastOptions = {
     autoClose: 1000,
     hideProgressBar: true,
@@ -43,6 +46,7 @@ export function ToastProvider({ children }: any) {
     closeButton: false,
     icon: false,
     toastId: "toast",
+    theme: theme.palette.mode,
   };
   const icons = {
     info: <Info />,
@@ -139,7 +143,6 @@ export function ToastProvider({ children }: any) {
         containerId="toast-root"
         limit={1}
         transition={Zoom}
-        className=""
       />
     </ToastContext.Provider>
   );

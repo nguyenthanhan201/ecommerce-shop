@@ -1,4 +1,4 @@
-import { loginWithGoogleAPI } from "api/authServices";
+import { getUserByEmailAPI } from "api/authServices";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -12,22 +12,24 @@ function useAuth() {
     const unsubscribe = onAuthStateChanged(authentication, (user) => {
       // console.log("👌 ~ user", user);
       if (!user) return dispatch(setAuthSlice(undefined));
-      return loginWithGoogleAPI(
-        user.displayName!,
-        user.email!
+      return getUserByEmailAPI(
+        user.displayName || "",
+        user.email || ""
       ).then((res) => {
+        const { name, email, _id, refeshToken } = res.data;
         dispatch(
           setAuthSlice({
-            name: user.displayName,
-            email: user.email,
-            _id: res._id,
+            name,
+            email,
+            _id,
+            refeshToken,
           })
         );
       }).catch((err) => {
-        console.log("🚀 ~ file: useAuth.ts ~ line 41 ~ .then ~ err", err);
+        console.log("err", err);
       });
     });
-    
+
     return unsubscribe;
   }, [dispatch]);
 }
