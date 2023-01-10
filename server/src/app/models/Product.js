@@ -14,7 +14,7 @@ const Product = new Scheme(
     colors: { type: Array, require: true, maxLength: 255 },
     slug: { type: String, slug: "title", unique: true },
     size: { type: Array, require: true, maxLength: 255 },
-    description: { type: String, require: true, maxLength: 255 },
+    description: { type: String, require: true, maxLength: 1500 },
     views: { type: Number, default: 0 },
     deletedAt: {
       type: Date,
