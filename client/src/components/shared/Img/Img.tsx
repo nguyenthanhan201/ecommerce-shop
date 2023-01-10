@@ -18,9 +18,3 @@ const Img = ({ src, alt, className, compressed }: ImgProps) => {
 };
 
 export default Img;
-
-// src={sourceURL}
-//               alt="imgPreview"
-//               className="shoess"
-//               loading="lazy"
-//               sizes="(max-width: 600px) 100vw, 600px"

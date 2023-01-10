@@ -19,6 +19,8 @@
 @import "./components/post-filters-form";
 @import "./components/login";
 @import "./components/contact";
+@import './components/shared/Input.scss';
+@import './components/shared/Modal.scss';
 
 // pages styles
 @import './pages/Order/VNPayReturn/VNPayReturn.scss';
@@ -28,3 +30,4 @@
 
 // lib styles
 @import "react-toastify/dist/ReactToastify.css";
+@import 'react-quill/dist/quill.snow.css';

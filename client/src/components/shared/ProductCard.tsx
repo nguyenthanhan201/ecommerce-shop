@@ -4,7 +4,7 @@ import { Product } from "lib/redux/slices/products";
 import { lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
-import Img from "./Img";
+import Img from "./Img/Img";
 
 const ProductViewModel = lazy(() => import("./ProductViewModel"));
 

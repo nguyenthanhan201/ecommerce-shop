@@ -6,7 +6,7 @@ export const registerSchema = yup.object().shape({
     .required("Tên không được để trống"),
   description: yup
     .string()
-    .max(255, "Mô tả không được quá 255 ký tự")
+    .max(1500, "Mô tả không được quá 700 ký tự")
     .required("Mô tả không được để trống"),
   price: yup
     .string()

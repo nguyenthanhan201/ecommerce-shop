@@ -1,40 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, OutlinedInput } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+import { Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import { createProductAPI, updateProductAPI } from "api/productServices";
+import category from "assets/fake-data/category";
+import colors from "assets/fake-data/product-color";
+import size from "assets/fake-data/product-size";
+import Img from "components/shared/Img/Img";
 import Input from "components/shared/Input/Input";
+import Select from "components/shared/Select/Select";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useToast } from "lib/providers/toast-provider";
 import { Product } from "lib/redux/slices/products";
 import { GET_PRODUCTS } from "lib/redux/types";
 import { registerSchema } from "lib/schema/formSchema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ReactQuill from "react-quill";
 
 type ModalAddProductProps = {
   product?: Product;
 };
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const listCategorySlug = ["ao-thun", "ao-somi", "quan-jean"];
-const listSize = ["s", "m", "l", "xl", "xxl"];
-const listColor = ["white", "pink", "black", "yellow", "orange", "blue"];
-
 const ModalAddProduct = ({ product }: ModalAddProductProps) => {
   const {
+    watch,
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -54,11 +44,20 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
   });
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const [img1, setImg1] = useState(product?.image01);
-  // console.log("👌 ~ img1", img1);
-  const [img2, setImg2] = useState(product?.image02);
+  const [img1, setImg1] = useState(product?.image01 || "");
+  const [img2, setImg2] = useState(product?.image02 || "");
+  const editorContent = watch("description");
+
+  useEffect(() => {
+    register("description");
+  }, [register]);
+
+  const onEditorStateChange = (editorState: ReactQuill.Value) => {
+    setValue("description", String(editorState));
+  };
 
   const formSubmit = (data: Product) => {
+    // console.log("👌 ~ data", data);
     if (product)
       return toast.promise(
         "Cập nhật sản phẩm thành công",
@@ -90,30 +89,44 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
         name="title"
         error={errors.title?.message}
       />
-      <Input
-        {...register("image01")}
-        type="text"
-        placeholder="Ảnh sản phẩm"
-        label="image01"
-        name="image01"
-        error={errors.image01?.message}
-        onChange={(e) => {
-          setImg1(e.target.value);
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1.5rem",
+          gap: "12px",
         }}
-      />
-      <img src={img1} alt="image01" />
-      <Input
-        {...register("image02")}
-        type="text"
-        placeholder="Ảnh sản phẩm"
-        label="image02"
-        name="image02"
-        error={errors.image02?.message}
-        onChange={(e) => {
-          setImg2(e.target.value);
-        }}
-      />
-      <img src={img2} alt="image02" />
+      >
+        <div style={{ width: "50%" }}>
+          <Input
+            {...register("image01")}
+            type="text"
+            placeholder="Ảnh sản phẩm"
+            label="image01"
+            name="image01"
+            error={errors.image01?.message}
+            onChange={(e) => {
+              setImg1(e.target.value);
+            }}
+          />
+          <Img src={img1} alt="image01" />
+        </div>
+        <div style={{ width: "50%" }}>
+          <Input
+            {...register("image02")}
+            type="text"
+            placeholder="Ảnh sản phẩm"
+            label="image02"
+            name="image02"
+            error={errors.image02?.message}
+            onChange={(e) => {
+              setImg2(e.target.value);
+            }}
+          />
+          <Img src={img2} alt="image02" />
+        </div>
+      </div>
       <Input
         {...register("price")}
         type="text"
@@ -123,62 +136,51 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
         error={errors.price?.message}
       />
       <Input
-        {...register("description")}
-        type="text"
+        type="editor"
+        label="editor"
+        value={editorContent}
+        onChange={onEditorStateChange as any}
         placeholder="Mô tả sản phẩm"
-        label="description"
-        name="description"
         error={errors.description?.message}
       />
-      <FormControl fullWidth sx={{ marginTop: "20px" }}>
-        <InputLabel>categorySlug</InputLabel>
-        <Select
-          defaultValue={product?.categorySlug || ""}
-          label="categorySlug"
-          {...register("categorySlug")}
-          error={Boolean(errors.categorySlug?.message)}
-        >
-          {listCategorySlug.map((item, index) => (
-            <MenuItem key={index} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth sx={{ marginTop: "20px" }}>
-        <InputLabel id="demo-multiple-name-label">Size</InputLabel>
-        <Select
-          {...register("size")}
-          multiple
-          defaultValue={product?.size || []}
-          input={<OutlinedInput />}
-          MenuProps={MenuProps}
-          error={Boolean(errors.size?.message)}
-        >
-          {listSize.map((size) => (
-            <MenuItem key={size} value={size}>
-              {size}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth sx={{ marginTop: "20px" }}>
-        <InputLabel id="demo-multiple-name-label">Colors</InputLabel>
-        <Select
-          {...register("colors")}
-          multiple
-          defaultValue={product?.colors || []}
-          input={<OutlinedInput />}
-          MenuProps={MenuProps}
-          error={Boolean(errors.colors?.message)}
-        >
-          {listColor.map((color) => (
-            <MenuItem key={color} value={color}>
-              {color}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        {...register("categorySlug")}
+        defaultValue={product?.categorySlug || ""}
+        label="CategorySlug"
+        error={errors.categorySlug?.message}
+      >
+        {category.map((item) => (
+          <MenuItem key={item.categorySlug} value={item.categorySlug}>
+            {item.display}
+          </MenuItem>
+        ))}
+      </Select>
+      <Select
+        {...register("size")}
+        defaultValue={product?.size || []}
+        multiple
+        label="Size"
+        error={errors.size?.message}
+      >
+        {size.map((size) => (
+          <MenuItem key={size.size} value={size.size}>
+            {size.display}
+          </MenuItem>
+        ))}
+      </Select>
+      <Select
+        {...register("colors")}
+        defaultValue={product?.size || []}
+        multiple
+        label="Colors"
+        error={errors.colors?.message}
+      >
+        {colors.map((color) => (
+          <MenuItem key={color.color} value={color.color}>
+            {color.display}
+          </MenuItem>
+        ))}
+      </Select>
       <Button
         type="submit"
         variant="contained"
