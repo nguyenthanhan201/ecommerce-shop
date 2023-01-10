@@ -48,7 +48,8 @@ class OrderController {
       ("0" + date.getSeconds()).slice(-2);
     var orderId = dateFormat(date, "HHmmss");
     var amount = req.body.amount;
-    var bankCode = "NCB";
+    // var bankCode = "NCB";
+    var bankCode = "";
 
     var orderInfo = "Thanh toan don hang";
     var orderType = "other";
