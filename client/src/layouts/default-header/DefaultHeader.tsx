@@ -1,10 +1,7 @@
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
@@ -25,6 +22,7 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/Logo-2.png";
 import { authentication } from "../../config/firebase.config";
+import Menu from "./components/Menu";
 
 const Defaultheader = () => {
   const theme = useTheme();
@@ -35,6 +33,7 @@ const Defaultheader = () => {
   const activeNav = mainNav.findIndex((e) => e.path === pathname);
   const menuLeft = useRef<any>(null);
   const [headerShrink, setHeaderShrink] = useState(false);
+  const [isShowMenu, setIsShowMenu] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -66,6 +65,10 @@ const Defaultheader = () => {
 
   const menuToggle = useCallback(() => {
     menuLeft.current.classList.toggle("active");
+  }, []);
+
+  const onHoverMenu = useCallback(() => {
+    setIsShowMenu((prevState) => !prevState);
   }, []);
 
   const handleLogout = () => {
@@ -133,34 +136,15 @@ const Defaultheader = () => {
                 </Tooltip>
               </div>
             )}
-            <div className="header_menu_item header_menu_right_item">
+            <div
+              className="header_menu_item header_menu_right_item"
+              onMouseEnter={onHoverMenu}
+              onMouseLeave={onHoverMenu}
+            >
               {auth ? (
                 <>
                   <AccountCircleOutlinedIcon />
-                  <div className="dropdown">
-                    <Link to="/user/account" className="dropdown_item">
-                      <AccountCircleOutlinedIcon
-                        sx={{ fontSize: "80% !important" }}
-                      />
-                      <span>Tài khoản của tôi</span>
-                    </Link>
-                    <Link to="/user/orders" className="dropdown_item">
-                      <MonetizationOnOutlinedIcon
-                        sx={{ fontSize: "80% !important" }}
-                      />
-                      <span>Đơn hàng của tôi</span>
-                    </Link>
-                    <Link to="/admin" className="dropdown_item">
-                      <AdminPanelSettingsOutlinedIcon
-                        sx={{ fontSize: "80% !important" }}
-                      />
-                      <span>Trang Admin</span>
-                    </Link>
-                    <p className="dropdown_item" onClick={handleLogout}>
-                      <LogoutOutlinedIcon sx={{ fontSize: "80% !important" }} />
-                      <span>Đăng xuất</span>
-                    </p>
-                  </div>
+                  {isShowMenu && <Menu handleLogout={handleLogout} />}
                 </>
               ) : (
                 <Tooltip title="Đăng nhập">

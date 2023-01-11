@@ -1,5 +1,4 @@
 import { memo, useEffect, useRef, useState } from "react";
-
 import Button from "../components/shared/Button";
 import CheckBox from "../components/shared/CheckBox";
 import Helmet from "../components/shared/Helmet";
@@ -19,14 +18,15 @@ const initFilter = {
 
 const Catalog = () => {
   const [productList, setProductList] = useState(productData.getAllProducts());
+  // console.log("👌 ~ productList", productList);
   const [products, setProducts] = useState(productList);
+  // console.log("👌 ~ products", products);
   const [filter, setFilter] = useState<any>(initFilter);
   const filterRef = useRef<any>(null);
 
   useEffect(() => {
     (function updateProducts() {
       let temp = productList;
-      // console.log("👌 ~ temp", temp);
 
       if (filter.category.length > 0) {
         temp = temp.filter((e) => filter.category.includes(e.categorySlug));
@@ -45,7 +45,6 @@ const Catalog = () => {
           return check !== undefined;
         });
       }
-
       setProducts(temp);
     })();
   }, [filter, productList]);

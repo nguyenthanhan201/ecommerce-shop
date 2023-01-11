@@ -1,7 +1,7 @@
 import Loading from "components/shared/Loading/Loading";
 import { Product } from "lib/redux/slices/products";
 import { processList } from "longProcesses/enums";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState, useTransition } from "react";
 import { ScrollContainer } from "react-scroll-motion";
 import heroSliderData from "../assets/fake-data/hero-slider";
 import policy from "../assets/fake-data/policy";
@@ -17,7 +17,7 @@ import Section, {
 import SlideBanner from "../components/shared/SlideBanner";
 
 const Home = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const [products, setProducts] = useState<Product[]>([]);
   const getData: Worker = useMemo(
     () =>
@@ -30,14 +30,13 @@ const Home = () => {
   useEffect(() => {
     if (window.Worker) {
       getData.postMessage(processList.getData);
-      setLoading(false);
     }
   }, [getData]);
 
   useEffect(() => {
     if (window.Worker) {
       getData.onmessage = (e: MessageEvent) => {
-        setProducts(e.data);
+        startTransition(() => setProducts(e.data));
       };
     }
   }, [getData]);
@@ -74,7 +73,7 @@ const Home = () => {
         <Section>
           <SectionTitle>top sản phẩm bản chạy trong tuần</SectionTitle>
           <SectionBody>
-            {loading ? (
+            {isPending ? (
               <Loading />
             ) : (
               <Grid col={4} mdCol={2} smCol={1} gap={20}>

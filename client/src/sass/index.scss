@@ -3,7 +3,6 @@
 @import "./base";
 
 // components styles
-@import "./components/header";
 @import "./components/footer";
 @import "./components/hero-slider";
 @import "./components/button";
@@ -23,7 +22,7 @@
 @import './components/shared/Modal.scss';
 
 // pages styles
-@import './pages/Order/VNPayReturn/VNPayReturn.scss';
+@import './pages/index.scss';
 
 // layouts styles
 @import './layouts/index.scss';
