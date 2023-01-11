@@ -17,22 +17,28 @@ const Helmet = (props: HelmetProps) => {
         <title>{`Yolo - ` + props.title}</title>
         <meta
           name="description"
-          content={props.metaDescription || "Yolo is a ecommerce website"}
+          content={props?.metaDescription || "Yolo - Cửa hàng Yolo"}
         />
         {/* Facebook Meta Tags */}
         <meta
           property="og:url"
-          content="https://ecommerce-shop-fe.vercel.app/"
+          content="https://ecommerce-shop-fe.vercel.app/static/media/Logo-2.3f227664b3ce56e8fcde.png"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={props.metaTitle || "Yolo Shop"} />
+        <meta
+          property="og:title"
+          content={props?.metaTitle || "Cửa hàng Yolo"}
+        />
         <meta
           property="og:description"
-          content={props.metaDescription || "Yolo is a ecommerce website"}
+          content={props?.metaDescription || "Yolo - Cửa hàng Yolo"}
         />
         <meta
           property="og:image"
-          content={props.metaImg || "../../assets/images/favicon.png"}
+          content={
+            props?.metaImg ||
+            "https://ecommerce-shop-fe.vercel.app/static/media/Logo-2.3f227664b3ce56e8fcde.png"
+          }
         />
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -42,16 +48,22 @@ const Helmet = (props: HelmetProps) => {
         />
         <meta
           property="twitter:url"
-          content="https://ecommerce-shop-fe.vercel.app/"
+          content="https://ecommerce-shop-fe.vercel.app/static/media/Logo-2.3f227664b3ce56e8fcde.png"
         />
-        <meta name="twitter:title" content={props.metaTitle || "Yolo Shop"} />
+        <meta
+          name="twitter:title"
+          content={props?.metaTitle || "Cửa hàng Yolo"}
+        />
         <meta
           name="twitter:description"
-          content={props.metaDescription || "Yolo is a ecommerce website"}
+          content={props?.metaDescription || "Yolo - Cửa hàng Yolo"}
         />
         <meta
           name="twitter:image"
-          content={props.metaImg || "../../assets/images/favicon.png"}
+          content={
+            props?.metaImg ||
+            "https://ecommerce-shop-fe.vercel.app/static/media/Logo-2.3f227664b3ce56e8fcde.png"
+          }
         />
         {/* Meta Tags Generated via https://www.opengraph.xyz */}
       </HelmetLib>
