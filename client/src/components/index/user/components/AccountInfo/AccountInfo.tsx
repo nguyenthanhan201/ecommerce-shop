@@ -1,5 +1,4 @@
 import { useAppSelector } from "lib/hooks/useAppSelector";
-import "../ManagerOrders/ManagerOrders.scss";
 
 const AccountInfo = () => {
   const auth = useAppSelector((state) => state.auth.auth);

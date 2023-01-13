@@ -1,7 +1,5 @@
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-
-import { Link } from "react-router-dom";
-
 import Button from "./Button";
 
 type HeroSliderProps = {
@@ -76,7 +74,7 @@ const HeroSliderItem = (props: any) => (
         <span>{props.item.description}</span>
       </div>
       <div className="hero-slider_item_info_btn">
-        <Link to={props.item.path}>
+        <Link href={props.item.path as any}>
           <Button
             backgroundColor={props.item.color}
             icon="bx bx-cart"

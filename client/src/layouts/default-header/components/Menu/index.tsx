@@ -4,8 +4,8 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import Link from "next/link";
 import React, { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 
 type MenuProps = {
   handleLogout: () => void;
@@ -90,7 +90,7 @@ const Menu = ({ handleLogout }: MenuProps) => {
               onClick={() => setSelectedTypeChild(menu.children?.type || null)}
             >
               {menu.to ? (
-                <Link to={menu.to} className="dropdown_item">
+                <Link href={menu.to} className="dropdown_item">
                   {menu.icon}
                   <span>{menu.title}</span>
                 </Link>
@@ -113,24 +113,29 @@ const Menu = ({ handleLogout }: MenuProps) => {
         })}
       </div>
       <div className="dropdown-expand">
-        <p
-          className="dropdown_item"
-          onClick={() => setIsChangedDropdown(false)}
-        >
-          <ArrowBackIosNewOutlinedIcon sx={{ fontSize: "80% !important" }} />
-          <span>
-            Quay lai
-            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-          </span>
-        </p>
-        {childrenItems.length &&
-          childrenItems[0].map((item: any, index: number) => {
-            return (
-              <p className="dropdown_item" key={index}>
-                <span>{item.title}</span>
-              </p>
-            );
-          })}
+        {childrenItems.length !== 0 && (
+          <>
+            <p
+              className="dropdown_item"
+              onClick={() => setIsChangedDropdown(false)}
+            >
+              <ArrowBackIosNewOutlinedIcon
+                sx={{ fontSize: "80% !important" }}
+              />
+              <span>
+                Quay lai
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+              </span>
+            </p>
+            {childrenItems[0].map((item: any, index: number) => {
+              return (
+                <p className="dropdown_item" key={index}>
+                  <span>{item.title}</span>
+                </p>
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );

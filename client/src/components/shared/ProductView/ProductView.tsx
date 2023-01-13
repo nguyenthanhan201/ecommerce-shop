@@ -5,8 +5,8 @@ import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
 import { GET_CART_ITEMS } from "lib/redux/types";
+import { useRouter } from "next/router";
 import { memo, useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import Loading from "../Loading/Loading";
 import ImagePreview from "./components/ImagePreview";
@@ -19,7 +19,7 @@ const ProductView = ({ product }: ProductViewProps) => {
   const toast = useToast();
   const auth = useAppSelector((state) => state.auth.auth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [previewImg, setReviewImg] = useState(product.image01);
   const [descriptionExpand, setDescriptionExpand] = useState(false);
@@ -56,9 +56,7 @@ const ProductView = ({ product }: ProductViewProps) => {
     }
     if (size === undefined) {
       // alert('Vui lòng chọn kích thước');
-      toast.error("Vui lòng chọn kích thước!", {
-        position: "top-right",
-      });
+      toast.error("Vui lòng chọn kích thước!");
       return false;
     }
     if (product._id === undefined) {
@@ -84,7 +82,7 @@ const ProductView = ({ product }: ProductViewProps) => {
   };
 
   const gotoCart = () => {
-    if (check()) navigate("/cart");
+    if (check()) router.push("/cart");
   };
 
   const handleExpand = useCallback(() => {

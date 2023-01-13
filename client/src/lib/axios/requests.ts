@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: process.env.REACT_APP_BE,
+  baseURL: process.env.NEXT_PUBLIC_BE,
 });
 
 export const get = async (path: string, option: object = {}) => {

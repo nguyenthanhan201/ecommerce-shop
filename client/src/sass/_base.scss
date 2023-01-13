@@ -1,17 +1,15 @@
 //import font Roboto
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap");
-//import font M Plus Rounded 1c
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700&family=Open+Sans+Condensed:wght@300;700&display=swap");
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  // user-select: none;
 }
 
 html {
+  font-family: "Roboto", sans-serif;
   font-size: 13px;
   scroll-behavior: smooth;
 
@@ -20,33 +18,35 @@ html {
   }
 }
 
-html,
-body,
-#root,
-.app,
-.content2 {
+.app {
   height: 100%;
   width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
+  background-color: var(--main-bg);
+  color: var(--main-color);
+
+  & .modal-open {
+    overflow: hidden;
+  }
 }
 
-.app {
+.header {
+  background-color: var(--main-bg);
+  color: var(--main-color);
+}
+
+body:has(.user-layout) {
+  background-color: var(--main-bg);
+  color: var(--main-color);
+}
+
+.app,
+.admin {
   display: flex;
   position: relative;
 
   & .content {
     flex-direction: column;
   }
-}
-
-body {
-  font-family: "Roboto", sans-serif !important;
-  background-color: var(--main-bg);
-  color: var(--main-color);
-}
-
-body.modal-open {
-  overflow: hidden;
 }
 
 ul {
@@ -56,14 +56,14 @@ ul {
 a {
   text-decoration: none;
   color: unset;
+
+  &:hover {
+    color: $main-color;
+  }
 }
 
 img {
   max-width: 100%;
-}
-
-a:hover {
-  color: $main-color;
 }
 
 @each $color,

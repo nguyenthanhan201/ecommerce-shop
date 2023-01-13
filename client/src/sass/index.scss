@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "./variables";
 @import "./mixins";
 @import "./base";
@@ -20,6 +23,8 @@
 @import "./components/contact";
 @import './components/shared/Input.scss';
 @import './components/shared/Modal.scss';
+@import './components/shared/Loading.scss';
+@import './components/index/user/components/ManagerOrders/ManagerOrders.scss';
 
 // pages styles
 @import './pages/index.scss';
@@ -30,3 +35,7 @@
 // lib styles
 @import "react-toastify/dist/ReactToastify.css";
 @import 'react-quill/dist/quill.snow.css';
+@import '/assets/boxicons-2.0.7/css/boxicons.min.css';
+
+
+

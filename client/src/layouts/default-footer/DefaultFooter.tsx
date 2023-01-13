@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom";
-
 import Button from "../../components/shared/Button";
 
 import Grid from "../../components/shared/Grid";
 
+import Link from "next/link";
 import { memo } from "react";
-import logo from "../../assets/images/Logo-2.png";
 
 const footerAboutLinks = [
   {
@@ -50,8 +48,12 @@ const DefaultFooter = () => {
     <footer className="footer">
       <div className="container">
         <div className="new_footer_logo">
-          <Link to="/">
-            <img src={logo} className="footer_logo" alt="logo" />
+          <Link href="/">
+            <img
+              src={"/images/Logo-2.png"}
+              className="footer_logo"
+              alt="logo"
+            />
           </Link>
         </div>
         <div className="new_footer_top">
@@ -125,7 +127,7 @@ const DefaultFooter = () => {
                   <input type="text" className="form-field_input" placeholder=" " />
                   <label htmlFor="name" className="form-field_label">Email</label>
                 </form> */}
-                <Link to="/register">
+                <Link href="/register">
                   <Button
                     backgroundColor={""}
                     size={""}

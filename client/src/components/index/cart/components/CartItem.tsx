@@ -5,7 +5,7 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
 import { Product } from "lib/redux/slices/products";
 import { GET_CART_ITEMS } from "lib/redux/types";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 type CartItemProps = {
   product: Product;
@@ -62,7 +62,7 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
       </div>
       <div className="cart_item_info">
         <div className="cart_item_info_name">
-          <Link to={`/catalog/${product.slug}`}>
+          <Link href={`/catalog/${product.slug}`}>
             {`${product.title} - ${color} - ${size}`}
           </Link>
         </div>

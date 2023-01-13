@@ -1,22 +1,26 @@
-import { CssBaseline } from "@mui/material";
-import Sidebar from "components/index/admin/components/global/Sidebar";
-import Topbar from "components/index/admin/components/global/Topbar";
-import Helmet from "components/shared/Helmet";
+import { tokens } from "@/lib/theme/theme";
+import { CssBaseline, useTheme } from "@mui/material";
 import useAuth from "lib/hooks/useAuth";
+import Sidebar from "./components/Sidebar";
+import Topbar from "./components/Topbar";
 
 const AdminLayout = ({ ...props }: any) => {
   useAuth();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  console.log(colors.grey[500]);
+
   return (
-    <Helmet title="Trang Admin">
+    <>
       <CssBaseline />
-      <div className="app">
+      <div className="admin" style={{}}>
         <Sidebar />
-        <main className="content2">
+        <main className="w-full h-full">
           <Topbar />
           {props.children}
         </main>
       </div>
-    </Helmet>
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import Loading from "components/shared/Loading/Loading";
 import { numberWithCommans } from "lib/helpers/parser";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useEffect, useMemo, useState } from "react";
-import "./ManagerOrders.scss";
 
 export type TypeRowProduct = {
   _id?: number;

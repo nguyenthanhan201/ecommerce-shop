@@ -1,10 +1,8 @@
+import { category, colors, size } from "@/utils/index";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { createProductAPI, updateProductAPI } from "api/productServices";
-import category from "assets/fake-data/category";
-import colors from "assets/fake-data/product-color";
-import size from "assets/fake-data/product-size";
 import Img from "components/shared/Img/Img";
 import Input from "components/shared/Input/Input";
 import Select from "components/shared/Select/Select";
@@ -15,7 +13,6 @@ import { GET_PRODUCTS } from "lib/redux/types";
 import { registerSchema } from "lib/schema/formSchema";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ReactQuill from "react-quill";
 
 type ModalAddProductProps = {
   product?: Product;
@@ -52,7 +49,7 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
     register("description");
   }, [register]);
 
-  const onEditorStateChange = (editorState: ReactQuill.Value) => {
+  const onEditorStateChange = (editorState: any) => {
     setValue("description", String(editorState));
   };
 

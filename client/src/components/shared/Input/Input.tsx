@@ -1,6 +1,12 @@
 import { FormControl, Select } from "@mui/material";
+import dynamic from "next/dynamic";
 import React from "react";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
+
+const ReactQuill = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+})
 
 interface InputProps extends FormControlProps {
   type: "text" | "password" | "email" | "number" | "tel" | "editor" | "select";

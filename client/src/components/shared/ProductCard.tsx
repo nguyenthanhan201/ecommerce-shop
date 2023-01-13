@@ -1,12 +1,13 @@
 import { updateViewsProductAPI } from "api/productServices";
 import { numberWithCommans } from "lib/helpers/parser";
 import { Product } from "lib/redux/slices/products";
-import { lazy, useState } from "react";
-import { Link } from "react-router-dom";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useState } from "react";
 import Button from "./Button";
 import Img from "./Img/Img";
 
-const ProductViewModel = lazy(() => import("./ProductViewModel"));
+const ProductViewModel = dynamic(() => import("./ProductViewModel"));
 
 type ProductCardProps = {
   product: Product;
@@ -18,9 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const handleIncreaseViewsProduct = () => {
     if (!product._id) return;
-    updateViewsProductAPI(product._id).then((res) => {
-      console.log(res.data);
-    });
+    updateViewsProductAPI(product._id);
   };
 
   return (
@@ -51,22 +50,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="imgBox">
           <h2>{product.title}</h2>
           <Link
-            to={`/catalog/${product.slug}`}
-            state={{
-              _id: product._id,
-              title: product.title,
-              image01: product.image01,
-              image02: product.image02,
-              price: product.price,
-              slug: product.slug,
-              size: product.size,
-              categorySlug: product.categorySlug,
-              colors: product.colors,
-              description: product.description,
+            href={{
+              pathname: `/product-detail/${product.slug}`,
+              query: {
+                _id: product._id,
+                title: product.title,
+                image01: product.image01,
+                image02: product.image02,
+                price: product.price,
+                slug: product.slug,
+                size: product.size,
+                categorySlug: product.categorySlug,
+                colors: product.colors,
+                description: product.description,
+              },
             }}
+            shallow={true}
+            prefetch={false}
             onClick={handleIncreaseViewsProduct}
           >
-            <Img src={sourceURL} alt="imgPreview" className="shoess" />
+            <Img src={sourceURL} alt={product.title} className="shoess" />
           </Link>
           <ul className="size">
             <span>Giá</span>

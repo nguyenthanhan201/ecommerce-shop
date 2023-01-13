@@ -1,5 +1,3 @@
-import banner from "../../assets/images/banner.png";
-
 const SlideBanner = () => {
   return (
     <>
@@ -67,19 +65,19 @@ const SlideBanner = () => {
           <div className="carousel">
             <ul>
               <li>
-                <img src={banner} alt="" />
+                <img src={"/assets/images/banner.png"} alt="" />
               </li>
               <li>
-                <img src={banner} alt="" />
+                <img src={"/assets/images/banner.png"} alt="" />
               </li>
               <li>
-                <img src={banner} alt="" />
+                <img src={"/assets/images/banner.png"} alt="" />
               </li>
               <li>
-                <img src={banner} alt="" />
+                <img src={"/assets/images/banner.png"} alt="" />
               </li>
               <li>
-                <img src={banner} alt="" />
+                <img src={"/assets/images/banner.png"} alt="" />
               </li>
             </ul>
           </div>

@@ -6,10 +6,11 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { logoutAPI } from "api/authServices";
-import { mainNav } from "assets/fake-data/header-navs";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { ColorModeContext } from "lib/theme/theme";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   memo,
   useCallback,
@@ -19,9 +20,8 @@ import {
   useState,
 } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/images/Logo-2.png";
 import { authentication } from "../../config/firebase.config";
+import { mainNav } from "../../utils/fake-data/header-navs";
 import Menu from "./components/Menu";
 
 const Defaultheader = () => {
@@ -29,8 +29,8 @@ const Defaultheader = () => {
   const colorMode = useContext(ColorModeContext);
   const cartItems = useAppSelector((state) => state.cartItems);
   const auth = useSelector((state: any) => state.auth.auth);
-  const { pathname } = useLocation();
-  const activeNav = mainNav.findIndex((e) => e.path === pathname);
+  const router = useRouter();
+  const activeNav = mainNav.findIndex((e) => e.path === router.pathname);
   const menuLeft = useRef<any>(null);
   const [headerShrink, setHeaderShrink] = useState(false);
   const [isShowMenu, setIsShowMenu] = useState(false);
@@ -60,7 +60,6 @@ const Defaultheader = () => {
       "--txt-second-color",
       darkTheme ? "#fff" : "#8d8d8d"
     );
-    localStorage.setItem("dark", darkTheme === true ? "true" : "false");
   }, [theme.palette.mode]);
 
   const menuToggle = useCallback(() => {
@@ -81,8 +80,8 @@ const Defaultheader = () => {
     <div className={`header ${headerShrink && "shrink"}`}>
       <div className="container">
         <div className="header_logo">
-          <Link to="/">
-            <img src={logo} alt="Yolo" />
+          <Link href="/">
+            <img src={"/assets/images/Logo-2.png"} alt="Yolo" />
           </Link>
         </div>
         <div className="header_menu">
@@ -101,7 +100,7 @@ const Defaultheader = () => {
                 }`}
                 onClick={menuToggle}
               >
-                <Link to={item.path}>
+                <Link href={item.path}>
                   <span>{item.display}</span>
                 </Link>
               </div>
@@ -110,7 +109,7 @@ const Defaultheader = () => {
           <div className="header_menu_right">
             <div
               className="header_menu_item header_menu_right_item"
-              onClick={() => colorMode.toggleColorMode()}
+              onClick={colorMode.toggleColorMode}
             >
               {theme.palette.mode === "dark" ? (
                 <DarkModeOutlinedIcon className="dark_toggle" />
@@ -121,7 +120,7 @@ const Defaultheader = () => {
             {auth && (
               <div className="header_menu_item header_menu_right_item">
                 <Tooltip title="Giỏ hàng">
-                  <Link to="/cart">
+                  <Link href="/cart">
                     <Badge
                       badgeContent={
                         cartItems.value
@@ -148,7 +147,7 @@ const Defaultheader = () => {
                 </>
               ) : (
                 <Tooltip title="Đăng nhập">
-                  <Link to="/login">
+                  <Link href="/login">
                     <LoginIcon />
                   </Link>
                 </Tooltip>

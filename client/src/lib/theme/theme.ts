@@ -1,9 +1,9 @@
 import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import { createContext, useMemo, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 
 // color design tokens export
-export const tokens = (mode: PaletteMode | undefined) => ({
+export const tokens = (mode: PaletteMode) => ({
   ...(mode === "dark"
     ? {
       custom: {
@@ -128,7 +128,7 @@ export const tokens = (mode: PaletteMode | undefined) => ({
 });
 
 // mui theme settings
-export const themeSettings = (mode: PaletteMode | undefined) => {
+export const themeSettings = (mode: PaletteMode) => {
   const colors = tokens(mode);
   return {
     palette: {
@@ -206,19 +206,25 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState(localStorage.getItem('theme') || 'dark');
+  const [mode, setMode] = useState<PaletteMode>("dark");
+  // console.log("👌 ~ mode", mode)
+
+  useEffect(() => {
+    setMode(localStorage.getItem("theme") as PaletteMode);
+  }, [])
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prev) => (prev === "light" ? "dark" : "light"))
-        localStorage.setItem('theme', mode === "light" ? "dark" : "light")
+        setMode((prev) => {
+          localStorage.setItem('theme', prev === "light" ? "dark" : "light")
+          return (prev === "light" ? "dark" : "light")
+        });
       }
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  const theme = useMemo(() => createTheme(themeSettings(mode as any)), [mode]);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
 };

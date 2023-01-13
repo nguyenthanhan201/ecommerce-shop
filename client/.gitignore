@@ -43,3 +43,7 @@ yarn-error.log*
 
 # Visual Studio Code
 .vscode/*
+
+# next.js
+/.next
+/out/

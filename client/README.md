@@ -1,4 +1,4 @@
-Based on: https://www.youtube.com/watch?v=fUdrXQ72670&t=175s
+  Based on: https://www.youtube.com/watch?v=fUdrXQ72670&t=175s
 Catalog and Product page: https://www.youtube.com/watch?v=I8GRy7GA3lU&t=181s
 Shopping cart: https://www.youtube.com/watch?v=NVssb8XHsKU&t=142s
 React Toast Notifications Tutorial: https://www.youtube.com/watch?v=k70cqeQGrHQ&t=639s
