@@ -1,12 +1,12 @@
+import Header from "@/components/index/admin/components/Header";
+import StatBox from "@/components/index/admin/components/StatBox";
+import { tokens } from "@/lib/theme/theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import { Box, Button, useTheme } from "@mui/material";
-import Header from "../../../components/index/admin/components/Header";
-import StatBox from "../../../components/index/admin/components/StatBox";
-import { tokens } from "../../../lib/theme/theme";
 
 const AdminPage = () => {
   const theme = useTheme();

@@ -4,9 +4,9 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import { Box, Button, useTheme } from "@mui/material";
-import Header from "../../../components/index/admin/components/Header";
-import StatBox from "../../../components/index/admin/components/StatBox";
-import { tokens } from "../../../lib/theme/theme";
+import Header from "@/components/index/admin/components/Header";
+import StatBox from "@/components/index/admin/components/StatBox";
+import { tokens } from "@/lib/theme/theme";
 
 const Dashboard = () => {
   const theme = useTheme();
