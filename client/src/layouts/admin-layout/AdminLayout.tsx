@@ -8,7 +8,6 @@ const AdminLayout = ({ ...props }: any) => {
   useAuth();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  console.log(colors.grey[500]);
 
   return (
     <>

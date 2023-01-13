@@ -39,8 +39,10 @@ const HomePage = () => {
   //   }
   // }, [getData]);
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_BE);
-    getProductsAPI().then((res) => setProducts(res));
+    getProductsAPI().then((res) => {
+      if (!res) return;
+      setProducts(res);
+    });
   }, []);
 
   return (
