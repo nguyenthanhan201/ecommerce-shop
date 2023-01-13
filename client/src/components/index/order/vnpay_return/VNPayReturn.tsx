@@ -1,6 +1,5 @@
 import { addOrderAPI } from "api/orderServices";
 import Button from "components/shared/Button";
-import Helmet from "components/shared/Helmet";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
@@ -40,18 +39,16 @@ const VNPayReturnPage = () => {
   }, [auth?._id]);
 
   return (
-    <Helmet title="VNPay">
-      <div className="vnpay-return">
-        {responseCode === "00" ? (
-          <p className="vnpay-return__text--success">Thanh toán thành công</p>
-        ) : (
-          <p className="vnpay-return__text--error">Thanh toán thất bại</p>
-        )}
-        <Button>
-          <Link href="/">Quay lại trang chủ</Link>
-        </Button>
-      </div>
-    </Helmet>
+    <div className="vnpay-return">
+      {responseCode === "00" ? (
+        <p className="vnpay-return__text--success">Thanh toán thành công</p>
+      ) : (
+        <p className="vnpay-return__text--error">Thanh toán thất bại</p>
+      )}
+      <Button>
+        <Link href="/">Quay lại trang chủ</Link>
+      </Button>
+    </div>
   );
 };
 

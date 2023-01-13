@@ -1,6 +1,5 @@
 import Button from "@/components/shared/Button";
 import CheckBox from "@/components/shared/CheckBox";
-import Helmet from "@/components/shared/Helmet";
 import { memo, useEffect, useRef, useState } from "react";
 
 import { getProductsAPI } from "@/api/productServices";
@@ -94,8 +93,7 @@ const CatalogPage = () => {
   const showHideFilter = () => filterRef.current.classList.toggle("active");
 
   return (
-    <Helmet title="Sản Phẩm">
-      {/* {console.log(filter)} */}
+    <>
       <div className="catalog">
         <div className="catalog_filter" ref={filterRef}>
           <div
@@ -169,7 +167,7 @@ const CatalogPage = () => {
           <InfinityList data={products as any} />
         </div>
       </div>
-    </Helmet>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import { getOrdersAPI } from "api/orderServices";
-import Helmet from "components/shared/Helmet";
 import Img from "components/shared/Img/Img";
 import Loading from "components/shared/Loading/Loading";
 import { numberWithCommans } from "lib/helpers/parser";
@@ -66,7 +65,7 @@ const ManagerOrders = () => {
   }, [auth?._id]);
 
   return (
-    <Helmet title="Quản lí đơn hàng">
+    <>
       {isLoading ? (
         <Loading />
       ) : (
@@ -104,7 +103,7 @@ const ManagerOrders = () => {
           </tbody>
         </table>
       )}
-    </Helmet>
+    </>
   );
 };
 
