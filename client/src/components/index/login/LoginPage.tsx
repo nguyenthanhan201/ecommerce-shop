@@ -15,7 +15,10 @@ const LoginPage = () => {
             localStorage.setItem("token", res.accessToken);
             router.replace("/");
           })
-          .catch((err) => alert(err));
+          .catch((err) => {
+            console.log(err);
+            alert(err);
+          });
       })
       .catch((err) => {
         alert("Đăng nhập thất bại");
