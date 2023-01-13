@@ -38,8 +38,8 @@ const HomePage = () => {
   //     };
   //   }
   // }, [getData]);
-
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_BE);
     getProductsAPI().then((res) => setProducts(res));
   }, []);
 
