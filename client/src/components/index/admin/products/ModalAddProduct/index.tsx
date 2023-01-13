@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { createProductAPI, updateProductAPI } from "api/productServices";
-import Img from "components/shared/Img/Img";
 import Input from "components/shared/Input/Input";
 import Select from "components/shared/Select/Select";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
@@ -107,7 +106,7 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
               setImg1(e.target.value);
             }}
           />
-          <Img src={img1} alt="image01" />
+          <img src={img1} alt="image01" />
         </div>
         <div style={{ width: "50%" }}>
           <Input
@@ -121,7 +120,7 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
               setImg2(e.target.value);
             }}
           />
-          <Img src={img2} alt="image02" />
+          <img src={img2} alt="image02" />
         </div>
       </div>
       <Input

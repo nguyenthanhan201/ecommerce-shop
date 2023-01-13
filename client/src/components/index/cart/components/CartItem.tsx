@@ -1,3 +1,4 @@
+import Img from "@/components/shared/Img/Img";
 import { createCartItemAPI, deleteCartItemAPI } from "api/cartServices";
 import { numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
@@ -58,7 +59,19 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
   return (
     <div className="cart_item">
       <div className="cart_item_image">
-        <img src={product.image01} alt="" />
+        <Img
+          src={product.image01}
+          alt={product.image01}
+          width={100}
+          height={100}
+          className="rounded-lg"
+        />
+        {/* <Image
+          src={product.image01}
+          alt={product.image01}
+          width={100}
+          height={100}
+        /> */}
       </div>
       <div className="cart_item_info">
         <div className="cart_item_info_name">

@@ -87,8 +87,8 @@
         overflow: hidden;
       }
 
-      &_title > span,
-      &_description > span,
+      &_title>span,
+      &_description>span,
       &_btn button {
         display: block;
         transform: translateY(-100%);
@@ -97,8 +97,9 @@
     }
 
     &.active &_info {
-      &_title > span,
-      &_description > span,
+
+      &_title>span,
+      &_description>span,
       &_btn button {
         transform: translateY(0);
       }
@@ -119,11 +120,11 @@
         z-index: 98;
       }
 
-      img {
-        height: 100vh;
-        position: absolute;
-        bottom: 0;
-        right: 0;
+      span {
+        // height: 100vh;
+        // position: absolute;
+        // bottom: 0;
+        // right: 0;
         transform: scale(0) rotate(65deg);
         transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
@@ -138,10 +139,10 @@
         height: $size;
         width: $size;
         position: absolute;
-        right: 0;
+        left: 50%;
         top: 50%;
         border-radius: 58% 42% 38% 62% / 42% 55% 45% 58%;
-        transform: translate(0, -50%);
+        transform: translate(-50%, -50%);
         transition: border-radius 13s ease;
         animation: border 13s infinite;
 
@@ -150,12 +151,12 @@
           height: $size;
           width: $size;
           right: 50%;
-          transform: translate(50%, -50%);
+          transform: translate(-50%, -50%);
         }
       }
     }
 
-    &.active &_image > img {
+    &.active &_image>span {
       transform: scale(1) rotate(0);
     }
   }
@@ -167,7 +168,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    &_item ~ &_item {
+    &_item~&_item {
       margin-left: 10px;
     }
 
@@ -191,9 +192,11 @@
   0% {
     border-radius: 58% 42% 38% 62% / 42% 55% 45% 58%;
   }
+
   50% {
     border-radius: 31% 69% 59% 41% / 28% 24% 76% 72%;
   }
+
   100% {
     border-radius: 58% 42% 38% 62% / 42% 55% 45% 58%;
   }

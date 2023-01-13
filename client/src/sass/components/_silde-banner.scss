@@ -40,11 +40,12 @@ $nb-slides: 5;
 
   li {
     @extend .line;
+    position: relative;
 
-    img {
-      @extend .line;
-      border-radius: 15px;
-    }
+    // span {
+    //   @extend .line;
+    //   border-radius: 15px;
+    // }
   }
 }
 

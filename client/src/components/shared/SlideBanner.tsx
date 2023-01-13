@@ -64,21 +64,13 @@ const SlideBanner = () => {
 
           <div className="carousel">
             <ul>
-              <li>
-                <img src={"/assets/images/banner.png"} alt="" />
-              </li>
-              <li>
-                <img src={"/assets/images/banner.png"} alt="" />
-              </li>
-              <li>
-                <img src={"/assets/images/banner.png"} alt="" />
-              </li>
-              <li>
-                <img src={"/assets/images/banner.png"} alt="" />
-              </li>
-              <li>
-                <img src={"/assets/images/banner.png"} alt="" />
-              </li>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => (
+                  <li key={index}>
+                    <img src={"/assets/images/banner.png"} alt="" />
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

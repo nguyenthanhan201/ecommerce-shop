@@ -3,7 +3,7 @@ import { numberWithCommans } from "lib/helpers/parser";
 import { Product } from "lib/redux/slices/products";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Button from "./Button";
 import Img from "./Img/Img";
 
@@ -17,6 +17,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [sourceURL, setSourceURL] = useState(product.image01);
   const [open, setOpen] = useState(false);
 
+  const childImg = useMemo(() => {
+    return [product.image01, product.image02];
+  }, [product]);
+
   const handleIncreaseViewsProduct = () => {
     if (!product._id) return;
     updateViewsProductAPI(product._id);
@@ -26,26 +30,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="product-card">
       <div className="container-product-card">
         <ul className="thumb">
-          <li className="child-shoes">
-            <img
-              src={product.image01}
-              alt="img01"
-              onClick={() => setSourceURL(product.image01)}
-              loading="lazy"
-              height="80%"
-              width="80%"
-            />
-          </li>
-          <li className="child-shoes">
-            <img
-              src={product.image02}
-              alt="img02"
-              onClick={() => setSourceURL(product.image02)}
-              loading="lazy"
-              height="80%"
-              width="80%"
-            />
-          </li>
+          {childImg.map((child, index) => (
+            <li className="child-shoes" key={index}>
+              <div className="w-[80%] h-[80%] relative">
+                <Img
+                  src={child}
+                  alt={child}
+                  onClick={() => setSourceURL(child)}
+                  loading="lazy"
+                  layout="fill"
+                />
+              </div>
+            </li>
+          ))}
         </ul>
         <div className="imgBox">
           <h2>{product.title}</h2>
@@ -69,7 +66,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             prefetch={false}
             onClick={handleIncreaseViewsProduct}
           >
-            <Img src={sourceURL} alt={product.title} className="shoess" />
+            <img src={sourceURL} alt={product.title} className="shoess" />
           </Link>
           <ul className="size">
             <span>Giá</span>

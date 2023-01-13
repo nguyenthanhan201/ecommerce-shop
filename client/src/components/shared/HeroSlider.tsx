@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
+import Img from "./Img/Img";
 
 type HeroSliderProps = {
   data: any;
@@ -87,7 +88,7 @@ const HeroSliderItem = (props: any) => (
     </div>
     <div className="hero-slider_item_image">
       <div className={`shape bg-${props.item.color}`}></div>
-      <img src={props.item.img} alt="" />
+      <Img src={props.item.img} alt="oki" layout="fill" loading="lazy" />
     </div>
   </div>
 );
