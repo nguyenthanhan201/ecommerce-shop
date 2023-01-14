@@ -1,6 +1,7 @@
 import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { createContext, useEffect, useMemo, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalstorage";
 
 // color design tokens export
 export const tokens = (mode: PaletteMode) => ({
@@ -207,17 +208,17 @@ export const ColorModeContext = createContext({
 
 export const useMode = () => {
   const [mode, setMode] = useState<PaletteMode>("dark");
-  // console.log("👌 ~ mode", mode)
+  const [themeLocal, setThemeLocal] = useLocalStorage<PaletteMode>('theme', 'dark');
 
   useEffect(() => {
-    setMode(localStorage.getItem("theme") as PaletteMode);
+    setMode(themeLocal);
   }, [])
 
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prev) => {
-          localStorage.setItem('theme', prev === "light" ? "dark" : "light")
+          setThemeLocal(prev === "light" ? "dark" : "light")
           return (prev === "light" ? "dark" : "light")
         });
       }

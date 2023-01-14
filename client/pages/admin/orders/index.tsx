@@ -112,6 +112,7 @@ const Page = () => {
   useEffect(() => {
     getAllOrdersAPI().then((res) => setOrders(res));
   }, []);
+  
   return (
     <Box m="20px">
       {/* HEADER */}

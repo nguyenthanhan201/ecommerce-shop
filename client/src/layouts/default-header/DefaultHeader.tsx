@@ -72,8 +72,13 @@ const Defaultheader = () => {
 
   const handleLogout = () => {
     if (!auth.email) return;
-    signOut(authentication);
-    logoutAPI(auth.email);
+    const promise1 = signOut(authentication);
+    const promise2 = logoutAPI(auth.email);
+    const promise3 = localStorage.setItem("token", "null");
+    Promise.all([promise1, promise2, promise3]).catch((err) => {
+      console.log(err);
+      alert(err);
+    });
   };
 
   return (

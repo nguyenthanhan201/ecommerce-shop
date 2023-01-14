@@ -1,3 +1,4 @@
+import Loading from "@/components/shared/Loading/Loading";
 import {
   Cancel,
   CheckCircle,
@@ -34,7 +35,6 @@ const ToastContext = createContext<{
 
 export function ToastProvider({ children }: any) {
   const theme = useTheme();
-
   const defaultOptions: ToastOptions = {
     autoClose: 1000,
     hideProgressBar: true,
@@ -51,26 +51,19 @@ export function ToastProvider({ children }: any) {
   const icons = {
     info: <Info />,
     success: <CheckCircle sx={{ fontSize: "60px", color: "green" }} />,
-    error: <Cancel style={{ color: "red" }} />,
+    error: <Cancel className="text-red-500" />,
     warn: <WarningOutlined />,
-    loading: <></>,
+    loading: <Loading />,
   };
 
   const createToastContent = (
     type: "info" | "success" | "error" | "warn" | "loading",
     content?: ToastContent
   ) => (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "16px",
-      }}
-    >
+    <div className="flex flex-col items-center p-4">
       <i>{icons[type]}</i>
       {content !== "" ? (
-        <div style={{ marginTop: "20px" }}>{content as ReactNode}</div>
+        <div className="mt-5">{content as ReactNode}</div>
       ) : (
         <></>
       )}
@@ -85,14 +78,12 @@ export function ToastProvider({ children }: any) {
         className: "",
         ...defaultOptions,
         ...options,
-        style: { color: "green" },
       }),
     error: (content: ToastContent, options?: ToastOptions) =>
       toastify.error(createToastContent("error", content), {
-        className: "",
+        className: "text-red-500",
         ...defaultOptions,
         ...options,
-        style: { color: "red" },
       }),
     promise: (
       content: ToastContent,

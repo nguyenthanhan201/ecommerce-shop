@@ -1,6 +1,5 @@
 import Grid from "@/components/shared/Grid";
 import HeroSlider from "@/components/shared/HeroSlider";
-import Loading from "@/components/shared/Loading/Loading";
 import PolicyCard from "@/components/shared/PolicyCard";
 import ProductCard from "@/components/shared/ProductCard";
 import Section, {
@@ -11,11 +10,10 @@ import SlideBanner from "@/components/shared/SlideBanner";
 import { heroSliderData, policy } from "@/utils/index";
 import { getProductsAPI } from "api/productServices";
 import { Product } from "lib/redux/slices/products";
-import { memo, useEffect, useState, useTransition } from "react";
+import { memo, useEffect, useState } from "react";
 import { ScrollContainer } from "react-scroll-motion";
 
 const HomePage = () => {
-  const [isPending, startTransition] = useTransition();
   const [products, setProducts] = useState<Product[]>([]);
   // const getData: Worker = useMemo(
   //   () =>
@@ -76,17 +74,13 @@ const HomePage = () => {
       <Section>
         <SectionTitle>top sản phẩm bản chạy trong tuần</SectionTitle>
         <SectionBody>
-          {isPending ? (
-            <Loading />
-          ) : (
-            <Grid col={4} mdCol={2} smCol={1} gap={20}>
-              {products.map((item: Product) => {
-                // console.log("👌 ~ products", products);
-                if (!item.image01) return null;
-                return <ProductCard key={item.title} product={item} />;
-              })}
-            </Grid>
-          )}
+          <Grid col={4} mdCol={2} smCol={1} gap={20}>
+            {products.map((item: Product) => {
+              // console.log("👌 ~ products", products);
+              if (!item.image01) return null;
+              return <ProductCard key={item.title} product={item} />;
+            })}
+          </Grid>
         </SectionBody>
       </Section>
       {/* end best selling section */}
