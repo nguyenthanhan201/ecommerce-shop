@@ -1,3 +1,4 @@
+import Img from "@/components/shared/Img/Img";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -17,24 +18,13 @@ const columns: any = [
     renderCell: (row: any) => {
       const { title, image01, size, color } = row.row;
       return (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
+        <div className="flex items-center gap-2">
+          <Img
             src={image01}
-            alt=""
-            style={{
-              borderRadius: "50%",
-              border: `2px solid ${color}`,
-              borderColor: `${color}`,
-              backgroundColor: `${color}`,
-              boxShadow: "none",
-              cursor: "pointer",
-              height: "50px",
-              width: "50px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: `${color}`,
-            }}
+            alt={image01}
+            width={30}
+            height={30}
+            className="rounded-full"
           />
           <p
             style={{ whiteSpace: "break-spaces" }}
@@ -112,7 +102,7 @@ const Page = () => {
   useEffect(() => {
     getAllOrdersAPI().then((res) => setOrders(res));
   }, []);
-  
+
   return (
     <Box m="20px">
       {/* HEADER */}

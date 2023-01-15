@@ -1,3 +1,4 @@
+import Img from "@/components/shared/Img/Img";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
@@ -84,11 +85,6 @@ const Defaultheader = () => {
   return (
     <div className={`header ${headerShrink && "shrink"}`}>
       <div className="container">
-        <div className="header_logo">
-          <Link href="/">
-            <img src={"/assets/images/Logo-2.png"} alt="Yolo" />
-          </Link>
-        </div>
         <div className="header_menu">
           <div className="header_menu_mobile-toggle" onClick={menuToggle}>
             <i className="bx bx-menu-alt-left"></i>
@@ -111,6 +107,9 @@ const Defaultheader = () => {
               </div>
             ))}
           </div>
+            <Link href="/" className="header_logo">
+              <Img src="/assets/images/Logo-2.png" alt="Yolo" layout="fill" />
+            </Link>
           <div className="header_menu_right">
             <div
               className="header_menu_item header_menu_right_item"
@@ -148,7 +147,8 @@ const Defaultheader = () => {
               {auth ? (
                 <>
                   <AccountCircleOutlinedIcon />
-                  {isShowMenu && <Menu handleLogout={handleLogout} />}
+                  {/* {isShowMenu && <Menu handleLogout={handleLogout} />} */}
+                  <Menu handleLogout={handleLogout} />
                 </>
               ) : (
                 <Tooltip title="Đăng nhập">

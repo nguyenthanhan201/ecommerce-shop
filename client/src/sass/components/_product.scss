@@ -7,7 +7,8 @@
 
   &_image {
     @include flex(flex-start, flex-start);
-    width: 50%;
+    // width: 50%;
+    width: 40%;
     flex-wrap: wrap;
 
     @include table {
@@ -19,10 +20,16 @@
     }
 
     &_list {
-      width: 20%;
+      width: 82px;
 
       &_item {
+        position: relative;
         cursor: pointer;
+        height: 82px;
+
+        &:first-child {
+          margin-bottom: 8px;
+        }
       }
 
       &_main {
@@ -163,7 +170,8 @@
 .product-description {
   width: 100%;
   padding: 2rem 2rem 4rem;
-  height: 400px;
+  // height: fit-content;
+  height: 200px;
   overflow: hidden;
   position: relative;
 
@@ -211,8 +219,10 @@
   position: relative;
 
   #myimage {
-    max-height: 564px;
-    height: 600px;
+    // max-height: 564px;
+    // height: 600px;
+    max-height: 432px;
+    height: 100%;
   }
 
   .img-zoom-lens {
@@ -222,7 +232,7 @@
     height: 40px;
   }
 
-  .img-zoom-lens:hover ~ #myresult {
+  .img-zoom-lens:hover~#myresult {
     transform: scale(1);
   }
 
@@ -234,8 +244,9 @@
     border: 1px solid black;
     /*set the size of the result div:*/
     // width: 350px;
-    right: 10px;
-    width: 51%;
+    // right: 10px;
+    left: 40%;
+    width: 54%;
     // height: 400px;
     height: 60%;
     position: fixed;

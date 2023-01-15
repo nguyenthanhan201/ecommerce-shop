@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Product } from "@/lib/redux/slices/products";
 import { createCartItemAPI } from "api/cartServices";
 import { numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
@@ -6,31 +7,33 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import { useRouter } from "next/router";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Button from "../Button";
+import Img from "../Img/Img";
 import Loading from "../Loading/Loading";
 import ImagePreview from "./components/ImagePreview";
 
 type ProductViewProps = {
-  product?: any;
+  product: Product;
 };
 
 const ProductView = ({ product }: ProductViewProps) => {
+  // console.log("👌 ~ product", product);
   const toast = useToast();
   const auth = useAppSelector((state) => state.auth.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
   const [previewImg, setReviewImg] = useState(product.image01);
   const [descriptionExpand, setDescriptionExpand] = useState(false);
-
   const [choosenItems, setChoosenItems] = useState({
     color: undefined,
     size: undefined,
     quantity: 1,
   });
   const { color, size, quantity } = choosenItems;
-  // console.log("👌 ~ color", color);
+  const childrenImg = useMemo(() => {
+    return [product.image01, product.image02];
+  }, [product.image01]);
 
   const updateQuantity = (types: any) => {
     if (types === "plus") {
@@ -86,7 +89,7 @@ const ProductView = ({ product }: ProductViewProps) => {
   };
 
   const handleExpand = useCallback(() => {
-    setDescriptionExpand(!descriptionExpand);
+    setDescriptionExpand((prev) => !prev);
   }, []);
 
   if (product === undefined) return <Loading />;
@@ -95,22 +98,17 @@ const ProductView = ({ product }: ProductViewProps) => {
       <div className="product">
         <div className="product_image">
           <div className="product_image_list">
-            <div
-              className="product_image_list_item"
-              onClick={() => {
-                setReviewImg(product.image01);
-              }}
-            >
-              <img src={product.image01} alt="" />
-            </div>
-            <div
-              className="product_image_list_item"
-              onClick={() => {
-                setReviewImg(product.image02);
-              }}
-            >
-              <img src={product.image02} alt="" />
-            </div>
+            {childrenImg.map((child, index) => (
+              <div
+                key={index}
+                className="product_image_list_item"
+                onClick={() => {
+                  setReviewImg(child);
+                }}
+              >
+                <Img src={child} alt={child} layout="fill" />
+              </div>
+            ))}
           </div>
           <ImagePreview previewImg={previewImg} />
           <div
@@ -119,10 +117,9 @@ const ProductView = ({ product }: ProductViewProps) => {
             }`}
           >
             <div className="product-description_title">Chi tiết sản phẩm</div>
-            <div
-              className="product-description_content"
-              dangerouslySetInnerHTML={{ __html: product.description }}
-            ></div>
+            <div className="product-description_content">
+              <p dangerouslySetInnerHTML={{ __html: product.description }}></p>
+            </div>
             <div className="product-description_toggle">
               <Button
                 size="sm"
@@ -139,7 +136,7 @@ const ProductView = ({ product }: ProductViewProps) => {
           <h1 className="product_info_title">{product.title}</h1>
           <div className="product_info_item">
             <span className="product_info_item_price">
-              {numberWithCommans(product.price)}đ
+              {numberWithCommans(Number(product.price))}đ
             </span>
           </div>
           <div className="product_info_item">

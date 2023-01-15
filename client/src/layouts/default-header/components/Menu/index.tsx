@@ -82,60 +82,64 @@ const Menu = ({ handleLogout }: MenuProps) => {
       className={`dropdown ${isChangedDropdown && "expand"}`}
       onMouseLeave={() => setIsChangedDropdown(false)}
     >
-      <div className="dropdown-enter">
-        {MENU_ITEMS.map((menu, index) => {
-          return (
-            <div
-              key={index}
-              onClick={() => setSelectedTypeChild(menu.children?.type || null)}
-            >
-              {menu.to ? (
-                <Link href={menu.to} className="dropdown_item">
-                  {menu.icon}
-                  <span>{menu.title}</span>
-                </Link>
-              ) : (
-                <p className="dropdown_item" onClick={menu.func}>
-                  {menu.icon}
-                  <span>{menu.title}</span>
-                  {menu.children && (
-                    <ArrowBackIosNewOutlinedIcon
-                      sx={{
-                        fontSize: "80% !important",
-                        transform: "rotate(180deg)",
-                      }}
-                    />
-                  )}
-                </p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <div className="dropdown-expand">
-        {childrenItems.length !== 0 && (
-          <>
-            <p
-              className="dropdown_item"
-              onClick={() => setIsChangedDropdown(false)}
-            >
-              <ArrowBackIosNewOutlinedIcon
-                sx={{ fontSize: "80% !important" }}
-              />
-              <span>
-                Quay lai
-                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-              </span>
-            </p>
-            {childrenItems[0].map((item: any, index: number) => {
-              return (
-                <p className="dropdown_item" key={index}>
-                  <span>{item.title}</span>
-                </p>
-              );
-            })}
-          </>
-        )}
+      <div className="dropdown-content">
+        <div className="dropdown-enter">
+          {MENU_ITEMS.map((menu, index) => {
+            return (
+              <div
+                key={index}
+                onClick={() =>
+                  setSelectedTypeChild(menu.children?.type || null)
+                }
+              >
+                {menu.to ? (
+                  <Link href={menu.to} className="dropdown_item">
+                    {menu.icon}
+                    <span>{menu.title}</span>
+                  </Link>
+                ) : (
+                  <p className="dropdown_item" onClick={menu.func}>
+                    {menu.icon}
+                    <span>{menu.title}</span>
+                    {menu.children && (
+                      <ArrowBackIosNewOutlinedIcon
+                        sx={{
+                          fontSize: "80% !important",
+                          transform: "rotate(180deg)",
+                        }}
+                      />
+                    )}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div className="dropdown-expand">
+          {childrenItems.length !== 0 && (
+            <>
+              <p
+                className="dropdown_item"
+                onClick={() => setIsChangedDropdown(false)}
+              >
+                <ArrowBackIosNewOutlinedIcon
+                  sx={{ fontSize: "80% !important" }}
+                />
+                <span>
+                  Quay lai
+                  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                </span>
+              </p>
+              {childrenItems[0].map((item: any, index: number) => {
+                return (
+                  <p className="dropdown_item" key={index}>
+                    <span>{item.title}</span>
+                  </p>
+                );
+              })}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -144,11 +144,9 @@ const DefaultFooter = () => {
                 <h3 className="f-title f_600 t_color f_size_18">Về Yolo</h3>
                 <ul className="list-unstyled f_list">
                   {footerAboutLinks.map((item, index) => (
-                    <div key={index}>
-                      <li>
-                        <a href="/#">{item.display}</a>
-                      </li>
-                    </div>
+                    <li key={index}>
+                      <a href="/#">{item.display}</a>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -160,11 +158,9 @@ const DefaultFooter = () => {
                 </h3>
                 <ul className="list-unstyled f_list">
                   {footerCustomerLinks.map((item, index) => (
-                    <div key={index}>
-                      <li>
-                        <a href="/#">{item.display}</a>
-                      </li>
-                    </div>
+                    <li key={index}>
+                      <a href="/#">{item.display}</a>
+                    </li>
                   ))}
                 </ul>
               </div>

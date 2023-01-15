@@ -76,37 +76,39 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
-}
 
-.container-product-card .thumb li {
-  list-style: none;
-  width: 100px;
-  height: 100px;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(0px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  // ------------------
-}
+  li {
+    list-style: none;
+    width: 100px;
+    height: 100px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(0px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
 
-.container-product-card .thumb li img {
-  width: 80%;
-  height: 80%;
-  object-fit: fill;
-  transition: 0.5s;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-}
+  .child-shoes {
+    div {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      border-radius: 10px;
+      overflow: hidden;
 
-.container-product-card .thumb li:hover img {
-  transform: scale(1.2);
+      &:hover img {
+        transform: scale(1.2);
+      }
+
+      img {
+        transition: 0.5s;
+      }
+    }
+  }
 }
 
 .container-product-card .imgBox {
@@ -124,9 +126,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
 
-.container-product-card .imgBox {
   & h2 {
     color: $txt-main-color;
     letter-spacing: 1;
@@ -137,69 +137,76 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-}
 
-.container-product-card .imgBox img {
-  width: 75%;
-  transition: 0.25s;
-  padding: 10px;
-  border-radius: 20px;
-}
+  .size {
+    @include flex(center, center);
+    // margin-top: 10px;
 
-.container-product-card .imgBox img:hover {
-  transform: scale(1.1);
-}
+    @include mobile {
+      margin-top: 5px;
+    }
 
-.container-product-card .imgBox .size {
-  @include flex(center, center);
-  // margin-top: 10px;
+    span {
+      color: $txt-main-color;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-right: 5px;
+    }
 
-  @include mobile {
-    margin-top: 5px;
+    p {
+      @include flex(center, center);
+      list-style: none;
+      color: $main-color;
+      letter-spacing: 0.2px;
+      font-weight: 500;
+      margin-right: 5px;
+      font-size: 16px;
+    }
+
+    del {
+      font-size: 10px;
+      color: $txt-second-color;
+    }
+  }
+
+  button {
+    position: absolute;
+    bottom: -7%;
+  }
+
+  .shoess {
+    position: relative;
+    width: 80%;
+    height: 60%;
+    border-radius: 20px;
+    overflow: hidden;
+
+    img {
+      width: 75%;
+      transition: 0.25s;
+      padding: 10px;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 }
 
-.container-product-card .imgBox .size span {
-  color: $txt-main-color;
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-right: 5px;
-}
+// .lazy-load-image-background.blur.lazy-load-image-loaded>img {
+//   opacity: 1;
+//   transition: all 0.3s;
+//   width: 100% !important;
+//   height: 100% !important;
+// }
 
-.container-product-card .imgBox .size li {
-  @include flex(center, center);
-  list-style: none;
-  color: $main-color;
-  letter-spacing: 0.2px;
-  font-weight: 500;
-  margin-right: 5px;
-  font-size: 16px;
-}
+// .lazy-load-image-background.blur.lazy-load-image-loaded>.shoess {
+//   width: 80% !important;
+//   height: 80% !important;
+//   max-width: 235px;
 
-.container-product-card .imgBox .size li del {
-  font-size: 10px;
-  color: $txt-second-color;
-}
-
-.container-product-card .imgBox button {
-  position: absolute;
-  bottom: -7%;
-}
-
-.lazy-load-image-background.blur.lazy-load-image-loaded>img {
-  opacity: 1;
-  transition: all 0.3s;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.lazy-load-image-background.blur.lazy-load-image-loaded>.shoess {
-  width: 80% !important;
-  height: 80% !important;
-  max-width: 235px;
-
-  @include mobile {
-    width: 75% !important;
-  }
-}
+//   @include mobile {
+//     width: 75% !important;
+//   }
+// }

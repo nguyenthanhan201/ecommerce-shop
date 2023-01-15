@@ -1,3 +1,4 @@
+import Img from "@/components/shared/Img/Img";
 import { tokens } from "@/lib/theme/theme";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -31,24 +32,13 @@ const columns: any = [
           {Object.values(row.row.order).map((item: any) => {
             const { size, color, product } = item[0];
             return (
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <img
+              <div className="flex items-center gap-2">
+                <Img
                   src={product.image01}
                   alt={product.image01}
-                  style={{
-                    borderRadius: "50%",
-                    border: `2px solid ${color}`,
-                    borderColor: `${color}`,
-                    backgroundColor: `${color}`,
-                    boxShadow: "none",
-                    cursor: "pointer",
-                    height: "30px",
-                    width: "30px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: `${color}`,
-                  }}
+                  width={30}
+                  height={30}
+                  className="rounded-full"
                 />
                 <p
                   style={{ whiteSpace: "break-spaces" }}

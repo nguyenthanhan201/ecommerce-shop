@@ -1,3 +1,4 @@
+import { useNetWork } from "@/lib/hooks/useNetwork";
 import { ToastProvider } from "@/lib/providers/toast-provider";
 import store from "@/lib/redux/store";
 import { ColorModeContext, useMode } from "@/lib/theme/theme";
@@ -6,6 +7,7 @@ import { DefaultSeo, NextSeo } from "next-seo";
 import { Fragment } from "react";
 import { Provider } from "react-redux";
 import "../src/sass/index.scss";
+import Page404 from "./404";
 
 type Props = {
   Component: any;
@@ -16,7 +18,9 @@ function MyApp({ Component, pageProps }: Props) {
   const Layout = Component.Layout ? Component.Layout : Fragment;
   const layoutProps = Component.LayoutProps ? Component.LayoutProps : {};
   const [theme, colorMode] = useMode();
+  const statusNetWork = useNetWork();
 
+  if (!statusNetWork) return <Page404 />;
   return (
     <>
       <DefaultSeo

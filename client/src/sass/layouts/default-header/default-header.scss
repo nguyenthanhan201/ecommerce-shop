@@ -35,11 +35,20 @@
   &_logo {
     @include flex(center, center);
     position: absolute;
-    inset: 0;
-    // pointer-events: none;
+    top: 50%;
+    left: 50%;
+    
+    width: 7%;
+    height: 28px;
+    transform: translate(-50%, -50%);
 
-    img {
-      height: 28px;
+    @include table {
+      width: 15%;
+      height: 35px;
+    }
+
+    @include mobile {
+      height: 21px;
     }
   }
 
@@ -90,7 +99,7 @@
         }
 
         &:hover .dropdown {
-          display: flex;
+          display: block;
         }
 
         & .dropdown {
@@ -108,37 +117,29 @@
           border-radius: 5px;
           box-shadow: 0 0 3px rgb(0 0 0 / 25%);
           overflow: hidden;
-          // transition: all 0.3s ease-in-out;
-
-          &-enter,
-          &-expand {
-            transition: all 0.3s ease-in-out;
-            width: 150px;
-          }
 
           &.expand {
-            .dropdown-enter {
-              // transition: all 0.3s ease-in-out;
-              transform: translateX(-150px)
-            }
-
-            .dropdown-expand {
-              // transition: all 0.3s ease-in-out;
-              transform: translateX(-150px)
+            .dropdown-content {
+              transform: translateX(-50%)
             }
           }
 
+          .dropdown-content {
+            width: 200%;
+            display: flex;
+            transition: all 0.3s ease-in-out;
+          }
 
           &_item {
             @include flex(center, flex-start);
             gap: 4px;
             padding: 12px;
             cursor: pointer;
-          }
 
-          &_item:hover {
-            background: #f5f5f5;
-            color: $main-color;
+            &:hover {
+              background: #f5f5f5;
+              color: $main-color;
+            }
           }
 
           @include table {

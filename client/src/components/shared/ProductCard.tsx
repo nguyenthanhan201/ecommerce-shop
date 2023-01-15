@@ -32,7 +32,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <ul className="thumb">
           {childImg.map((child, index) => (
             <li className="child-shoes" key={index}>
-              <div className="w-[80%] h-[80%] relative">
+              <div>
                 <Img
                   src={child}
                   alt={child}
@@ -65,16 +65,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
             shallow={true}
             prefetch={false}
             onClick={handleIncreaseViewsProduct}
+            className="shoess"
           >
-            <img src={sourceURL} alt={product.title} className="shoess" />
+            <Img src={sourceURL} alt={product.title} layout="fill" />
           </Link>
-          <ul className="size">
+          <div className="size">
             <span>Giá</span>
-            <li>{numberWithCommans(Number(product.price))}&#x00111;</li>
-            {/* <li>
-              <del>{numberWithCommans(399000)} &#x00111;</del>
-            </li> */}
-          </ul>
+            <p>{numberWithCommans(Number(product.price))}&#x00111;</p>
+            <del>{numberWithCommans(399000)} &#x00111;</del>
+          </div>
           <Button
             size="sm"
             icon="bx bx-cart"
