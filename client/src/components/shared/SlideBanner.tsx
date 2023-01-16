@@ -68,7 +68,7 @@ const SlideBanner = () => {
                 .fill(0)
                 .map((_, index) => (
                   <li key={index}>
-                    <img src={"/assets/images/banner.png"} alt="" />
+                    <img src={"/images/banner.png"} alt="" />
                   </li>
                 ))}
             </ul>

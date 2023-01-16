@@ -1,28 +1,24 @@
 import Grid from "@/components/shared/Grid";
 import HeroSlider from "@/components/shared/HeroSlider";
 import PolicyCard from "@/components/shared/PolicyCard";
-import ProductCard from "@/components/shared/ProductCard";
+// import ProductCard from "@/components/shared/ProductCard";
 import Section, {
   SectionBody,
   SectionTitle,
 } from "@/components/shared/Section";
 import SlideBanner from "@/components/shared/SlideBanner";
 import { heroSliderData, policy } from "@/utils/index";
-import { getProductsAPI } from "api/productServices";
 import { Product } from "lib/redux/slices/products";
-import { memo, useEffect, useState } from "react";
-import { ScrollContainer } from "react-scroll-motion";
+import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
+import { memo } from "react";
+// import { ScrollContainer } from "react-scroll-motion";
 
-const HomePage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  // const getData: Worker = useMemo(
-  //   () =>
-  //     new Worker(
-  //       new URL("../../../../worker.ts", import.meta.url)
-  //     ),
-  //   []
-  // );
+const ProductCard = dynamic(import("@/components/shared/ProductCard"), {
+  ssr: false,
+});
 
+const HomePage = ({ products }: any) => {
   // useEffect(() => {
   //   if (window.Worker) {
   //     getData.postMessage(processList.getData);
@@ -36,15 +32,8 @@ const HomePage = () => {
   //     };
   //   }
   // }, [getData]);
-  useEffect(() => {
-    getProductsAPI().then((res) => {
-      if (!res) return;
-      setProducts(res);
-    });
-  }, []);
-
   return (
-    <ScrollContainer>
+    <>
       {/* {hero slider} */}
       <HeroSlider
         data={heroSliderData}
@@ -134,8 +123,15 @@ const HomePage = () => {
             </SectionBody>
           </Section> */}
       {/* end popular product */}
-    </ScrollContainer>
+    </>
   );
 };
-
 export default memo(HomePage);
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      title: "Trang chủ",
+    },
+  };
+};

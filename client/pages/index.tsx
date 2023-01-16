@@ -1,13 +1,17 @@
+import { getProductsAPI } from "@/api/productServices";
 import HomePage from "@/components/index/home/HomePage";
 import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 
-export default function Page() {
-  return <HomePage />;
+export default function Page({ products }: any) {
+  return <HomePage products={products} />;
 }
 Page.Layout = DefaultLayout;
 
 export async function getServerSideProps() {
+  const products = await getProductsAPI()
+    .then((res) => res)
+    .catch((err) => err);
   const seo = useSEO("Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi", {
     description: "Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi",
     image: "/images/Logo-2.png",
@@ -18,6 +22,7 @@ export async function getServerSideProps() {
     props: JSON.parse(
       JSON.stringify({
         seo,
+        products,
       })
     ),
   };

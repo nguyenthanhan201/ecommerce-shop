@@ -1,6 +1,6 @@
-const img1 = "/images/slider/slide_1.png";
-const img2 = "/images/slider/slide_2.png";
-const img3 = "/images/slider/slide_3.png";
+const img1 = "/images/slider/slide-1.webp";
+const img2 = "/images/slider/slide-2.webp";
+const img3 = "/images/slider/slide-3.webp";
 
 const heroSliderData = [
   {

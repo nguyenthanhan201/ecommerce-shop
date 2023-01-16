@@ -108,7 +108,7 @@ const Defaultheader = () => {
             ))}
           </div>
             <Link href="/" className="header_logo">
-              <Img src="/assets/images/Logo-2.png" alt="Yolo" layout="fill" />
+              <Img src="/images/Logo-2.png" alt="Yolo" layout="fill" />
             </Link>
           <div className="header_menu_right">
             <div
