@@ -2,7 +2,15 @@ const img1 = "/images/slider/slide-1.webp";
 const img2 = "/images/slider/slide-2.webp";
 const img3 = "/images/slider/slide-3.webp";
 
-const heroSliderData = [
+type HeroSliderData = {
+  title: string;
+  description: string;
+  img: string;
+  color: string;
+  path: string;
+};
+
+const heroSliderData: HeroSliderData[] = [
   {
     title: "Polo nữ Pima cao cấp",
     description:

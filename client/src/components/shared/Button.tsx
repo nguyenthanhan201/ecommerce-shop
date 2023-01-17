@@ -4,8 +4,8 @@ type ButtonProps = {
   children: ReactNode;
   backgroundColor?: string;
   size?: string;
-  icon?: string;
-  animate?: boolean;
+  icon?: ReactNode;
+animate?: boolean;
   onClick?: () => void;
 };
 
@@ -25,7 +25,8 @@ const Button = (props: ButtonProps) => {
       <span className="btn_txt">{props.children}</span>
       {props.icon ? (
         <span className="btn_icon">
-          <i className={`${props.icon} bx-tada`}></i>
+          {/* <i className={`${props.icon} bx-tada`}></i> */}
+          {props.icon}
         </span>
       ) : null}
     </button>

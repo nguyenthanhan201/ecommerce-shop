@@ -1,3 +1,4 @@
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { updateViewsProductAPI } from "api/productServices";
 import { numberWithCommans } from "lib/helpers/parser";
 import { Product } from "lib/redux/slices/products";
@@ -76,7 +77,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </div>
           <Button
             size="sm"
-            icon="bx bx-cart"
+            icon={<ShoppingCartOutlinedIcon fontSize="inherit" />}
             animate={true}
             onClick={() => setOpen(true)}
           >

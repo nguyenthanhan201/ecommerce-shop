@@ -2,6 +2,7 @@ import Button from "../../components/shared/Button";
 
 import Grid from "../../components/shared/Grid";
 
+import Img from "@/components/shared/Img/Img";
 import Link from "next/link";
 import { memo } from "react";
 
@@ -48,11 +49,12 @@ const DefaultFooter = () => {
     <footer className="footer">
       <div className="container">
         <div className="new_footer_logo">
-          <Link href="/">
-            <img
+          <Link href="/" className="relative w-[10%] h-10 block">
+            <Img
               src={"/images/Logo-2.png"}
               className="footer_logo"
-              alt="logo"
+              alt="yolo-logo"
+              layout="fill"
             />
           </Link>
         </div>

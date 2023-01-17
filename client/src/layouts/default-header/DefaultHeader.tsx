@@ -107,9 +107,14 @@ const Defaultheader = () => {
               </div>
             ))}
           </div>
-            <Link href="/" className="header_logo">
-              <Img src="/images/Logo-2.png" alt="Yolo" layout="fill" />
-            </Link>
+          <Link href="/" className="header_logo">
+            <Img
+              src="/images/Logo-2.png"
+              alt="Yolo"
+              layout="fill"
+              loading="eager"
+            />
+          </Link>
           <div className="header_menu_right">
             <div
               className="header_menu_item header_menu_right_item"
@@ -147,8 +152,7 @@ const Defaultheader = () => {
               {auth ? (
                 <>
                   <AccountCircleOutlinedIcon />
-                  {/* {isShowMenu && <Menu handleLogout={handleLogout} />} */}
-                  <Menu handleLogout={handleLogout} />
+                  {isShowMenu && <Menu handleLogout={handleLogout} />}
                 </>
               ) : (
                 <Tooltip title="Đăng nhập">

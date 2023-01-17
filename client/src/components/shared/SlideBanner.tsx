@@ -1,3 +1,7 @@
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import Img from "./Img/Img";
+
 const SlideBanner = () => {
   return (
     <>
@@ -20,47 +24,28 @@ const SlideBanner = () => {
           <label htmlFor="slide4" className="nav-dot"></label>
           <label htmlFor="slide5" className="nav-dot"></label>
 
-          <label htmlFor="slide1" className="left-arrow">
-            {" "}
-            <i className="bx bx-left-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide2" className="left-arrow">
-            {" "}
-            <i className="bx bx-left-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide3" className="left-arrow">
-            {" "}
-            <i className="bx bx-left-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide4" className="left-arrow">
-            {" "}
-            <i className="bx bx-left-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide5" className="left-arrow">
-            {" "}
-            <i className="bx bx-left-arrow-alt"></i>{" "}
-          </label>
-
-          <label htmlFor="slide1" className="right-arrow">
-            {" "}
-            <i className="bx bx-right-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide2" className="right-arrow">
-            {" "}
-            <i className="bx bx-right-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide3" className="right-arrow">
-            {" "}
-            <i className="bx bx-right-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide4" className="right-arrow">
-            {" "}
-            <i className="bx bx-right-arrow-alt"></i>{" "}
-          </label>
-          <label htmlFor="slide5" className="right-arrow">
-            {" "}
-            <i className="bx bx-right-arrow-alt"></i>{" "}
-          </label>
+          {Array(5)
+            .fill(0)
+            .map((_, index) => (
+              <label
+                key={index}
+                htmlFor={`slide${index + 1}`}
+                className="left-arrow"
+              >
+                <ArrowBackOutlinedIcon fontSize="inherit" />
+              </label>
+            ))}
+          {Array(5)
+            .fill(0)
+            .map((_, index) => (
+              <label
+                key={index}
+                htmlFor={`slide${index + 1}`}
+                className="right-arrow"
+              >
+                <ArrowForwardOutlinedIcon fontSize="inherit" />
+              </label>
+            ))}
 
           <div className="carousel">
             <ul>
@@ -68,7 +53,11 @@ const SlideBanner = () => {
                 .fill(0)
                 .map((_, index) => (
                   <li key={index}>
-                    <img src={"/images/banner.png"} alt="" />
+                    <Img
+                      src="/images/banner.png"
+                      alt="yolo-banner"
+                      layout="fill"
+                    />
                   </li>
                 ))}
             </ul>

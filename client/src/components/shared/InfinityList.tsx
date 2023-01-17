@@ -35,6 +35,7 @@ const InfinityList = (props: InfinityListProps) => {
         }
       }
     });
+    return () => window.removeEventListener("scroll", () => {});
   }, [listRef]);
 
   useEffect(() => {
@@ -58,10 +59,7 @@ const InfinityList = (props: InfinityListProps) => {
     <div ref={listRef}>
       <Grid col={3} mdCol={2} smCol={1} gap={20}>
         {data.map((item: any) => (
-          <ProductCard
-            key={Math.random()}
-            product={item}
-          />
+          <ProductCard key={Math.random()} product={item} />
         ))}
       </Grid>
     </div>

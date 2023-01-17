@@ -1,20 +1,20 @@
 import Grid from "@/components/shared/Grid";
 import HeroSlider from "@/components/shared/HeroSlider";
 import PolicyCard from "@/components/shared/PolicyCard";
-// import ProductCard from "@/components/shared/ProductCard";
 import Section, {
   SectionBody,
   SectionTitle,
 } from "@/components/shared/Section";
-import SlideBanner from "@/components/shared/SlideBanner";
 import { heroSliderData, policy } from "@/utils/index";
 import { Product } from "lib/redux/slices/products";
-import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 // import { ScrollContainer } from "react-scroll-motion";
 
 const ProductCard = dynamic(import("@/components/shared/ProductCard"), {
+  ssr: false,
+});
+const SlideBanner = dynamic(import("@/components/shared/SlideBanner"), {
   ssr: false,
 });
 
@@ -64,11 +64,12 @@ const HomePage = ({ products }: any) => {
         <SectionTitle>top sản phẩm bản chạy trong tuần</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {products.map((item: Product) => {
-              // console.log("👌 ~ products", products);
-              if (!item.image01) return null;
-              return <ProductCard key={item.title} product={item} />;
-            })}
+            {products &&
+              products.map((item: Product) => {
+                // console.log("👌 ~ products", products);
+                if (!item.image01) return null;
+                return <ProductCard key={item.title} product={item} />;
+              })}
           </Grid>
         </SectionBody>
       </Section>
@@ -127,11 +128,3 @@ const HomePage = ({ products }: any) => {
   );
 };
 export default memo(HomePage);
-
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      title: "Trang chủ",
-    },
-  };
-};

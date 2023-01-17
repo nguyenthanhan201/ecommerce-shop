@@ -1,3 +1,4 @@
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
@@ -78,7 +79,7 @@ const HeroSliderItem = (props: any) => (
         <Link href={props.item.path as any}>
           <Button
             backgroundColor={props.item.color}
-            icon="bx bx-cart"
+            icon={<ShoppingCartOutlinedIcon fontSize="inherit" />}
             animate={true}
           >
             xem chi tiết
@@ -88,7 +89,7 @@ const HeroSliderItem = (props: any) => (
     </div>
     <div className="hero-slider_item_image">
       <div className={`shape bg-${props.item.color}`}></div>
-      <Img src={props.item.img} alt="oki" layout="fill" loading="lazy" />
+      <Img src={props.item.img} alt="oki" layout="fill" loading="eager" />
     </div>
   </div>
 );

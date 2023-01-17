@@ -13,10 +13,11 @@
     @include flex(center, center);
     width: 40%;
     color: $main-color;
+    font-size: 3rem;
 
-    i {
-      font-size: 3rem;
-    }
+    // i {
+    //   font-size: 3rem;
+    // }
   }
 
   &_info {
