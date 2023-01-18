@@ -5,14 +5,17 @@ const Order = require("../models/Order");
 
 class OrderController {
   getAllOrders(req, res) {
-    Order.find().then((orders) => res.json(orders));
+    Order.find()
+      .sort({ createdAt: -1 })
+      .then((orders) => res.json(orders));
   }
 
   show(req, res, next) {
     const id = req.params.id;
 
-    // get orders have idAuth = id
+    // get orders have idAuth = id and sort by date
     Order.find({ idAuth: id })
+      .sort({ createdAt: -1 })
       .then((orders) => {
         res.json(orders);
       })
@@ -150,6 +153,7 @@ class OrderController {
           cartItems.forEach(function (a) {
             const itemOrder = new ItemOrder({
               product: a.idProduct,
+              price: a.idProduct.price,
               quantity: a.quantity,
               size: a.size,
               color: a.color,
@@ -169,7 +173,7 @@ class OrderController {
           //lưu order
           order
             .save()
-            .then((order) => {
+            .then(() => {
               // res.status(200).json({ order });
               // lưu order thành công thì xóa cartItem
               CartItem.deleteMany({

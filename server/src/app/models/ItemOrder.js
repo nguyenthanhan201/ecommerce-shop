@@ -21,6 +21,7 @@ const ItemProduct = new Schema({
 const ItemOrder = new Schema({
   idAuth: { type: mongoose.Schema.Types.ObjectId, ref: "Auth" },
   product: { type: ItemProduct, require: true },
+  price: { type: String, require: true, maxLength: 255 },
   size: { type: String, require: true, maxLength: 255 },
   color: { type: String, require: true, maxLength: 255 },
   quantity: { type: Number, require: true },
