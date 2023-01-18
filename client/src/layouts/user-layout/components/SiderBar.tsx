@@ -1,5 +1,6 @@
 import PersonIcon from "@mui/icons-material/Person";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -22,14 +23,15 @@ const SiderBar = () => {
     <div className="side-bar">
       <h2>Thông tin người dùng</h2>
       <ul className="side-bar__content">
-        {listSidebar.map((item, index) => {
+        {listSidebar.map((item) => {
           const isSelect = router.pathname === item.path;
           return (
-            <li key={index}>
+            <li key={item.path}>
               <Link
                 href={item.path}
                 className={`side-bar__content__item ${isSelect && "active"}`}
               >
+                <NextSeo title={isSelect ? item.title : ""} />
                 {item.icon}
                 <p>{item.title}</p>
               </Link>

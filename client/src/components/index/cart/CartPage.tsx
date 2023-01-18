@@ -11,11 +11,10 @@ import { useMemo } from "react";
 const CartPage = () => {
   const toast = useToast();
   const cartItems = useAppSelector((state) => state.cartItems.value);
-  // console.log("👌 ~ cartItems", cartItems);
 
   const handleCreateOrder = () => {
     if (cartItems && Object.keys(cartItems).length === 0)
-      return toast.error("Giỏ hàng trống");
+      return toast.error("Giỏ hàng trống", { autoClose: 300 });
     return createOrderAPI(totalPrice)
       .then((res) => (window.location.href = res.data))
       .catch((err) => toast.error(err.message));
@@ -66,6 +65,16 @@ const CartPage = () => {
               />
             );
           })}
+        <p className="text-red-500">
+          Lưu ý: vào link sau để lấy thông tin thanh toán&nbsp;
+          <Link
+            href="https://sandbox.vnpayment.vn/apis/vnpay-demo/"
+            target="_blank"
+            className="text-blue-500"
+          >
+            https://sandbox.vnpayment.vn/apis/vnpay-demo/
+          </Link>
+        </p>
       </div>
     </div>
   );

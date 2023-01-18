@@ -31,7 +31,7 @@ const VNPayReturnPage = () => {
       "Xử lí đơn hàng thành công",
       addOrderAPI(auth._id).then(() => {
         // console.log("👌 ~ res", res);
-        dispatch({ type: GET_CART_ITEMS });
+        dispatch({ type: GET_CART_ITEMS, payload: auth._id });
       }),
       "Xử lí đơn hàng thất bại"
     );

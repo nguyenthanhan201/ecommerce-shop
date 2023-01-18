@@ -66,12 +66,6 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
           height={100}
           className="rounded-lg"
         />
-        {/* <Image
-          src={product.image01}
-          alt={product.image01}
-          width={100}
-          height={100}
-        /> */}
       </div>
       <div className="cart_item_info">
         <div className="cart_item_info_name">
@@ -101,7 +95,6 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
         </div>
         <div className="cart_item_info_del">
           <i className="bx bx-trash" onClick={handleDeleteCartItem}></i>
-          {/* onClick={() => removeCartItem()} */}
         </div>
       </div>
     </div>

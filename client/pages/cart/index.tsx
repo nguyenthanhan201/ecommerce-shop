@@ -1,4 +1,4 @@
-import CartPage from "@/components/index/cart";
+import CartPage from "@/components/index/cart/CartPage";
 import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 
@@ -7,7 +7,6 @@ const Page = () => {
 };
 
 export default Page;
-
 Page.Layout = DefaultLayout;
 
 export const getServerSideProps = async () => {

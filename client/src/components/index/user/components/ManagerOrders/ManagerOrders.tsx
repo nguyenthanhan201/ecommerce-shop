@@ -6,7 +6,7 @@ import { getOrdersAPI } from "api/orderServices";
 import Loading from "components/shared/Loading/Loading";
 import { formatDate, numberWithCommans } from "lib/helpers/parser";
 import { useAppSelector } from "lib/hooks/useAppSelector";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type TypeRowProduct = {
   _id?: number;
@@ -29,16 +29,17 @@ const columns: any = [
     renderCell: (row: any) => {
       return (
         <div className="flex flex-col gap-2">
-          {Object.values(row.row.order).map((item: any) => {
+          {Object.values(row.row.order).map((item: any, index: number) => {
             const { size, color, product } = item[0];
             return (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" key={index}>
                 <Img
                   src={product.image01}
                   alt={product.image01}
                   width={30}
                   height={30}
                   className="rounded-full"
+                  hasNotplaceholder
                 />
                 <p
                   style={{ whiteSpace: "break-spaces" }}
@@ -67,11 +68,14 @@ const columns: any = [
     renderCell: (row: any) => {
       return (
         <div className="flex flex-col gap-2">
-          {Object.values(row.row.order).map((item: any) => {
-            const { quantity, product } = item[0];
+          {Object.values(row.row.order).map((item: any, index: number) => {
+            const { quantity, price, product } = item[0];
             return (
-              <div style={{ display: "flex", alignItems: "center" }}>
-                {numberWithCommans(product.price * quantity)} ₫
+              <div
+                key={index}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                {numberWithCommans(price || product.price * quantity)} ₫
               </div>
             );
           })}
@@ -96,35 +100,8 @@ const ManagerOrders = () => {
   const colors = tokens(theme.palette.mode);
   const auth = useAppSelector((state) => state.auth.auth);
   const [orders, setOrders] = useState<any[]>([]);
+  // console.log("👌 ~ orders", orders);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const convertOrders = useMemo(() => {
-    if (!orders.length) return [];
-    let arr: TypeRowProduct[] = [];
-    orders.forEach((order) => {
-      // console.log("👌 ~ order", order);
-      const createdAt = new Date(order.createdAt || "");
-      const day = createdAt.getDate();
-      const month = createdAt.getMonth() + 1;
-      const year = createdAt.getFullYear();
-
-      Object.values(order.order).forEach((item: any) => {
-        // console.log("👌 ~ item", item);
-        const { color, size, quantity } = item[0];
-        const { title, image01, price } = item[0].product;
-        arr.push({
-          title,
-          image01,
-          price,
-          size,
-          color,
-          quantity,
-          createdAt: `${day}/${month}/${year}`,
-        });
-      });
-    });
-
-    return arr;
-  }, [orders]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -185,7 +162,7 @@ const ManagerOrders = () => {
               getRowId={(row) => row._id!}
             />
           </Box>
-          <table className="table">
+          {/* <table className="table">
             <tbody>
               <tr className="title">
                 <th>Sản phẩm</th>
@@ -217,7 +194,7 @@ const ManagerOrders = () => {
                 );
               })}
             </tbody>
-          </table>
+          </table> */}
         </>
       )}
     </>
