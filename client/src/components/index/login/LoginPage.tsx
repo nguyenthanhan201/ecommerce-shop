@@ -28,12 +28,12 @@ const LoginPage = () => {
   return (
     <div className="form-login">
       <img
-        src={"/images/gifs/animation.f96cd653adf38d1993e0.gif"}
-        alt="gif"
+        src="/images/gifs/ezgif.com-gif-maker.webp"
+        alt="yolo-gif"
         loading="lazy"
       />
       <div className="form-login__left">
-        <img src={"/images/Logo-2.png"} alt="logo" />
+        <img src="/images/Logo-2.png" alt="logo" />
         <button className="btn btn-google" onClick={googleSignIn}>
           <i className="bx bxl-google"></i> <p>Đăng nhập với google</p>
         </button>

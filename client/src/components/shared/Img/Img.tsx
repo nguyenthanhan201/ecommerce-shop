@@ -12,6 +12,7 @@ declare type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 //   JSX.IntrinsicElements["img"]["style"]
 // >;
 type Props = {
+  id?:string
   src: string;
   alt: string;
   width?: number | undefined;
@@ -33,6 +34,7 @@ const myLoader = ({ src, width, quality }: any) => {
 };
 
 const Img = ({
+  id,
   src,
   alt,
   width,
@@ -50,6 +52,7 @@ const Img = ({
 }: Props) => {
   return (
     <Image
+      id={id}
       objectPosition={objectPosition}
       layout={layout && layout}
       loading={loading || "lazy"}

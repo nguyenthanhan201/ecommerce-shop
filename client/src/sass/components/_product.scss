@@ -1,5 +1,6 @@
 .product {
   @include flex(flex-start, flex-start);
+  gap: 12px;
 
   @include mobile {
     flex-direction: column;
@@ -52,7 +53,7 @@
     flex-grow: 1;
     position: sticky; // xuất theo kiểu fixed nhưng khi lướt hết phần chiều dài của thằng cha thì sẽ biến mất
     top: $header-shrink-height;
-    padding-top: 2rem;
+    // padding-top: 2rem;
     text-align: left;
 
     @include mobile {
@@ -219,10 +220,12 @@
   position: relative;
 
   #myimage {
-    // max-height: 564px;
-    // height: 600px;
-    max-height: 432px;
-    height: 100%;
+    width: 95%;
+    height: 432px;
+
+    @include table {
+      height: 100%;
+    }
   }
 
   .img-zoom-lens {
@@ -243,11 +246,8 @@
   .img-zoom-result {
     border: 1px solid black;
     /*set the size of the result div:*/
-    // width: 350px;
-    // right: 10px;
     left: 40%;
     width: 54%;
-    // height: 400px;
     height: 60%;
     position: fixed;
     transform: scale(0);

@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useDevice } from "@/lib/hooks/useDevice";
 import { Product } from "@/lib/redux/slices/products";
 import { createCartItemAPI } from "api/cartServices";
 import { numberWithCommans } from "lib/helpers/parser";
@@ -7,7 +8,7 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import { useRouter } from "next/router";
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../Button";
 import Img from "../Img/Img";
 import Loading from "../Loading/Loading";
@@ -16,16 +17,22 @@ import ImagePreview from "./components/ImagePreview";
 type ProductViewProps = {
   product: Product;
 };
+type ChoosenItemType = {
+  color: string | undefined;
+  size: string | undefined;
+  quantity: number;
+};
 
 const ProductView = ({ product }: ProductViewProps) => {
-  // console.log("👌 ~ product", product);
+  const { isMobile } = useDevice();
   const toast = useToast();
   const auth = useAppSelector((state) => state.auth.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [previewImg, setReviewImg] = useState(product.image01);
-  const [descriptionExpand, setDescriptionExpand] = useState(false);
-  const [choosenItems, setChoosenItems] = useState({
+  const [previewImg, setReviewImg] = useState<string>("");
+  const [descriptionExpand, setDescriptionExpand] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>("");
+  const [choosenItems, setChoosenItems] = useState<ChoosenItemType>({
     color: undefined,
     size: undefined,
     quantity: 1,
@@ -34,6 +41,11 @@ const ProductView = ({ product }: ProductViewProps) => {
   const childrenImg = useMemo(() => {
     return [product.image01, product.image02];
   }, [product.image01]);
+
+  useEffect(() => {
+    setReviewImg(product.image01);
+    setDescription(product.description);
+  }, []);
 
   const updateQuantity = (types: any) => {
     if (types === "plus") {
@@ -94,114 +106,103 @@ const ProductView = ({ product }: ProductViewProps) => {
 
   if (product === undefined) return <Loading />;
   return (
-    <>
-      <div className="product">
-        <div className="product_image">
-          <div className="product_image_list">
-            {childrenImg.map((child, index) => (
+    <div className="product">
+      <div className="product_image">
+        <div className="product_image_list">
+          {childrenImg.map((child, index) => (
+            <div
+              key={index}
+              className="product_image_list_item"
+              onClick={() => setReviewImg(child)}
+            >
+              <Img src={child} alt={child} layout="fill" />
+            </div>
+          ))}
+        </div>
+        {previewImg && <ImagePreview previewImg={previewImg} />}
+        <div
+          className={`product-description ${descriptionExpand ? "expand" : ""}`}
+        >
+          <div className="product-description_title">Chi tiết sản phẩm</div>
+          <div className="product-description_content">
+            <p dangerouslySetInnerHTML={{ __html: description }}></p>
+          </div>
+          <div className="product-description_toggle">
+            <Button size="sm" onClick={handleExpand} icon={""} animate={false}>
+              {descriptionExpand ? "Thu gọn" : "Xem thêm"}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="product_info">
+        <h1 className="product_info_title">{product.title}</h1>
+        <div className="product_info_item">
+          <span className="product_info_item_price">
+            {numberWithCommans(Number(product.price))}đ
+          </span>
+        </div>
+        <div className="product_info_item">
+          <div className="product_info_item_title">Màu sắc</div>
+          <div className="product_info_item_list">
+            {product.colors.map((item: any, index: number) => (
               <div
                 key={index}
-                className="product_image_list_item"
-                onClick={() => {
-                  setReviewImg(child);
-                }}
+                className={`product_info_item_list_item ${
+                  color === item ? "active" : ""
+                }`}
+                onClick={() =>
+                  setChoosenItems({ ...choosenItems, color: item })
+                }
               >
-                <Img src={child} alt={child} layout="fill" />
+                <div className={`circle bg-${item}`}></div>
               </div>
             ))}
           </div>
-          <ImagePreview previewImg={previewImg} />
-          <div
-            className={`product-description ${
-              descriptionExpand ? "expand" : ""
-            }`}
-          >
-            <div className="product-description_title">Chi tiết sản phẩm</div>
-            <div className="product-description_content">
-              <p dangerouslySetInnerHTML={{ __html: product.description }}></p>
-            </div>
-            <div className="product-description_toggle">
-              <Button
-                size="sm"
-                onClick={handleExpand}
-                icon={""}
-                animate={false}
+        </div>
+        <div className="product_info_item">
+          <div className="product_info_item_title">Kích cỡ</div>
+          <div className="product_info_item_list">
+            {product.size.map((item: any, index: number) => (
+              <div
+                key={index}
+                className={`product_info_item_list_item ${
+                  size === item ? "active" : ""
+                }`}
+                onClick={() => setChoosenItems({ ...choosenItems, size: item })}
               >
-                {descriptionExpand ? "Thu gọn" : "Xem thêm"}
-              </Button>
+                <div className="product_info_item_list_item_size">{item}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="product_info_item">
+          <div className="product_info_item_title">Số lượng</div>
+          <div className="product_info_item_quantity">
+            <div
+              className="product_info_item_quantity_btn"
+              onClick={() => updateQuantity("minus")}
+            >
+              -
+            </div>
+            <div className="product_info_item_quantity_input">{quantity}</div>
+            <div
+              className="product_info_item_quantity_btn"
+              onClick={() => updateQuantity("plus")}
+            >
+              +
             </div>
           </div>
         </div>
-        <div className="product_info">
-          <h1 className="product_info_title">{product.title}</h1>
-          <div className="product_info_item">
-            <span className="product_info_item_price">
-              {numberWithCommans(Number(product.price))}đ
-            </span>
-          </div>
-          <div className="product_info_item">
-            <div className="product_info_item_title">Màu sắc</div>
-            <div className="product_info_item_list">
-              {product.colors.map((item: any, index: number) => (
-                <div
-                  key={index}
-                  className={`product_info_item_list_item ${
-                    color === item ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    setChoosenItems({ ...choosenItems, color: item })
-                  }
-                >
-                  <div className={`circle bg-${item}`}></div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="product_info_item">
-            <div className="product_info_item_title">Kích cỡ</div>
-            <div className="product_info_item_list">
-              {product.size.map((item: any, index: number) => (
-                <div
-                  key={index}
-                  className={`product_info_item_list_item ${
-                    size === item ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    setChoosenItems({ ...choosenItems, size: item })
-                  }
-                >
-                  <div className="product_info_item_list_item_size">{item}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="product_info_item">
-            <div className="product_info_item_title">Số lượng</div>
-            <div className="product_info_item_quantity">
-              <div
-                className="product_info_item_quantity_btn"
-                onClick={() => updateQuantity("minus")}
-              >
-                -
-              </div>
-              <div className="product_info_item_quantity_input">{quantity}</div>
-              <div
-                className="product_info_item_quantity_btn"
-                onClick={() => updateQuantity("plus")}
-              >
-                +
-              </div>
-            </div>
-          </div>
-          <div className="product_info_item">
-            <Button onClick={addToCart} icon={""} animate={false}>
-              thêm vào giỏ
-            </Button>
-            <Button onClick={gotoCart} icon={""} animate={false}>
-              mua ngay
-            </Button>
-          </div>
+        <div className="product_info_item">
+          <Button onClick={addToCart} icon={""} animate={false}>
+            thêm vào giỏ
+          </Button>
+          <Button onClick={gotoCart} icon={""} animate={false}>
+            mua ngay
+          </Button>
         </div>
+      </div>
+      {isMobile && (
         <div
           className={`product-description mobile ${
             descriptionExpand ? "expand" : ""
@@ -211,15 +212,15 @@ const ProductView = ({ product }: ProductViewProps) => {
           <div
             className="product-description_content"
             dangerouslySetInnerHTML={{ __html: product.description }}
-          ></div>
+          />
           <div className="product-description_toggle">
             <Button size="sm" onClick={handleExpand} icon={""} animate={false}>
               {descriptionExpand ? "Thu gọn" : "Xem thêm"}
             </Button>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 export default memo(ProductView);

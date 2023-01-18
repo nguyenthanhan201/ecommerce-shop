@@ -89,7 +89,15 @@ const HeroSliderItem = (props: any) => (
     </div>
     <div className="hero-slider_item_image">
       <div className={`shape bg-${props.item.color}`}></div>
-      <Img src={props.item.img} alt="oki" layout="fill" loading="eager" />
+      <Img
+        src={props.item.img}
+        alt="oki"
+        layout="fill"
+        loading="eager"
+        sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+      />
     </div>
   </div>
 );

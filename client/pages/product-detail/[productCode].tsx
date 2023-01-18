@@ -3,8 +3,8 @@ import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 import { NextPageContext } from "next";
 
-const Page = () => {
-  return <ProductDetailPage />;
+const Page = ({ query }: any) => {
+  return <ProductDetailPage product={query} />;
 };
 
 export default Page;

@@ -1,11 +1,7 @@
 import ProductView from "@/components/shared/ProductView/ProductView";
 import Section, { SectionBody } from "@/components/shared/Section";
-import { useRouter } from "next/router";
 
-const ProductDetailPage = () => {
-  const router = useRouter();
-  const product: any = router.query;
-
+const ProductDetailPage = ({ product }: any) => {
   return (
     <Section>
       <SectionBody>

@@ -16,13 +16,12 @@ function useAuth() {
         user.displayName || "",
         user.email || ""
       ).then((res) => {
-        const { name, email, _id, refeshToken } = res.data;
+        const { name, email, _id } = res.data;
         dispatch(
           setAuthSlice({
             name,
             email,
-            _id,
-            refeshToken,
+            _id
           })
         );
       }).catch((err) => {
