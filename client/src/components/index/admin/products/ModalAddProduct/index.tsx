@@ -1,14 +1,14 @@
+import { createProductAPI, updateProductAPI } from "@/api/productServices";
+import { GET_PRODUCTS } from "@/lib/redux/types";
 import { category, colors, size } from "@/utils/index";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { createProductAPI, updateProductAPI } from "api/productServices";
 import Input from "components/shared/Input/Input";
 import Select from "components/shared/Select/Select";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useToast } from "lib/providers/toast-provider";
 import { Product } from "lib/redux/slices/products";
-import { GET_PRODUCTS } from "lib/redux/types";
 import { registerSchema } from "lib/schema/formSchema";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,6 +19,7 @@ type ModalAddProductProps = {
 
 const ModalAddProduct = ({ product }: ModalAddProductProps) => {
   const {
+    getValues,
     watch,
     setValue,
     register,
@@ -36,6 +37,8 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
       size: product?.size,
       colors: product?.colors,
       description: product?.description,
+      stock: product?.stock,
+      discount: product?.discount,
     },
   });
   const toast = useToast();
@@ -53,7 +56,6 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
   };
 
   const formSubmit = (data: Product) => {
-    // console.log("👌 ~ data", data);
     if (product)
       return toast.promise(
         "Cập nhật sản phẩm thành công",
@@ -124,12 +126,28 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
         </div>
       </div>
       <Input
+        {...register("stock")}
+        type="number"
+        placeholder="Số lượng"
+        label="stock"
+        name="stock"
+        error={errors.stock?.message}
+      />
+      <Input
         {...register("price")}
-        type="text"
+        type="number"
         placeholder="Giá sản phẩm"
         label="price"
         name="price"
         error={errors.price?.message}
+      />
+      <Input
+        {...register("discount")}
+        type="number"
+        placeholder="Phần trăm giảm giá"
+        label="discount"
+        name="discount"
+        error={errors.discount?.message}
       />
       <Input
         type="editor"

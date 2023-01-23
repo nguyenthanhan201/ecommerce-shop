@@ -1,12 +1,27 @@
+import { tokenAPI } from "@/api/authServices";
 import Img from "@/components/shared/Img/Img";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
+import { getSalePrice, numberWithCommans } from "@/lib/helpers/parser";
+import { useAppSelector } from "@/lib/hooks/useAppSelector";
+import { useToast } from "@/lib/providers/toast-provider";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { getAllOrdersAPI } from "api/orderServices";
 import Header from "components/index/admin/components/Header";
-import { TypeRowProduct } from "components/index/user/components/ManagerOrders/ManagerOrders";
 import { tokens } from "lib/theme/theme";
 import { useEffect, useMemo, useState } from "react";
+
+type TypeRowProduct = {
+  _id?: number;
+  title: string;
+  image01: string;
+  price: number;
+  size: string;
+  color: string;
+  quantity: number;
+  createdAt: string;
+  discount: number | null;
+};
 
 const columns: any = [
   {
@@ -25,6 +40,7 @@ const columns: any = [
             width={30}
             height={30}
             className="rounded-full"
+            hasNotplaceholder
           />
           <p
             style={{ whiteSpace: "break-spaces" }}
@@ -48,8 +64,10 @@ const columns: any = [
     headerAlign: "center",
     align: "center",
     renderCell: (row: any) => {
-      const { quantity, price } = row.row;
-      return <> {quantity * price}</>;
+      const { quantity, price, discount } = row.row;
+      return discount
+        ? numberWithCommans(quantity * getSalePrice(price, discount))
+        : numberWithCommans(quantity * price);
     },
   },
   {
@@ -65,6 +83,8 @@ const columns: any = [
 ];
 
 const Page = () => {
+  const auth = useAppSelector((state) => state.auth.auth);
+  const toast = useToast();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [orders, setOrders] = useState([]);
@@ -82,7 +102,7 @@ const Page = () => {
       Object.values(order.order).forEach((item: any) => {
         // console.log("👌 ~ item", item);
         const { color, size, quantity } = item[0];
-        const { title, image01, price } = item[0].product;
+        const { title, image01, price, discount } = item[0].product;
         arr.push({
           _id: Math.random() + 1,
           title,
@@ -91,6 +111,7 @@ const Page = () => {
           size,
           color,
           quantity,
+          discount,
           createdAt: `${day}/${month}/${year}`,
         });
       });
@@ -98,10 +119,27 @@ const Page = () => {
 
     return arr;
   }, [orders]);
+  // console.log("👌 ~ convertOrders", convertOrders);
 
   useEffect(() => {
-    getAllOrdersAPI().then((res) => setOrders(res));
-  }, []);
+    getAllOrdersAPI()
+      .then((res) => setOrders(res))
+      .catch((err) => {
+        if (err.response.data.error.name === "TokenExpiredError" && auth) {
+          toast.promise(
+            "Làm mới access token thành công. Làm mới trang để tiếp tục",
+            tokenAPI(auth?.email)
+              .then((res) => {
+                localStorage.setItem("token", res.accessToken);
+              })
+              .catch((err) => {
+                Promise.reject(err);
+              }),
+            "Làm mới access token thất bại"
+          );
+        }
+      });
+  }, [auth]);
 
   return (
     <Box m="20px">

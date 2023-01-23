@@ -70,9 +70,16 @@
       margin-top: 2rem;
 
       &_price {
+        @include flex(center, flex-start);
         color: $main-color;
         font-size: 2rem;
         font-weight: 600;
+        gap: 8px;
+
+        del {
+          color: $txt-second-color;
+          font-size: 1rem;
+        }
       }
 
       &_title {
@@ -127,7 +134,7 @@
       }
 
       &_quantity {
-        @include flex(flex-start, flex-start);
+        @include flex(center, flex-start);
         font-weight: 600 !important;
 
         &_btn {
@@ -157,6 +164,11 @@
           border: 2px solid $txt-second-color;
           border-right: none;
           border-left: none;
+        }
+
+        & .stock{
+          color: $txt-second-color;
+          margin-left: 8px;
         }
       }
 

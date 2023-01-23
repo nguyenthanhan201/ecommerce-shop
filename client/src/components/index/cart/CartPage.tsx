@@ -1,7 +1,7 @@
 import { createOrderAPI } from "@/api/orderServices";
 import CartItem from "@/components/index/cart/components/CartItem";
 import Button from "@/components/shared/Button";
-import { numberWithCommans } from "@/lib/helpers/parser";
+import { getSalePrice, numberWithCommans } from "@/lib/helpers/parser";
 import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import { useToast } from "@/lib/providers/toast-provider";
 import { CartItem as CartItemType } from "@/lib/redux/slices/cartItems";
@@ -11,30 +11,50 @@ import { useMemo } from "react";
 const CartPage = () => {
   const toast = useToast();
   const cartItems = useAppSelector((state) => state.cartItems.value);
+  // console.log("👌 ~ cartItems", cartItems);
+  const filteredCartItems = useMemo(() => {
+    if (!cartItems) return [];
+    const asArray = Object.entries(cartItems).map(([key, value]) => {
+      return {
+        ...value,
+        _id: key,
+      };
+    });
 
-  const handleCreateOrder = () => {
-    if (cartItems && Object.keys(cartItems).length === 0)
-      return toast.error("Giỏ hàng trống", { autoClose: 300 });
-    return createOrderAPI(totalPrice)
-      .then((res) => (window.location.href = res.data))
-      .catch((err) => toast.error(err.message));
-  };
-
+    // filter out cart items with products are not hidden
+    return asArray.filter((item) => item[0].idProduct.deletedAt === null);
+  }, [cartItems]);
   const totalPrice = useMemo(() => {
     let total = 0;
-    if (!cartItems) return total;
-    Object.values(cartItems).map((item: [CartItemType]) => {
+    if (!filteredCartItems) return total;
+    Object.values(filteredCartItems).map((item: [CartItemType]) => {
       const quantity = item[0].quantity;
-      return (total += Number(item[0].idProduct.price) * quantity);
+
+      // if product is on sale then use sale price else use price from product
+      return (total += item[0].idProduct.discount
+        ? getSalePrice(item[0].idProduct.price, item[0].idProduct.discount) *
+          quantity
+        : Number(item[0].idProduct.price) * quantity);
     });
     return total;
-  }, [cartItems]);
+  }, [filteredCartItems]);
+
+  const handleCreateOrder = () => {
+    if (filteredCartItems && filteredCartItems.length === 0)
+      return toast.error("Giỏ hàng trống", { autoClose: 300 });
+    return createOrderAPI(totalPrice, cartItems)
+      .then((res) => (window.location.href = res.data))
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  };
+
   return (
     <div className="cart">
       <div className="cart_info">
         <div className="cart_info_txt">
           <p>
-            Bạn đang có {cartItems && Object.keys(cartItems).length} sản phẩm
+            Bạn đang có {filteredCartItems && filteredCartItems.length} sản phẩm
             trong giỏ hàng
           </p>
           <div className="cart_info_txt_price">

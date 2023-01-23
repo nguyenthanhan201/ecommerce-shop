@@ -29,10 +29,14 @@ const VNPayReturnPage = () => {
     if (!auth || responseCode !== "00") return;
     toast.promise(
       "Xử lí đơn hàng thành công",
-      addOrderAPI(auth._id).then(() => {
-        // console.log("👌 ~ res", res);
-        dispatch({ type: GET_CART_ITEMS, payload: auth._id });
-      }),
+      addOrderAPI(auth._id)
+        .then((res) => {
+          console.log("👌 ~ res", res);
+          dispatch({ type: GET_CART_ITEMS, payload: auth._id });
+        })
+        .catch((err) => {
+          console.log("🚀 ~ file: VNPayReturn.tsx ~ line 43 ~ err", err);
+        }),
       "Xử lí đơn hàng thất bại"
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

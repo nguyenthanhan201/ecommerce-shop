@@ -26,6 +26,12 @@ export const registerSchema = yup.object().shape({
   colors: yup
     .array()
     .required("Màu sắc không được để trống"),
+  stock: yup
+    .number()
+    .min(1, "Số lượng không được nhỏ hơn 1")
+    .max(100, "Số lượng không được lớn hơn 100")
+    .required("Số lượng không được để trống"),
+  discount: yup.number().min(1, "Giảm giá không được nhỏ hơn 1").max(70, "Giảm giá không được lớn hơn 70").notRequired().typeError("Giảm giá phải là số").transform((value, originalValue) => originalValue === "" ? null : value).nullable(true),
 });
 
 // export const registerSchema = yup.object().shape({

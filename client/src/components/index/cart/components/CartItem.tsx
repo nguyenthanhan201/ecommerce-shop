@@ -1,6 +1,7 @@
 import Img from "@/components/shared/Img/Img";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { createCartItemAPI, deleteCartItemAPI } from "api/cartServices";
-import { numberWithCommans } from "lib/helpers/parser";
+import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
@@ -44,6 +45,7 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
           "Đã có lỗi xảy ra"
         );
       case "+":
+        if (product.stock === quantity) return toast.error("Quá số lượng hàng");
         return toast.promise(
           "Cập nhật giỏ hàng thành công",
           createCartItemAPI(auth._id, product._id, size, color, 1).then(() => {
@@ -68,33 +70,58 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
         />
       </div>
       <div className="cart_item_info">
-        <div className="cart_item_info_name">
-          <Link href={`/catalog/${product.slug}`}>
-            {`${product.title} - ${color} - ${size}`}
-          </Link>
-        </div>
-        <div className="cart_item_info_price">
-          {numberWithCommans(Number(product.price))}
-        </div>
-        <div className="cart_item_info_quantity">
-          <div className="product_info_item_quantity">
-            <div
-              className="product_info_item_quantity_btn"
-              onClick={() => updateQuantity("-")}
-            >
-              -
+        {product.deletedAt ? (
+          <p className="text-red-500">Sản phẩm đã bị ẩn</p>
+        ) : (
+          <>
+            <div className="cart_item_info_name">
+              <Link href={`/catalog/${product.slug}`}>
+                {`${product.title} - ${color} - ${size}`}
+              </Link>
             </div>
-            <div className="product_info_item_quantity_input">{quantity}</div>
-            <div
-              className="product_info_item_quantity_btn"
-              onClick={() => updateQuantity("+")}
-            >
-              +
+            <div className="cart_item_info_price">
+              {product.discount ? (
+                <div className="flex items-center gap-1">
+                  <p>
+                    {numberWithCommans(
+                      getSalePrice(product.price, product.discount)
+                    )}
+                  </p>
+                  <del className="text-[10px]">
+                    {numberWithCommans(Number(product.price))}
+                  </del>
+                </div>
+              ) : (
+                numberWithCommans(Number(product.price))
+              )}
             </div>
-          </div>
-        </div>
+            <div className="cart_item_info_quantity">
+              <div className="product_info_item_quantity">
+                <div
+                  className="product_info_item_quantity_btn"
+                  onClick={() => updateQuantity("-")}
+                >
+                  -
+                </div>
+                <div className="product_info_item_quantity_input">
+                  {quantity}
+                </div>
+                <div
+                  className="product_info_item_quantity_btn"
+                  onClick={() => updateQuantity("+")}
+                >
+                  +
+                </div>
+              </div>
+            </div>
+          </>
+        )}
         <div className="cart_item_info_del">
-          <i className="bx bx-trash" onClick={handleDeleteCartItem}></i>
+          <DeleteOutlineOutlinedIcon
+            onClick={handleDeleteCartItem}
+            fontSize="large"
+            className="cursor-pointer"
+          />
         </div>
       </div>
     </div>

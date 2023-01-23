@@ -25,9 +25,7 @@ const Page = () => {
   const errProducts: string | null = useAppSelector(
     (state) => state.products.err
   );
-  // console.log("👌 ~ errProducts", errProducts);
   const auth = useAppSelector((state) => state.auth.auth);
-  // console.log("👌 ~ auth", auth);
 
   const columns: any = [
     {
@@ -127,16 +125,17 @@ const Page = () => {
 
   useEffect(() => {
     if (errProducts === "TokenExpiredError" && auth) {
-      tokenAPI(auth?.email)
-        .then((res) => {
-          toast.error("Token đã hết hạn");
-          localStorage.setItem("token", res.accessToken);
-        })
-        .catch((err) => {
-          toast.error("Refresh token đã hết hạn");
-          console.log("🚀 ~ file: index.tsx ~ line 100 ~ err", err);
-          // localStorage.removeItem("token");
-        });
+      toast.promise(
+        "Làm mới access token thành công. Làm mới trang để tiếp tục",
+        tokenAPI(auth?.email)
+          .then((res) => {
+            localStorage.setItem("token", res.accessToken);
+          })
+          .catch((err) => {
+            Promise.reject(err);
+          }),
+        "Làm mới access token thất bại"
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errProducts, auth]);

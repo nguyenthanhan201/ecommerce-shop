@@ -1,6 +1,6 @@
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { updateViewsProductAPI } from "api/productServices";
-import { numberWithCommans } from "lib/helpers/parser";
+import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { Product } from "lib/redux/slices/products";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -53,6 +53,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               query: {
                 _id: product._id,
                 title: product.title,
+                stock: product.stock,
                 image01: product.image01,
                 image02: product.image02,
                 price: product.price,
@@ -61,6 +62,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 categorySlug: product.categorySlug,
                 colors: product.colors,
                 description: product.description,
+                discount: product.discount,
               },
             }}
             shallow={true}
@@ -72,8 +74,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
           <div className="size">
             <span>Giá</span>
-            <p>{numberWithCommans(Number(product.price))}&#x00111;</p>
-            <del>{numberWithCommans(399000)} &#x00111;</del>
+            {product.discount ? (
+              <>
+                <p>
+                  {numberWithCommans(
+                    getSalePrice(product.price, product.discount)
+                  )}
+                </p>
+                <del>{numberWithCommans(Number(product.price))}</del>
+              </>
+            ) : (
+              <p>{numberWithCommans(Number(product.price))}</p>
+            )}
           </div>
           <Button
             size="sm"

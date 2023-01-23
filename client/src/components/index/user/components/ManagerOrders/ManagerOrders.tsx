@@ -4,20 +4,13 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { getOrdersAPI } from "api/orderServices";
 import Loading from "components/shared/Loading/Loading";
-import { formatDate, numberWithCommans } from "lib/helpers/parser";
+import {
+  formatDate,
+  getSalePrice,
+  numberWithCommans,
+} from "lib/helpers/parser";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useEffect, useState } from "react";
-
-export type TypeRowProduct = {
-  _id?: number;
-  title: string;
-  image01: string;
-  price: number;
-  size: string;
-  color: string;
-  quantity: number;
-  createdAt: string;
-};
 
 const columns: any = [
   {
@@ -75,7 +68,10 @@ const columns: any = [
                 key={index}
                 style={{ display: "flex", alignItems: "center" }}
               >
-                {numberWithCommans(price || product.price * quantity)} ₫
+                {product.discount
+                  ? getSalePrice(product.price, product.discount) * quantity
+                  : numberWithCommans(price * quantity)}
+                ₫
               </div>
             );
           })}
@@ -162,39 +158,6 @@ const ManagerOrders = () => {
               getRowId={(row) => row._id!}
             />
           </Box>
-          {/* <table className="table">
-            <tbody>
-              <tr className="title">
-                <th>Sản phẩm</th>
-                <th>Ngày mua</th>
-                <th>Tổng tiền</th>
-                <th>Trạng thái</th>
-              </tr>
-              {convertOrders.map((item: TypeRowProduct, index: number) => {
-                // console.log("👌 ~ item", item);
-                const {
-                  title,
-                  image01,
-                  price,
-                  size,
-                  color,
-                  quantity,
-                  createdAt,
-                } = item;
-                return (
-                  <tr key={index} className="table__item">
-                    <td className="table__item-1">
-                      <img src={image01} alt={title} />
-                      {title}-{size}-{color}
-                    </td>
-                    <td>{createdAt || "null"}</td>
-                    <td>{numberWithCommans(price * quantity)} ₫</td>
-                    <td>Hoàn thành</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table> */}
         </>
       )}
     </>

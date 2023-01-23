@@ -8,8 +8,8 @@ export const getAllOrdersAPI = async () => {
   });
   return res;
 }
-export const createOrderAPI = async (amount: number) => {
-  const res = await post(`/order/create_payment_url`, { amount });
+export const createOrderAPI = async (amount: number, cartItems: any) => {
+  const res = await post(`/order/create_payment_url`, { amount, cartItems });
   return res;
 }
 

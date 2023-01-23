@@ -2,7 +2,7 @@
 import { useDevice } from "@/lib/hooks/useDevice";
 import { Product } from "@/lib/redux/slices/products";
 import { createCartItemAPI } from "api/cartServices";
-import { numberWithCommans } from "lib/helpers/parser";
+import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
@@ -49,6 +49,7 @@ const ProductView = ({ product }: ProductViewProps) => {
 
   const updateQuantity = (types: any) => {
     if (types === "plus") {
+      if (product.stock == quantity) return;
       setChoosenItems({
         ...choosenItems,
         quantity: choosenItems.quantity + 1,
@@ -137,9 +138,20 @@ const ProductView = ({ product }: ProductViewProps) => {
       <div className="product_info">
         <h1 className="product_info_title">{product.title}</h1>
         <div className="product_info_item">
-          <span className="product_info_item_price">
-            {numberWithCommans(Number(product.price))}đ
-          </span>
+          <div className="product_info_item_price">
+            {product.discount ? (
+              <>
+                <p>
+                  {numberWithCommans(
+                    getSalePrice(product.price, product.discount)
+                  )}
+                </p>
+                <del>{numberWithCommans(Number(product.price))}</del>
+              </>
+            ) : (
+              <p>{numberWithCommans(Number(product.price))}</p>
+            )}
+          </div>
         </div>
         <div className="product_info_item">
           <div className="product_info_item_title">Màu sắc</div>
@@ -175,32 +187,41 @@ const ProductView = ({ product }: ProductViewProps) => {
             ))}
           </div>
         </div>
-        <div className="product_info_item">
-          <div className="product_info_item_title">Số lượng</div>
-          <div className="product_info_item_quantity">
-            <div
-              className="product_info_item_quantity_btn"
-              onClick={() => updateQuantity("minus")}
-            >
-              -
+        {product.stock > 0 ? (
+          <>
+            <div className="product_info_item">
+              <div className="product_info_item_title">Số lượng</div>
+              <div className="product_info_item_quantity">
+                <div
+                  className="product_info_item_quantity_btn"
+                  onClick={() => updateQuantity("minus")}
+                >
+                  -
+                </div>
+                <div className="product_info_item_quantity_input">
+                  {quantity}
+                </div>
+                <div
+                  className="product_info_item_quantity_btn"
+                  onClick={() => updateQuantity("plus")}
+                >
+                  +
+                </div>
+                <p className="stock">Số lượng còn lại {product.stock}</p>
+              </div>
             </div>
-            <div className="product_info_item_quantity_input">{quantity}</div>
-            <div
-              className="product_info_item_quantity_btn"
-              onClick={() => updateQuantity("plus")}
-            >
-              +
+            <div className="product_info_item">
+              <Button onClick={addToCart} icon={""} animate={false}>
+                thêm vào giỏ
+              </Button>
+              <Button onClick={gotoCart} icon={""} animate={false}>
+                mua ngay
+              </Button>
             </div>
-          </div>
-        </div>
-        <div className="product_info_item">
-          <Button onClick={addToCart} icon={""} animate={false}>
-            thêm vào giỏ
-          </Button>
-          <Button onClick={gotoCart} icon={""} animate={false}>
-            mua ngay
-          </Button>
-        </div>
+          </>
+        ) : (
+          <p className="text-red-500 text-32 mt-6">Hết hàng</p>
+        )}
       </div>
       {isMobile && (
         <div

@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import React from "react";
 // import ReactQuill from "react-quill";
 
-const ReactQuill = dynamic(import('react-quill'), {
+const ReactQuill = dynamic(import("react-quill"), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
-})
+});
 
 interface InputProps extends FormControlProps {
   type: "text" | "password" | "email" | "number" | "tel" | "editor" | "select";
@@ -75,6 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             />
           ) : (
             <input
+              type={type}
               ref={ref}
               value={value || undefined}
               name={name}

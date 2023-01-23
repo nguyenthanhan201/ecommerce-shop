@@ -11,7 +11,10 @@ export type Product = {
   categorySlug: string,
   colors: Array<string>,
   description: string,
-  views: number
+  views: number,
+  deletedAt?: string,
+  stock: number,
+  discount?: number,
 };
 
 const products = createSlice({
