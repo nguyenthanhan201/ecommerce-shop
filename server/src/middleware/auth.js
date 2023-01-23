@@ -4,7 +4,7 @@ const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authentication;
   // console.log("👌 ~ authHeader", authHeader);
   const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.sendStatus(401);
+  if (!token) res.status(401).json({ error: "Access token not found" });
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -12,8 +12,8 @@ const verifyToken = (req, res, next) => {
 
     next();
   } catch (err) {
-    console.log(err);
-    return res.status(403).json({ error: err });
+    // console.log("err auth middleware", err);
+    return res.status(400).json({ error: err });
   }
 
   // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

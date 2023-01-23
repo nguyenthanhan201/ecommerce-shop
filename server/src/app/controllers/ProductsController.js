@@ -8,9 +8,11 @@ class ProductsController {
   hideProducts(req, res) {
     // console.log("👌 ~ req", req);
     // get products that have deletedAt
-    Product.find({ deletedAt: { $ne: null } }).then((products) =>
-      res.json(products)
-    );
+    Product.find({ deletedAt: { $ne: null } })
+      .then((products) => res.json(products))
+      .catch((err) => {
+        return res.status(400).json({ error: err });
+      });
   }
 
   store(req, res) {

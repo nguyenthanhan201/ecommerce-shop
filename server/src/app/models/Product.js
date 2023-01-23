@@ -8,6 +8,7 @@ const Product = new Scheme(
   {
     title: { type: String, require: true, maxLength: 255 },
     price: { type: String, require: true, maxLength: 255 },
+    stock: { type: Number, require: true },
     image01: { type: String, require: true, maxLength: 255 },
     image02: { type: String, require: true, maxLength: 255 },
     categorySlug: { type: String, require: true, maxLength: 255 },
@@ -16,6 +17,7 @@ const Product = new Scheme(
     size: { type: Array, require: true, maxLength: 255 },
     description: { type: String, require: true, maxLength: 1500 },
     views: { type: Number, default: 0 },
+    discount: { type: Number, default: null },
     deletedAt: {
       type: Date,
       default: null,
