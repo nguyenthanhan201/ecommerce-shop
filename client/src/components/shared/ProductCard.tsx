@@ -1,14 +1,16 @@
+import { Product } from "@/lib/redux/types/product.type";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { updateViewsProductAPI } from "api/productServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
-import { Product } from "lib/redux/slices/products";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import Button from "./Button";
 import Img from "./Img/Img";
 
-const ProductViewModel = dynamic(() => import("./ProductViewModel"));
+const ProductViewModel = dynamic(() => import("./ProductViewModel"), {
+  ssr: false,
+});
 
 type ProductCardProps = {
   product: Product;

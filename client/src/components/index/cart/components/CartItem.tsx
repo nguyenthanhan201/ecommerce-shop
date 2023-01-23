@@ -1,11 +1,11 @@
 import Img from "@/components/shared/Img/Img";
+import { Product } from "@/lib/redux/types/product.type";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { createCartItemAPI, deleteCartItemAPI } from "api/cartServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
-import { Product } from "lib/redux/slices/products";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import Link from "next/link";
 

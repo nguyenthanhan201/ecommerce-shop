@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDevice } from "@/lib/hooks/useDevice";
-import { Product } from "@/lib/redux/slices/products";
+import { Product } from "@/lib/redux/types/product.type";
 import { createCartItemAPI } from "api/cartServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
@@ -133,6 +133,7 @@ const ProductView = ({ product }: ProductViewProps) => {
               {descriptionExpand ? "Thu gọn" : "Xem thêm"}
             </Button>
           </div>
+          {!descriptionExpand && <div className="gradient" />}
         </div>
       </div>
       <div className="product_info">

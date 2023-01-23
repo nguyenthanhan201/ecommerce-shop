@@ -1,4 +1,6 @@
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
+import { RootState } from "@/lib/redux/store";
+import { Product } from "@/lib/redux/types/product.type";
 import { Box, Button, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { hideProductAPI } from "api/productServices";
@@ -7,7 +9,6 @@ import Modal from "components/shared/Modal/Modal";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
-import { Product } from "lib/redux/slices/products";
 import { GET_PRODUCTS } from "lib/redux/types";
 import { tokens } from "lib/theme/theme";
 import dynamic from "next/dynamic";
@@ -22,8 +23,8 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const products: Product[] = useAppSelector(
-    (state: any) => state.products.products
+  const products = useAppSelector(
+    (state: RootState) => state.products.products
   );
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(

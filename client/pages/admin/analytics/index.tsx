@@ -1,6 +1,6 @@
 import { getMostViewedProductsAPI } from "@/api/productServices";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
-import { Product } from "@/lib/redux/slices/products";
+import { Product } from "@/lib/redux/types/product.type";
 import { Box } from "@mui/material";
 import {
   CategoryScale,

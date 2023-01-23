@@ -1,8 +1,10 @@
-import { Product } from "lib/redux/slices/products";
-import { lazy } from "react";
+import { Product } from "@/lib/redux/types/product.type";
+import dynamic from "next/dynamic";
 import Button from "./Button";
 
-const ProductView = lazy(() => import("./ProductView/ProductView"));
+const ProductView = dynamic(() => import("./ProductView/ProductView"), {
+  ssr: false,
+});
 
 type ProductViewModelProps = {
   product: Product;

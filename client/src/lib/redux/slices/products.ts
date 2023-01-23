@@ -1,28 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Product } from "../types/product.type";
 
-export type Product = {
-  _id: string,
-  title: string,
-  image01: string,
-  image02: string,
-  price: string,
-  slug: string,
-  size: Array<string>,
-  categorySlug: string,
-  colors: Array<string>,
-  description: string,
-  views: number,
-  deletedAt?: string,
-  stock: number,
-  discount?: number,
-};
+const initialState = {
+  products: [] as Array<Product>,
+  err: null,
+}
 
 const products = createSlice({
   name: "products",
-  initialState: {
-    products: [],
-    err: null
-  },
+  initialState,
   reducers: {
     setProductsSlice: (state, action) => {
       state.products = action.payload;

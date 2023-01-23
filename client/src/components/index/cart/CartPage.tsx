@@ -4,7 +4,7 @@ import Button from "@/components/shared/Button";
 import { getSalePrice, numberWithCommans } from "@/lib/helpers/parser";
 import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import { useToast } from "@/lib/providers/toast-provider";
-import { CartItem as CartItemType } from "@/lib/redux/slices/cartItems";
+import { CartItem as CartItemType } from "@/lib/redux/types/cartItem.type";
 import Link from "next/link";
 import { useMemo } from "react";
 

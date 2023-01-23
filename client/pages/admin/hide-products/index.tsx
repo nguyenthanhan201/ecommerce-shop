@@ -8,7 +8,6 @@ import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import useAuth from "lib/hooks/useAuth";
 import { useToast } from "lib/providers/toast-provider";
-import { Product } from "lib/redux/slices/products";
 import { GET_HIDE_PRODUCTS } from "lib/redux/types";
 import { tokens } from "lib/theme/theme";
 import { useEffect } from "react";
@@ -19,9 +18,7 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const products: Product[] = useAppSelector(
-    (state) => state.products.products
-  );
+  const products = useAppSelector((state) => state.products.products);
   const errProducts: string | null = useAppSelector(
     (state) => state.products.err
   );

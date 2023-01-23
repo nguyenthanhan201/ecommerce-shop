@@ -1,5 +1,6 @@
 import { createProductAPI, updateProductAPI } from "@/api/productServices";
 import { GET_PRODUCTS } from "@/lib/redux/types";
+import { Product } from "@/lib/redux/types/product.type";
 import { category, colors, size } from "@/utils/index";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
@@ -8,7 +9,6 @@ import Input from "components/shared/Input/Input";
 import Select from "components/shared/Select/Select";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useToast } from "lib/providers/toast-provider";
-import { Product } from "lib/redux/slices/products";
 import { registerSchema } from "lib/schema/formSchema";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

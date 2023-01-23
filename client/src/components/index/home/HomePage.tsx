@@ -5,8 +5,8 @@ import Section, {
   SectionBody,
   SectionTitle,
 } from "@/components/shared/Section";
+import { Product } from "@/lib/redux/types/product.type";
 import { heroSliderData, policy } from "@/utils/index";
-import { Product } from "lib/redux/slices/products";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 // import { ScrollContainer } from "react-scroll-motion";

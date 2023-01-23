@@ -1,5 +1,5 @@
+import { Product } from "@/lib/redux/types/product.type";
 import { get, post } from "lib/axios/requests";
-import { Product } from "lib/redux/slices/products";
 
 export const getProductsAPI = async () => {
   try {

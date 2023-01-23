@@ -1,4 +1,4 @@
-import { Product } from "lib/redux/slices/products";
+import { Product } from "@/lib/redux/types/product.type";
 import { useEffect, useRef, useState } from "react";
 
 import Grid from "./Grid";

@@ -166,7 +166,7 @@
           border-left: none;
         }
 
-        & .stock{
+        & .stock {
           color: $txt-second-color;
           margin-left: 8px;
         }
@@ -217,10 +217,22 @@
   }
 
   &_toggle {
+    z-index: 1;
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  .gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+
+    // background for dark mode
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
   }
 }
 

@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Auth } from "../types/auth.type";
 
-export type Auth = {
-  _id: string;
-  name: string;
-  email: string;
-};
+const initialState = {
+  auth: null as Auth | null
+}
 
 const auth = createSlice({
   name: "auth",
-  initialState: {
-    auth: undefined,
-  } as { auth: Auth | undefined },
+  initialState,
   reducers: {
     setAuthSlice: (state, action) => {
       state.auth = action.payload;
