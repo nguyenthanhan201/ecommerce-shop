@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 
 class ProductsController {
-  index(req, res) {
+  getAllProduct(req, res) {
     Product.find({ deletedAt: null }).then((products) => res.json(products));
   }
 

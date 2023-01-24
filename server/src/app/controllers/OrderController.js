@@ -5,7 +5,7 @@ const Order = require("../models/Order");
 const Product = require("../models/Product");
 
 class OrderController {
-  getAllOrders(req, res) {
+  getAllOrder(req, res) {
     Order.find()
       .sort({ createdAt: -1 })
       .then((orders) => res.json(orders));
