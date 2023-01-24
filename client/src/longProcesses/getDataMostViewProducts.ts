@@ -1,10 +1,10 @@
 /* eslint-disable no-restricted-globals */
-import { getMostViewedProductsAPI } from "api/productServices";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { processList } from "./enums";
 
 self.onmessage = async (e: MessageEvent<string>) => {
   if (e.data === processList.getDataMostViewedProducts) {
-    const products = await getMostViewedProductsAPI().then((res) => {
+    const products = await ProductServices.getMostViewedProducts().then((res) => {
       return res;
     });
     // console.log("👌 ~ products", products.data)

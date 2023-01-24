@@ -1,4 +1,4 @@
-import { addOrderAPI } from "api/orderServices";
+import { OrderServices } from "@/lib/repo/order.repo";
 import Button from "components/shared/Button";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
@@ -29,7 +29,7 @@ const VNPayReturnPage = () => {
     if (!auth || responseCode !== "00") return;
     toast.promise(
       "Xử lí đơn hàng thành công",
-      addOrderAPI(auth._id)
+      OrderServices.addOrder(auth._id)
         .then((res) => {
           console.log("👌 ~ res", res);
           dispatch({ type: GET_CART_ITEMS, payload: auth._id });

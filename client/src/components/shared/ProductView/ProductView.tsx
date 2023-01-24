@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDevice } from "@/lib/hooks/useDevice";
 import { Product } from "@/lib/redux/types/product.type";
-import { createCartItemAPI } from "api/cartServices";
+import { CartServices } from "@/lib/repo/cart.repo";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
@@ -85,7 +85,7 @@ const ProductView = ({ product }: ProductViewProps) => {
   const addToCart = () => {
     if (!check()) return;
     const { color, size, quantity } = choosenItems;
-    createCartItemAPI(auth!._id, product._id, size!, color!, quantity)
+    CartServices.createCartItem(auth!._id, product._id, size!, color!, quantity)
       .then((res) => {
         if (res) {
           dispatch({ type: GET_CART_ITEMS, payload: auth!._id });

@@ -1,8 +1,8 @@
 import Img from "@/components/shared/Img/Img";
+import { OrderServices } from "@/lib/repo/order.repo";
 import { tokens } from "@/lib/theme/theme";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { getOrdersAPI } from "api/orderServices";
 import Loading from "components/shared/Loading/Loading";
 import {
   formatDate,
@@ -102,7 +102,7 @@ const ManagerOrders = () => {
   useEffect(() => {
     setIsLoading(true);
     if (!auth?._id) return;
-    getOrdersAPI(auth._id)
+    OrderServices.getOrders(auth._id)
       .then((res) => {
         // console.log(res);
         setOrders(res);

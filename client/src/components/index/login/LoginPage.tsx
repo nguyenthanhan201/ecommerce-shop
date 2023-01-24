@@ -1,4 +1,4 @@
-import { loginAPI } from "api/authServices";
+import { AuthServices } from "@/lib/repo/auth.repo";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
 import { authentication } from "../../../config/firebase.config";
@@ -10,7 +10,7 @@ const LoginPage = () => {
     const googleAuthProvider = new GoogleAuthProvider();
     signInWithPopup(authentication, googleAuthProvider)
       .then((result) => {
-        loginAPI(result.user.email!)
+        AuthServices.login(result.user.email!)
           .then((res) => {
             localStorage.setItem("token", res.accessToken);
             router.replace("/");

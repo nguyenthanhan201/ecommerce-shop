@@ -1,6 +1,6 @@
-import { createProductAPI, updateProductAPI } from "@/api/productServices";
 import { GET_PRODUCTS } from "@/lib/redux/types";
 import { Product } from "@/lib/redux/types/product.type";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { category, colors, size } from "@/utils/index";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
@@ -59,7 +59,7 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
     if (product)
       return toast.promise(
         "Cập nhật sản phẩm thành công",
-        updateProductAPI({
+        ProductServices.updateProduct({
           ...data,
           _id: product._id,
         }).then(() => {
@@ -69,7 +69,7 @@ const ModalAddProduct = ({ product }: ModalAddProductProps) => {
       );
     return toast.promise(
       "Thêm sản phẩm thành công",
-      createProductAPI(data).then(() => {
+      ProductServices.createProduct(data).then(() => {
         dispatch({ type: GET_PRODUCTS });
       }),
       "Thêm sản phẩm thất bại"

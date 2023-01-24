@@ -1,9 +1,9 @@
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
 import { RootState } from "@/lib/redux/store";
 import { Product } from "@/lib/redux/types/product.type";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { Box, Button, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { hideProductAPI } from "api/productServices";
 import Header from "components/index/admin/components/Header";
 import Modal from "components/shared/Modal/Modal";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
@@ -130,7 +130,7 @@ const Page = () => {
   const hideProduct = (id: string) => {
     toast.promise(
       "Ẩn sản phẩm thành công",
-      hideProductAPI(id).then(() => {
+      ProductServices.hideProduct(id).then(() => {
         dispatch({ type: GET_PRODUCTS });
       }),
       "Ẩn sản phẩm thất bại"

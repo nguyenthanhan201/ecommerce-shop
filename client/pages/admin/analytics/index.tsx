@@ -1,6 +1,6 @@
-import { getMostViewedProductsAPI } from "@/api/productServices";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
 import { Product } from "@/lib/redux/types/product.type";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { Box } from "@mui/material";
 import {
   CategoryScale,
@@ -68,7 +68,7 @@ const Page = () => {
   //   }
   // }, [getDataMostViewedProducts]);
   useEffect(() => {
-    getMostViewedProductsAPI().then((res) => {
+    ProductServices.getMostViewedProducts().then((res) => {
       const nameProducts = res.map((item: Product) => item.title);
       const viewsProducts = res.map((item: Product) => item.views);
       setChartData({

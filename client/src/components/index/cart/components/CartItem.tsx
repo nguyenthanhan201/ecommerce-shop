@@ -1,7 +1,7 @@
 import Img from "@/components/shared/Img/Img";
 import { Product } from "@/lib/redux/types/product.type";
+import { CartServices } from "@/lib/repo/cart.repo";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { createCartItemAPI, deleteCartItemAPI } from "api/cartServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
@@ -25,9 +25,11 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
     if (!auth) return toast.error("Please login to delete cart item");
     return toast.promise(
       "Xóa sản phẩm khỏi giỏ hàng thành công",
-      deleteCartItemAPI(auth._id, product._id, size, color).then(() => {
-        dispatch({ type: GET_CART_ITEMS, payload: auth._id });
-      }),
+      CartServices.deleteCartItem(auth._id, product._id, size, color).then(
+        () => {
+          dispatch({ type: GET_CART_ITEMS, payload: auth._id });
+        }
+      ),
       "Đã có lỗi xảy ra"
     );
   };
@@ -39,7 +41,13 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
         if (quantity === 1) return handleDeleteCartItem();
         return toast.promise(
           "Cập nhật giỏ hàng thành công",
-          createCartItemAPI(auth._id, product._id, size, color, -1).then(() => {
+          CartServices.createCartItem(
+            auth._id,
+            product._id,
+            size,
+            color,
+            -1
+          ).then(() => {
             dispatch({ type: GET_CART_ITEMS, payload: auth._id });
           }),
           "Đã có lỗi xảy ra"
@@ -48,7 +56,13 @@ const CartItem = ({ product, quantity, size, color }: CartItemProps) => {
         if (product.stock === quantity) return toast.error("Quá số lượng hàng");
         return toast.promise(
           "Cập nhật giỏ hàng thành công",
-          createCartItemAPI(auth._id, product._id, size, color, 1).then(() => {
+          CartServices.createCartItem(
+            auth._id,
+            product._id,
+            size,
+            color,
+            1
+          ).then(() => {
             dispatch({ type: GET_CART_ITEMS, payload: auth._id });
           }),
           "Đã có lỗi xảy ra"

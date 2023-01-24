@@ -1,12 +1,12 @@
-import { tokenAPI } from "@/api/authServices";
 import Img from "@/components/shared/Img/Img";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
 import { getSalePrice, numberWithCommans } from "@/lib/helpers/parser";
 import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import { useToast } from "@/lib/providers/toast-provider";
+import { AuthServices } from "@/lib/repo/auth.repo";
+import { OrderServices } from "@/lib/repo/order.repo";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { getAllOrdersAPI } from "api/orderServices";
 import Header from "components/index/admin/components/Header";
 import { tokens } from "lib/theme/theme";
 import { useEffect, useMemo, useState } from "react";
@@ -87,7 +87,7 @@ const Page = () => {
   const toast = useToast();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<any>([]);
   // console.log("👌 ~ orders", orders);
   const convertOrders = useMemo(() => {
     if (!orders.length) return [];
@@ -122,13 +122,13 @@ const Page = () => {
   // console.log("👌 ~ convertOrders", convertOrders);
 
   useEffect(() => {
-    getAllOrdersAPI()
+    OrderServices.getAll()
       .then((res) => setOrders(res))
       .catch((err) => {
         if (err.response.data.error.name === "TokenExpiredError" && auth) {
           toast.promise(
             "Làm mới access token thành công. Làm mới trang để tiếp tục",
-            tokenAPI(auth?.email)
+            AuthServices.token(auth?.email)
               .then((res) => {
                 localStorage.setItem("token", res.accessToken);
               })

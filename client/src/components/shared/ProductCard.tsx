@@ -1,6 +1,6 @@
 import { Product } from "@/lib/redux/types/product.type";
+import { ProductServices } from "@/lib/repo/product.repo";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { updateViewsProductAPI } from "api/productServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -22,7 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const handleIncreaseViewsProduct = () => {
     if (!product._id) return;
-    updateViewsProductAPI(product._id);
+    ProductServices.updateViewsProduct(product._id);
   };
 
   return (
@@ -63,7 +63,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 discount: product.discount,
               },
             }}
-            prefetch
             onClick={handleIncreaseViewsProduct}
             className="shoess"
           >

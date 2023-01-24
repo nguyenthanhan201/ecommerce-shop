@@ -1,4 +1,5 @@
 import Img from "@/components/shared/Img/Img";
+import { AuthServices } from "@/lib/repo/auth.repo";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
@@ -6,7 +7,6 @@ import LoginIcon from "@mui/icons-material/Login";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import { logoutAPI } from "api/authServices";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { ColorModeContext } from "lib/theme/theme";
@@ -74,7 +74,7 @@ const Defaultheader = () => {
   const handleLogout = () => {
     if (!auth.email) return;
     const promise1 = signOut(authentication);
-    const promise2 = logoutAPI(auth.email);
+    const promise2 = AuthServices.logout(auth.email);
     const promise3 = localStorage.setItem("token", "null");
     Promise.all([promise1, promise2, promise3]).catch((err) => {
       console.log(err);

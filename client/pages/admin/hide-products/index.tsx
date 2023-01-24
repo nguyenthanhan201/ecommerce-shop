@@ -1,8 +1,8 @@
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
+import { AuthServices } from "@/lib/repo/auth.repo";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { Box, Button, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokenAPI } from "api/authServices";
-import { deleteProductAPI, unhideProductAPI } from "api/productServices";
 import Header from "components/index/admin/components/Header";
 import { useAppDispatch } from "lib/hooks/useAppDispatch";
 import { useAppSelector } from "lib/hooks/useAppSelector";
@@ -103,7 +103,7 @@ const Page = () => {
               variant="contained"
               style={{ backgroundColor: "#70d8bd" }}
               onClick={() => {
-                deleteProductAPI(row.row._id).then(() => {
+                ProductServices.deleteProduct(row.row._id).then(() => {
                   dispatch({ type: GET_HIDE_PRODUCTS });
                 });
               }}
@@ -124,7 +124,7 @@ const Page = () => {
     if (errProducts === "TokenExpiredError" && auth) {
       toast.promise(
         "Làm mới access token thành công. Làm mới trang để tiếp tục",
-        tokenAPI(auth?.email)
+        AuthServices.token(auth?.email)
           .then((res) => {
             localStorage.setItem("token", res.accessToken);
           })
@@ -140,7 +140,7 @@ const Page = () => {
   const handleShowProduct = (id: string) => {
     toast.promise(
       "Hiện sản phẩm thành công",
-      unhideProductAPI(id).then(() => {
+      ProductServices.unhideProduct(id).then(() => {
         dispatch({ type: GET_HIDE_PRODUCTS });
       }),
       "Hiện sản phẩm thất bại"

@@ -1,9 +1,8 @@
 import Button from "@/components/shared/Button";
 import CheckBox from "@/components/shared/CheckBox";
 import { memo, useEffect, useRef, useState } from "react";
-
-import { getProductsAPI } from "@/api/productServices";
 import InfinityList from "@/components/shared/InfinityList";
+import { ProductServices } from "@/lib/repo/product.repo";
 import { category, colors, productData, size } from "@/utils/index";
 
 const initFilter = {
@@ -46,7 +45,9 @@ const CatalogPage = () => {
   }, [filter, productList]);
 
   useEffect(() => {
-    getProductsAPI().then((res) => setProductList([...res, ...productList]));
+    ProductServices.getAll().then((res) =>
+      setProductList([...res, ...productList])
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
