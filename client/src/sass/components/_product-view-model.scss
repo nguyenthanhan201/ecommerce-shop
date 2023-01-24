@@ -20,7 +20,7 @@
   &_content {
     margin: auto;
     padding: 2rem;
-    background-color: $main-bg;
+    background-color: var(--main-bg);
     width: 80%;
     position: relative;
     opacity: 0;

@@ -4,7 +4,7 @@ import { updateViewsProductAPI } from "api/productServices";
 import { getSalePrice, numberWithCommans } from "lib/helpers/parser";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import Img from "./Img/Img";
 
@@ -20,10 +20,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [sourceURL, setSourceURL] = useState(product.image01);
   const [open, setOpen] = useState(false);
 
-  const childImg = useMemo(() => {
-    return [product.image01, product.image02];
-  }, [product]);
-
   const handleIncreaseViewsProduct = () => {
     if (!product._id) return;
     updateViewsProductAPI(product._id);
@@ -33,7 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="product-card">
       <div className="container-product-card">
         <ul className="thumb">
-          {childImg.map((child, index) => (
+          {[product.image01, product.image02].map((child, index) => (
             <li className="child-shoes" key={index}>
               <div>
                 <Img
@@ -67,8 +63,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 discount: product.discount,
               },
             }}
-            shallow={true}
-            prefetch={false}
+            prefetch
             onClick={handleIncreaseViewsProduct}
             className="shoess"
           >

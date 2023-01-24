@@ -16,25 +16,25 @@ const DefaultLayout = ({ ...props }: any) => {
     dispatch({ type: GET_CART_ITEMS, payload: auth._id });
   }, [auth?._id, dispatch]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      let progress: any = document.querySelector("#progressbar");
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     let progress: any = document.querySelector("#progressbar");
 
-      let totalHeight = document.body.scrollHeight - window.innerHeight;
-      let progressHeight = (window.pageYOffset / totalHeight) * 100;
-      progress.style.height = progressHeight + "%";
-    };
+  //     let totalHeight = document.body.scrollHeight - window.innerHeight;
+  //     let progressHeight = (window.pageYOffset / totalHeight) * 100;
+  //     progress.style.height = progressHeight + "%";
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   return (
     <>
-      <div id="progressbar" />
+      {/* <div id="progressbar" /> */}
       <DefaultHeader />
       <div className="container app">
         <div className="main">

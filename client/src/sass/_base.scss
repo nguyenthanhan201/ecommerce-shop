@@ -130,13 +130,10 @@ $val in $colors {
 }
 
 //? Custom progress-bar
-::-webkit-scrollbar {
-  display: none;
-  // opacity: 1;
-  // width: 10px;
-  // background: blue;
-  // pointer-events: none;
-}
+// ::-webkit-scrollbar {
+//   width: 0;
+//   height: 0;
+// }
 
 #progressbar {
   position: fixed;

@@ -51,7 +51,7 @@ const DefaultFooter = () => {
         <div className="new_footer_logo">
           <Link href="/" className="relative w-[10%] h-10 block">
             <Img
-              src={"/images/Logo-2.png"}
+              src="/images/Logo-2.png"
               className="footer_logo"
               alt="yolo-logo"
               layout="fill"
