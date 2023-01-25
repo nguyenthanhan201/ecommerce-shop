@@ -18,6 +18,7 @@ const Product = new Scheme(
     description: { type: String, require: true, maxLength: 1500 },
     views: { type: Number, default: 0 },
     discount: { type: Number, default: null },
+    sold: { type: Number, default: 0 },
     deletedAt: {
       type: Date,
       default: null,

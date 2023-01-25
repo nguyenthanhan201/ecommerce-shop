@@ -3,6 +3,7 @@ const CartItem = require("../models/CartItem");
 const ItemOrder = require("../models/ItemOrder");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const Rating = require("../models/Rating");
 
 class OrderController {
   getAllOrder(req, res) {
@@ -196,24 +197,38 @@ class OrderController {
           try {
             //lưu order
             order.save().then(async (orderResult) => {
-              // update số lượng sản phẩm
+              // update số lượng sản phẩm và sô lượng bán
               const promises = await Object.values(orderResult.order).map(
                 (item) => {
                   const result = new Promise((resolve) => {
                     Product.findOneAndUpdate(
                       { _id: item[0].product._id },
-                      { $inc: { stock: -item[0].quantity } },
+                      {
+                        $inc: {
+                          stock: -item[0].quantity,
+                          sold: +item[0].quantity,
+                        },
+                      },
                       { new: true }
+                    ).then(resolve(true));
+                  })
+                    .then(
+                      Rating({
+                        idProduct: item[0].product._id,
+                        idAuth,
+                      }).save()
                     )
-                      .then(resolve(true))
-                      .catch(resolve(false));
-                  });
+                    .catch((err) => {
+                      console.log("👌 ~ err", err);
+                      resolve(false);
+                    });
 
                   return result;
                 }
               );
 
               const results = await Promise.all(promises);
+              // console.log("👌 ~ results", results);
 
               if (results.every((item) => item === true)) {
                 // lưu order thành công thì xóa cartItem

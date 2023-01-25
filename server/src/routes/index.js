@@ -1,13 +1,11 @@
-const productRouter = require("./products.js");
-const authRouter = require("./auth.js");
-const cartItemRouter = require("./cartItem.js");
-const orderRouter = require("./order.js");
+// const productRouter = require("./products.js");
 
 function route(app) {
-  app.use("/order", orderRouter);
-  app.use("/cart-item", cartItemRouter);
-  app.use("/auth", authRouter);
-  app.use("/products", productRouter);
+  app.use("/order", require("./order.js"));
+  app.use("/cart-item", require("./cartItem.js"));
+  app.use("/auth", require("./auth.js"));
+  app.use("/products", require("./products.js"));
+  app.use("/rating", require("./rating.js"));
 }
 
 module.exports = route;
