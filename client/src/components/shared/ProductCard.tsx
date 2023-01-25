@@ -61,6 +61,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 colors: product.colors,
                 description: product.description,
                 discount: product.discount,
+                sold: product.sold,
               },
             }}
             onClick={handleIncreaseViewsProduct}

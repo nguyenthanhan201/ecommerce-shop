@@ -3,6 +3,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
 
 const listSidebar = [
   {
@@ -14,6 +15,11 @@ const listSidebar = [
     icon: <ReceiptLongIcon />,
     title: "Quản lí hóa đơn",
     path: "/user/orders",
+  },
+  {
+    icon: <StarsOutlinedIcon />,
+    title: "Quản lí đánh giá",
+    path: "/user/rating",
   },
 ];
 

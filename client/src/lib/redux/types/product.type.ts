@@ -13,4 +13,5 @@ export interface Product {
   deletedAt?: string,
   stock: number,
   discount?: number,
+  sold: number,
 }
