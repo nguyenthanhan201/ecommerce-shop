@@ -11,7 +11,7 @@ class OrderController {
       .then((orders) => res.json(orders));
   }
 
-  show(req, res, next) {
+  getOrdersByIdAuth(req, res, next) {
     const id = req.params.id;
 
     // get orders have idAuth = id and sort by date
