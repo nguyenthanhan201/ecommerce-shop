@@ -1,21 +1,21 @@
+import { HeroSliderData } from "@/utils/fake-data/hero-slider";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import classnames from "classnames";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
 import Img from "./Img/Img";
 
 type HeroSliderProps = {
-  data: any;
+  data: HeroSliderData[];
   timeOut?: number;
   auto?: boolean;
   control?: boolean;
 };
 
-const HeroSlider = (props: HeroSliderProps) => {
-  const data = props.data;
-
-  const timeOut = props.timeOut ? props.timeOut : 3000;
-
+const HeroSlider = ({ data, timeOut, auto, control }: HeroSliderProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -29,56 +29,58 @@ const HeroSlider = (props: HeroSliderProps) => {
   };
 
   useEffect(() => {
-    if (!props.auto) return;
+    if (!auto) return;
     const slideAuto = setInterval(() => {
       nextSlide();
     }, timeOut);
     return () => {
       clearInterval(slideAuto);
     };
-  }, [nextSlide, timeOut, props]);
+  }, [nextSlide, timeOut, auto]);
 
   return (
     <div className="hero-slider">
-      {data.map((item: any, index: number) => (
+      {data.map((item, index: number) => (
         <HeroSliderItem
           key={index}
           item={item}
           active={index === activeSlide}
         />
       ))}
-      {props.control ? (
+      {control && (
         <div className="hero-slider_control">
-          <div className="hero-slider_control_item" onClick={preSlide}>
-            <i className="bx bx-chevron-left"></i>
-          </div>
+          <KeyboardArrowLeftOutlinedIcon
+            className="hero-slider_control_item"
+            onClick={preSlide}
+          />
           <div className="hero-slider_control_item">
             <div className="index">
               {activeSlide + 1}/{data.length}
             </div>
           </div>
-          <div className="hero-slider_control_item" onClick={nextSlide}>
-            <i className="bx bx-chevron-right"></i>
-          </div>
+          <KeyboardArrowRightOutlinedIcon
+            className="hero-slider_control_item"
+            onClick={nextSlide}
+          />
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
 
-const HeroSliderItem = (props: any) => (
-  <div className={`hero-slider_item ${props.active ? "active" : ""}`}>
+const HeroSliderItem = ({ item, active }: any) => (
+  <div className={classnames("hero-slider_item", { active })}>
     <div className="hero-slider_item_info">
-      <div className={`hero-slider_item_info_title color-${props.item.color}`}>
-        <span>{props.item.title}</span>
+      <div className={`hero-slider_item_info_title color-${item.color}`}>
+        <span>{item.title}</span>
       </div>
       <div className="hero-slider_item_info_description">
-        <span>{props.item.description}</span>
+        <span>{item.description}</span>
       </div>
       <div className="hero-slider_item_info_btn">
-        <Link href={props.item.path as any}>
+        <Link href={item.path as any}>
           <Button
-            backgroundColor={props.item.color}
+            backgroundColor={item.color}
             icon={<ShoppingCartOutlinedIcon fontSize="inherit" />}
             animate={true}
           >
@@ -88,12 +90,14 @@ const HeroSliderItem = (props: any) => (
       </div>
     </div>
     <div className="hero-slider_item_image">
-      <div className={`shape bg-${props.item.color}`}></div>
+      <div className={`shape bg-${item.color}`}></div>
       <Img
-        src={props.item.img}
+        src={item.img}
         alt="oki"
         layout="fill"
-        loading="eager"
+        loading={
+          item.path === "/catalog/ao-thun-dinosaur-01" ? "eager" : "lazy"
+        }
         sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"

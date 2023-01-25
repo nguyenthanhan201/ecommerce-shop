@@ -2,7 +2,7 @@ const img1 = "/images/slider/slide-1.webp";
 const img2 = "/images/slider/slide-2.webp";
 const img3 = "/images/slider/slide-3.webp";
 
-type HeroSliderData = {
+export type HeroSliderData = {
   title: string;
   description: string;
   img: string;

@@ -4,12 +4,14 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
+import MenuIcon from "@mui/icons-material/Menu";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import { ColorModeContext } from "lib/theme/theme";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -23,7 +25,8 @@ import {
 import { useSelector } from "react-redux";
 import { authentication } from "../../config/firebase.config";
 import { mainNav } from "../../utils/fake-data/header-navs";
-import Menu from "./components/Menu";
+
+const Menu = dynamic(() => import("./components/Menu"), { ssr: false });
 
 const Defaultheader = () => {
   const theme = useTheme();
@@ -87,7 +90,7 @@ const Defaultheader = () => {
       <div className="container">
         <div className="header_menu">
           <div className="header_menu_mobile-toggle" onClick={menuToggle}>
-            <i className="bx bx-menu-alt-left"></i>
+            <MenuIcon fontSize="inherit"/>
           </div>
           <div className="header_menu_left" ref={menuLeft}>
             <div className="header_menu_left_close" onClick={menuToggle}>

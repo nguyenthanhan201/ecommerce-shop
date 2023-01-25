@@ -4,19 +4,14 @@ export abstract class CrudRepository<T> {
   abstract apiName: string;
   abstract displayName: string;
 
-  async getAll(): Promise<T[]> {
+  async getAll(isNotToken?: boolean): Promise<T[]> {
     try {
-      if (this.apiName === "products") {
-        const res = await get(`/${this.apiName}/getAll${this.displayName}`);
-        return res;
-      } else {
-        const res = await get(`/${this.apiName}/getAll${this.displayName}`, {
-          headers: {
-            "authentication": "Bearer " + localStorage.getItem("token"),
-          }
-        });
-        return res;
-      }
+      const res = await get(`/${this.apiName}/getAll${this.displayName}`, {
+        headers: {
+          "authentication": isNotToken ? "" : "Bearer " + localStorage.getItem("token"),
+        }
+      });
+      return res;
     } catch (err) {
       console.log(`Lấy danh sách ${this.apiName} thất bại.`);
       throw err;

@@ -9,7 +9,7 @@ export default function Page({ products }: any) {
 Page.Layout = DefaultLayout;
 
 export async function getServerSideProps() {
-  const products = await ProductServices.getAll()
+  const products = await ProductServices.getAll(true)
     .then((res) => res)
     .catch((err) => err);
   const seo = useSEO("Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi", {

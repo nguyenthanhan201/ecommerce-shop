@@ -69,9 +69,10 @@ const columns: any = [
                 style={{ display: "flex", alignItems: "center" }}
               >
                 {product.discount
-                  ? getSalePrice(product.price, product.discount) * quantity
+                  ? numberWithCommans(
+                      getSalePrice(product.price, product.discount) * quantity
+                    )
                   : numberWithCommans(price * quantity)}
-                ₫
               </div>
             );
           })}
@@ -102,7 +103,7 @@ const ManagerOrders = () => {
   useEffect(() => {
     setIsLoading(true);
     if (!auth?._id) return;
-    OrderServices.getOrders(auth._id)
+    OrderServices.getOrdersByIdAuth(auth._id)
       .then((res) => {
         // console.log(res);
         setOrders(res);

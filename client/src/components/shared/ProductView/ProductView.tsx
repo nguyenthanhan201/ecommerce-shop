@@ -8,7 +8,7 @@ import { useAppSelector } from "lib/hooks/useAppSelector";
 import { useToast } from "lib/providers/toast-provider";
 import { GET_CART_ITEMS } from "lib/redux/types";
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import Button from "../Button";
 import Img from "../Img/Img";
 import Loading from "../Loading/Loading";
@@ -38,9 +38,6 @@ const ProductView = ({ product }: ProductViewProps) => {
     quantity: 1,
   });
   const { color, size, quantity } = choosenItems;
-  const childrenImg = useMemo(() => {
-    return [product.image01, product.image02];
-  }, [product.image01]);
 
   useEffect(() => {
     setReviewImg(product.image01);
@@ -63,20 +60,17 @@ const ProductView = ({ product }: ProductViewProps) => {
   };
 
   const check = () => {
-    // console.log("👌 ~ color", color);
+    const toastErr = (msg: string) => toast.error(msg);
     if (color === undefined) {
-      // console.log("👌 ~ color", color);
-      // alert('Vui lòng chọn màu');
-      toast.error("Vui lòng chọn màu!");
+      toastErr("Vui lòng chọn màu!");
       return false;
     }
     if (size === undefined) {
-      // alert('Vui lòng chọn kích thước');
-      toast.error("Vui lòng chọn kích thước!");
+      toastErr("Vui lòng chọn kích thước!");
       return false;
     }
     if (product._id === undefined) {
-      toast.error("Sản phẩm không tồn tại!");
+      toastErr("Sản phẩm không tồn tại!");
       return false;
     }
     return true;
@@ -110,7 +104,7 @@ const ProductView = ({ product }: ProductViewProps) => {
     <div className="product">
       <div className="product_image">
         <div className="product_image_list">
-          {childrenImg.map((child, index) => (
+          {[product.image01, product.image02].map((child, index) => (
             <div
               key={index}
               className="product_image_list_item"

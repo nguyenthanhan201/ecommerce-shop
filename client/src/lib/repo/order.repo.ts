@@ -15,7 +15,7 @@ export class OrderRepository extends CrudRepository<any> {
     return res;
   }
 
-  async getOrders(idAuth: string) {
+  async getOrdersByIdAuth(idAuth: string) {
     const res = await get(`/order/show/${idAuth}`);
     return res;
   }

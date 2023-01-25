@@ -203,7 +203,7 @@
       display: none;
 
       @include table {
-        display: block;
+        display: flex;
         font-size: 2.5rem;
         z-index: 9;
       }

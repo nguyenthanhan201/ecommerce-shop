@@ -175,6 +175,7 @@ $nb-slides: 5;
     &~.left-arrow[for="slide#{custom-modulo($n - 1)}"],
     &~.right-arrow[for="slide#{custom-modulo($n + 1)}"] {
       display: inherit;
+      transform: translateY(-50%);
     }
   }
 }

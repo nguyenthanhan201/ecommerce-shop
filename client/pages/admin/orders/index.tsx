@@ -1,6 +1,10 @@
 import Img from "@/components/shared/Img/Img";
 import AdminLayout from "@/layouts/admin-layout/AdminLayout";
-import { getSalePrice, numberWithCommans } from "@/lib/helpers/parser";
+import {
+  formatDate,
+  getSalePrice,
+  numberWithCommans,
+} from "@/lib/helpers/parser";
 import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import { useToast } from "@/lib/providers/toast-provider";
 import { AuthServices } from "@/lib/repo/auth.repo";
@@ -25,26 +29,39 @@ type TypeRowProduct = {
 
 const columns: any = [
   {
+    field: "idAuth",
+    headerName: "User",
+    flex: 1,
+    headerAlign: "center",
+    align: "center",
+  },
+  {
     field: "actions1",
     headerName: "Title",
     flex: 1,
     headerAlign: "center",
     align: "left",
     renderCell: (row: any) => {
-      const { title, image01, size, color } = row.row;
       return (
-        <div className="flex items-center gap-2">
-          <Img
-            src={image01}
-            alt={image01}
-            width={30}
-            height={30}
-            className="rounded-full"
-            hasNotplaceholder
-          />
-          <p
-            style={{ whiteSpace: "break-spaces" }}
-          >{`${title}-${size}-${color}`}</p>
+        <div className="flex flex-col gap-2">
+          {Object.values(row.row.order).map((item: any, index: number) => {
+            const { size, color, product } = item[0];
+            return (
+              <div className="flex items-center gap-2" key={index}>
+                <Img
+                  src={product.image01}
+                  alt={product.image01}
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                  hasNotplaceholder
+                />
+                <p
+                  style={{ whiteSpace: "break-spaces" }}
+                >{`${product.title}-${size}-${color}`}</p>
+              </div>
+            );
+          })}
         </div>
       );
     },
@@ -55,19 +72,34 @@ const columns: any = [
     flex: 1,
     headerAlign: "center",
     align: "center",
-    cellClassName: "name-column--cell",
+    renderCell: (row: any) => formatDate(row.row.createdAt, "date"),
   },
   {
     field: "actions2",
-    headerName: "price",
+    headerName: "Price",
     flex: 1,
     headerAlign: "center",
     align: "center",
     renderCell: (row: any) => {
-      const { quantity, price, discount } = row.row;
-      return discount
-        ? numberWithCommans(quantity * getSalePrice(price, discount))
-        : numberWithCommans(quantity * price);
+      return (
+        <div className="flex flex-col gap-2">
+          {Object.values(row.row.order).map((item: any, index: number) => {
+            const { quantity, price, product } = item[0];
+            return (
+              <div
+                key={index}
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                {product.discount
+                  ? numberWithCommans(
+                      getSalePrice(product.price, product.discount) * quantity
+                    )
+                  : numberWithCommans(price * quantity)}
+              </div>
+            );
+          })}
+        </div>
+      );
     },
   },
   {
@@ -89,37 +121,6 @@ const Page = () => {
   const colors = tokens(theme.palette.mode);
   const [orders, setOrders] = useState<any>([]);
   // console.log("👌 ~ orders", orders);
-  const convertOrders = useMemo(() => {
-    if (!orders.length) return [];
-    let arr: TypeRowProduct[] = [];
-    orders.forEach((order: any) => {
-      // console.log("👌 ~ order", order);
-      const createdAt = new Date(order.createdAt || "");
-      const day = createdAt.getDate();
-      const month = createdAt.getMonth() + 1;
-      const year = createdAt.getFullYear();
-
-      Object.values(order.order).forEach((item: any) => {
-        // console.log("👌 ~ item", item);
-        const { color, size, quantity } = item[0];
-        const { title, image01, price, discount } = item[0].product;
-        arr.push({
-          _id: Math.random() + 1,
-          title,
-          image01,
-          price,
-          size,
-          color,
-          quantity,
-          discount,
-          createdAt: `${day}/${month}/${year}`,
-        });
-      });
-    });
-
-    return arr;
-  }, [orders]);
-  // console.log("👌 ~ convertOrders", convertOrders);
 
   useEffect(() => {
     OrderServices.getAll()
@@ -178,8 +179,9 @@ const Page = () => {
         }}
       >
         <DataGrid
+          getRowHeight={() => "auto"}
           checkboxSelection
-          rows={convertOrders}
+          rows={orders}
           columns={columns}
           getRowId={(row) => row._id!}
         />
