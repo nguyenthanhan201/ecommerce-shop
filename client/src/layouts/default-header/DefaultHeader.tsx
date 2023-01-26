@@ -1,27 +1,16 @@
 import Img from "@/components/shared/Img/Img";
 import { AuthServices } from "@/lib/repo/auth.repo";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import MenuIcon from "@mui/icons-material/Menu";
-import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { Badge, useTheme } from "@mui/material";
+import { Avatar, Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
-import { ColorModeContext } from "lib/theme/theme";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { authentication } from "../../config/firebase.config";
 import { mainNav } from "../../utils/fake-data/header-navs";
@@ -30,7 +19,6 @@ const Menu = dynamic(() => import("./components/Menu"), { ssr: false });
 
 const Defaultheader = () => {
   const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
   const cartItems = useAppSelector((state) => state.cartItems);
   const auth = useSelector((state: any) => state.auth.auth);
   const router = useRouter();
@@ -90,7 +78,7 @@ const Defaultheader = () => {
       <div className="container">
         <div className="header_menu">
           <div className="header_menu_mobile-toggle" onClick={menuToggle}>
-            <MenuIcon fontSize="inherit"/>
+            <MenuIcon fontSize="inherit" />
           </div>
           <div className="header_menu_left" ref={menuLeft}>
             <div className="header_menu_left_close" onClick={menuToggle}>
@@ -119,16 +107,6 @@ const Defaultheader = () => {
             />
           </Link>
           <div className="header_menu_right">
-            <div
-              className="header_menu_item header_menu_right_item"
-              onClick={colorMode.toggleColorMode}
-            >
-              {theme.palette.mode === "dark" ? (
-                <DarkModeOutlinedIcon className="dark_toggle" />
-              ) : (
-                <WbSunnyOutlinedIcon className="dark_toggle" />
-              )}
-            </div>
             {auth && (
               <div className="header_menu_item header_menu_right_item">
                 <Tooltip title="Giỏ hàng">
@@ -154,7 +132,9 @@ const Defaultheader = () => {
             >
               {auth ? (
                 <>
-                  <AccountCircleOutlinedIcon />
+                  <Avatar sx={{ width: 27, height: 27 }}>
+                    {auth.name?.charAt(0)}
+                  </Avatar>
                   {isShowMenu && <Menu handleLogout={handleLogout} />}
                 </>
               ) : (

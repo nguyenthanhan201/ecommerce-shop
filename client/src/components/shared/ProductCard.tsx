@@ -94,7 +94,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Button>
         </div>
       </div>
-      <ProductViewModel product={product} setOpen={setOpen} open={open} />
+      {open && (
+        <ProductViewModel open={open} product={product} setOpen={setOpen} />
+      )}
     </div>
   );
 };

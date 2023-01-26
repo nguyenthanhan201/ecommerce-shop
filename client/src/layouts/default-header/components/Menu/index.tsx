@@ -1,11 +1,14 @@
+import { ColorModeContext } from "@/lib/theme/theme";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
+import { useTheme } from "@mui/material";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 type MenuProps = {
   handleLogout: () => void;
@@ -20,6 +23,8 @@ type MenuItemsProps = {
 };
 
 const Menu = ({ handleLogout }: MenuProps) => {
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
   const [isChangedDropdown, setIsChangedDropdown] = useState<boolean>(false);
   const [selectedTypeChild, setSelectedTypeChild] = useState<string | null>(
     null
@@ -31,13 +36,6 @@ const Menu = ({ handleLogout }: MenuProps) => {
         icon: <AccountCircleOutlinedIcon sx={{ fontSize: "80% !important" }} />,
         title: "Tài khoản của tôi",
         to: "/user/account",
-      },
-      {
-        icon: (
-          <MonetizationOnOutlinedIcon sx={{ fontSize: "80% !important" }} />
-        ),
-        title: "Đơn hàng của tôi",
-        to: "/user/orders",
       },
       {
         icon: (
@@ -61,6 +59,22 @@ const Menu = ({ handleLogout }: MenuProps) => {
             },
           ],
         },
+      },
+      {
+        icon:
+          theme.palette.mode === "dark" ? (
+            <DarkModeOutlinedIcon
+              className="dark_toggle"
+              sx={{ fontSize: "80% !important" }}
+            />
+          ) : (
+            <WbSunnyOutlinedIcon
+              className="dark_toggle"
+              sx={{ fontSize: "80% !important" }}
+            />
+          ),
+        title: "Giao diện",
+        func: () => colorMode.toggleColorMode(),
       },
       {
         icon: <LogoutOutlinedIcon sx={{ fontSize: "80% !important" }} />,

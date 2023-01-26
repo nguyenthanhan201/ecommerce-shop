@@ -16,12 +16,17 @@ const ModalRating = ({ selectedRating }: ModalRatingProps) => {
   const onEditorStateChange = (editorState: any) => {
     setComment(editorState);
   };
+  const [idDisabled, setIdDisabled] = useState<boolean>(false);
 
   const handleRating = () => {
     if (rating === null || comment === "" || !selectedRating?._id) return;
     toast.promise(
       "Gửi đánh giá thành công",
-      RatingServices.updateRatingById(selectedRating?._id, rating, comment),
+      RatingServices.updateRatingById(
+        selectedRating?._id,
+        rating,
+        comment
+      ).then(() => setIdDisabled(true)),
       "Gửi đánh giá thất bại"
     );
   };
@@ -42,7 +47,13 @@ const ModalRating = ({ selectedRating }: ModalRatingProps) => {
         onChange={onEditorStateChange}
         placeholder="Nhập nội dụng comment"
       />
-      <button onClick={handleRating}>Gửi đánh giá</button>
+      <button
+        className="px-2 py-1 rounded border-none mt-3 cursor-pointer bg-main"
+        onClick={handleRating}
+        disabled={idDisabled}
+      >
+        Gửi đánh giá
+      </button>
     </>
   );
 };

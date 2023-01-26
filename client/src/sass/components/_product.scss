@@ -236,6 +236,22 @@
   }
 }
 
+.product-rating {
+  @include flex(flex-start, flex-start);
+  gap: 8px;
+  color: var(--main-color);
+
+  &__main {
+    @include flex(flex-start, flex-start);
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__time {
+    opacity: 0.5;
+  }
+}
+
 // ? code cho phan image zoom o day
 .img-zoom-container {
   display: flex;

@@ -65,7 +65,7 @@ const ManagerRating = () => {
     },
     {
       field: "actions4",
-      headerName: "status",
+      headerName: "actions",
       flex: 1,
       headerAlign: "center",
       align: "center",

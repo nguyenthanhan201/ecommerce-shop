@@ -52,7 +52,7 @@ const ProductView = ({ product }: ProductViewProps) => {
     quantity: 1,
   });
   const [ratings, setRatings] = useState<Rating[]>([]);
-  console.log("👌 ~ ratings", ratings);
+  // console.log("👌 ~ ratings", ratings);
   const [showModal, setShowModal] = useState<boolean>(false);
   const { color, size, quantity } = choosenItems;
 
