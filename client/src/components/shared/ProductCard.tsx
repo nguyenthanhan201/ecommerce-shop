@@ -17,7 +17,7 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const [sourceURL, setSourceURL] = useState(product.image01);
+  // const [sourceURL, setSourceURL] = useState(product.image01);
   const [open, setOpen] = useState(false);
 
   const handleIncreaseViewsProduct = () => {
@@ -28,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="product-card">
       <div className="container-product-card">
-        <ul className="thumb">
+        {/* <ul className="thumb">
           {[product.image01, product.image02].map((child, index) => (
             <li className="child-shoes" key={index}>
               <div>
@@ -42,7 +42,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </div>
             </li>
           ))}
-        </ul>
+        </ul> */}
         <div className="imgBox">
           <h2>{product.title}</h2>
           <Link
@@ -67,7 +67,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             onClick={handleIncreaseViewsProduct}
             className="shoess"
           >
-            <Img src={sourceURL} alt={product.title} layout="fill" />
+            <Img src={product.image01} alt={product.title} layout="fill" />
           </Link>
           <div className="size">
             <span>Giá</span>

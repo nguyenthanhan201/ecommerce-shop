@@ -9,23 +9,13 @@ import { useAppSelector } from "@/lib/hooks/useAppSelector";
 import { useToast } from "@/lib/providers/toast-provider";
 import { AuthServices } from "@/lib/repo/auth.repo";
 import { OrderServices } from "@/lib/repo/order.repo";
-import { Box, useTheme } from "@mui/material";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import { Box, Button as ButtonMUI, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "components/index/admin/components/Header";
 import { tokens } from "lib/theme/theme";
 import { useEffect, useMemo, useState } from "react";
-
-type TypeRowProduct = {
-  _id?: number;
-  title: string;
-  image01: string;
-  price: number;
-  size: string;
-  color: string;
-  quantity: number;
-  createdAt: string;
-  discount: number | null;
-};
+import { useExcelDownloder } from "react-xls";
 
 const columns: any = [
   {
@@ -115,12 +105,34 @@ const columns: any = [
 ];
 
 const Page = () => {
+  const { ExcelDownloder } = useExcelDownloder();
   const auth = useAppSelector((state) => state.auth.auth);
   const toast = useToast();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [orders, setOrders] = useState<any>([]);
-  // console.log("👌 ~ orders", orders);
+
+  const convertOrdersToExcel = () => {
+    if (orders.length <= 0) return;
+    const data = Object.values(orders).map((item: any) => {
+      const { idAuth, createdAt, order } = item;
+      // in cột order có nhiều sản phẩm nên phải map ra
+      const Purchaseorders = Object.values(order).map(
+        (item2: any) => item2[0].product.title
+      );
+      // in cột price có nhiều sản phẩm nên phải map ra
+      const PurchasePrice = Object.values(order).map(
+        (item2: any) => item2[0].product.price
+      );
+      return {
+        idAuth,
+        createdAt,
+        order: Purchaseorders.map((item3: any) => item3).join("; "),
+        price: PurchasePrice.map((item3: any) => item3).join("; "),
+      };
+    });
+    return { Data1: [...data] };
+  };
 
   useEffect(() => {
     OrderServices.getAll()
@@ -142,14 +154,42 @@ const Page = () => {
       });
   }, [auth]);
 
+  const ButtonExcel = useMemo(() => {
+    if (!convertOrdersToExcel()) return null;
+    return (
+      <Box>
+        <ButtonMUI
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+          }}
+        >
+          <ExcelDownloder
+            data={convertOrdersToExcel()}
+            filename="book"
+            type="link" // or type={'button'}
+            className="flex items-center"
+          >
+            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            Xuất Excel
+          </ExcelDownloder>
+        </ButtonMUI>
+      </Box>
+    );
+  }, [convertOrdersToExcel]);
+
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Orders" subtitle="Welcome to orders dashboard" />
+        {ButtonExcel}
       </Box>
       <Box
-        m="40px 0 0 0"
+        m="20px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
