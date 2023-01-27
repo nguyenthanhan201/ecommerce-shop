@@ -1,4 +1,5 @@
 import Img from "@/components/shared/Img/Img";
+import { RootState } from "@/lib/redux/store";
 import { AuthServices } from "@/lib/repo/auth.repo";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
@@ -11,6 +12,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { authentication } from "../../config/firebase.config";
 import { mainNav } from "../../utils/fake-data/header-navs";
@@ -19,7 +21,8 @@ const Menu = dynamic(() => import("./components/Menu"), { ssr: false });
 
 const Defaultheader = () => {
   const theme = useTheme();
-  const cartItems = useAppSelector((state) => state.cartItems);
+  const { t } = useTranslation("header");
+  const cartItems = useAppSelector((state: RootState) => state.cartItems);
   const auth = useSelector((state: any) => state.auth.auth);
   const router = useRouter();
   const activeNav = mainNav.findIndex((e) => e.path === router.pathname);
@@ -93,7 +96,7 @@ const Defaultheader = () => {
                 onClick={menuToggle}
               >
                 <Link href={item.path}>
-                  <span>{item.display}</span>
+                  <span>{t("mainNavs." + item.name, "")}</span>
                 </Link>
               </div>
             ))}

@@ -5,6 +5,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import classnames from "classnames";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Button from "./Button";
 import Img from "./Img/Img";
 
@@ -44,6 +45,7 @@ const HeroSlider = ({ data, timeOut, auto, control }: HeroSliderProps) => {
         <HeroSliderItem
           key={index}
           item={item}
+          index={index}
           active={index === activeSlide}
         />
       ))}
@@ -68,42 +70,45 @@ const HeroSlider = ({ data, timeOut, auto, control }: HeroSliderProps) => {
   );
 };
 
-const HeroSliderItem = ({ item, active }: any) => (
-  <div className={classnames("hero-slider_item", { active })}>
-    <div className="hero-slider_item_info">
-      <div className={`hero-slider_item_info_title color-${item.color}`}>
-        <span>{item.title}</span>
+const HeroSliderItem = ({ item, active, index }: any) => {
+  const { t } = useTranslation("home");
+  return (
+    <div className={classnames("hero-slider_item", { active })}>
+      <div className="hero-slider_item_info">
+        <div className={`hero-slider_item_info_title color-${item.color}`}>
+          <span>{t(`HeroSlider.${index}.title`, "")}</span>
+        </div>
+        <div className="hero-slider_item_info_description">
+          <span>{t(`HeroSlider.${index}.description`, "")}</span>
+        </div>
+        <div className="hero-slider_item_info_btn">
+          <Link href={item.path as any}>
+            <Button
+              backgroundColor={item.color}
+              icon={<ShoppingCartOutlinedIcon fontSize="inherit" />}
+              animate={true}
+            >
+              {t("HeroSliderButton")}
+            </Button>
+          </Link>
+        </div>
       </div>
-      <div className="hero-slider_item_info_description">
-        <span>{item.description}</span>
-      </div>
-      <div className="hero-slider_item_info_btn">
-        <Link href={item.path as any}>
-          <Button
-            backgroundColor={item.color}
-            icon={<ShoppingCartOutlinedIcon fontSize="inherit" />}
-            animate={true}
-          >
-            xem chi tiết
-          </Button>
-        </Link>
+      <div className="hero-slider_item_image">
+        <div className={`shape bg-${item.color}`}></div>
+        <Img
+          src={item.img}
+          alt="oki"
+          layout="fill"
+          loading={
+            item.path === "/catalog/ao-thun-dinosaur-01" ? "eager" : "lazy"
+          }
+          sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
+        />
       </div>
     </div>
-    <div className="hero-slider_item_image">
-      <div className={`shape bg-${item.color}`}></div>
-      <Img
-        src={item.img}
-        alt="oki"
-        layout="fill"
-        loading={
-          item.path === "/catalog/ao-thun-dinosaur-01" ? "eager" : "lazy"
-        }
-        sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 export default HeroSlider;

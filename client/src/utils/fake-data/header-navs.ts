@@ -1,10 +1,10 @@
 export const mainNav = [
   {
-    display: "Trang Chủ",
+    name: "home",
     path: "/",
   },
   {
-    display: "Sản Phẩm",
+   name: "products",
     path: "/catalog",
   },
 ];

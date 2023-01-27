@@ -30,11 +30,12 @@
       "@/assets/*": ["assets/*"],
       "@/longProcesses/*": ["longProcesses/*"],
       "@/utils/*": ["utils/*"],
-      "@/api/*": ["api/*"]
+      "@/api/*": ["api/*"],
+      "@/i18n/*": ["i18n/*"]
     }
   },
   "include": [
-    ".d.ts",
+    "src/@types/.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "utils/data.js",
@@ -42,6 +43,5 @@
     "pages/_app.tsx",
     "src/utils/data.js"
   ],
-  // "include": ["src"],
   "exclude": ["node_modules"]
 }

@@ -12,6 +12,7 @@ import { GET_CART_ITEMS } from "lib/redux/types";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Button from "../Button";
 import Img from "../Img/Img";
 import Loading from "../Loading/Loading";
@@ -38,6 +39,7 @@ type ChoosenItemType = {
 };
 
 const ProductView = ({ product }: ProductViewProps) => {
+  const { t } = useTranslation("product");
   const { isMobile } = useDevice();
   const toast = useToast();
   const auth = useAppSelector((state) => state.auth.auth);
@@ -197,7 +199,7 @@ const ProductView = ({ product }: ProductViewProps) => {
             </div>
           </div>
           <div className="product_info_item">
-            <div className="product_info_item_title">Màu sắc</div>
+            <div className="product_info_item_title">{t("color")}</div>
             <div className="product_info_item_list">
               {product.colors.map((item: any, index: number) => (
                 <div
@@ -215,7 +217,7 @@ const ProductView = ({ product }: ProductViewProps) => {
             </div>
           </div>
           <div className="product_info_item">
-            <div className="product_info_item_title">Kích cỡ</div>
+            <div className="product_info_item_title">{t("size")}</div>
             <div className="product_info_item_list">
               {product.size.map((item: any, index: number) => (
                 <div
@@ -235,7 +237,7 @@ const ProductView = ({ product }: ProductViewProps) => {
           {product.stock > 0 ? (
             <>
               <div className="product_info_item">
-                <div className="product_info_item_title">Số lượng</div>
+                <div className="product_info_item_title">{t("quantity")}</div>
                 <div className="product_info_item_quantity">
                   <div
                     className="product_info_item_quantity_btn"
@@ -252,15 +254,17 @@ const ProductView = ({ product }: ProductViewProps) => {
                   >
                     +
                   </div>
-                  <p className="stock">Số lượng còn lại {product.stock}</p>
+                  <p className="stock">
+                    {t("available")} {product.stock}
+                  </p>
                 </div>
               </div>
               <div className="product_info_item">
                 <Button onClick={addToCart} icon={""} animate={false}>
-                  thêm vào giỏ
+                  {t("add_to_cart")}
                 </Button>
                 <Button onClick={gotoCart} icon={""} animate={false}>
-                  mua ngay
+                  {t("buy_now")}
                 </Button>
               </div>
             </>

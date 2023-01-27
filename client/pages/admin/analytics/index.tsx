@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import {
   CategoryScale,
   Chart as ChartJS,
+  ChartOptions,
   Legend,
   LinearScale,
   LineElement,
@@ -86,13 +87,12 @@ const Page = () => {
     });
   }, []);
 
-  const options = {
-    responsive: true,
+  const options: ChartOptions = {
+    animation: false,
     interaction: {
       mode: "index" as const,
       intersect: false,
     },
-    stacked: false,
     plugins: {
       title: {
         display: true,
@@ -186,16 +186,16 @@ const Page = () => {
 
   if (!chartData) return <div>Loading...</div>;
   return (
-    <Box m="20px">
-      {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Thống kê lượt xem" subtitle="Chào mừng tới thống kê" />
+    <>
+      <Box m="20px">
+        {/* HEADER */}
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Header title="Thống kê lượt xem" subtitle="Chào mừng tới thống kê" />
+        </Box>
+        {/* GRID & CHARTS */}
       </Box>
-      {/* GRID & CHARTS */}
-      <div style={{ margin: "0 50px 100px 50px" }}>
-        {chartData && <Line options={options} data={data} />}
-      </div>
-    </Box>
+      {chartData && <Line options={options as any} data={data} />}
+    </>
   );
 };
 

@@ -45,7 +45,7 @@ const HomePage = ({ products }: any) => {
         <SectionTitle>top sản phẩm bản chạy trong tuần</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {products &&
+            {products.length > 0 &&
               products.map((item: Product) => {
                 // console.log("👌 ~ products", products);
                 if (!item.image01) return null;

@@ -9,6 +9,7 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { useTheme } from "@mui/material";
 import Link from "next/link";
 import React, { useContext, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type MenuProps = {
   handleLogout: () => void;
@@ -23,6 +24,7 @@ type MenuItemsProps = {
 };
 
 const Menu = ({ handleLogout }: MenuProps) => {
+  const { i18n } = useTranslation();
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   const [isChangedDropdown, setIsChangedDropdown] = useState<boolean>(false);
@@ -53,9 +55,11 @@ const Menu = ({ handleLogout }: MenuProps) => {
           data: [
             {
               title: "Tiếng Việt",
+              func: () => i18n.changeLanguage("vi"),
             },
             {
               title: "Tiếng Anh",
+              func: () => i18n.changeLanguage("en"),
             },
           ],
         },
@@ -146,7 +150,7 @@ const Menu = ({ handleLogout }: MenuProps) => {
               </p>
               {childrenItems[0].map((item: any, index: number) => {
                 return (
-                  <p className="dropdown_item" key={index}>
+                  <p className="dropdown_item" key={index} onClick={item.func}>
                     <span>{item.title}</span>
                   </p>
                 );

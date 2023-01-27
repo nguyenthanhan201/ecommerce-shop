@@ -3,8 +3,8 @@ import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 import { ProductServices } from "@/lib/repo/product.repo";
 
+
 export default function Page({ products }: any) {
-  // console.log("👌 ~ products", products);
   return <HomePage products={products} />;
 }
 Page.Layout = DefaultLayout;

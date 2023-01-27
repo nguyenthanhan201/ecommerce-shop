@@ -15,19 +15,19 @@ interface Option<T = any> {
   className?: string;
   disabled?: boolean;
   color?:
-    | "primary"
-    | "accent"
-    | "info"
-    | "success"
-    | "danger"
-    | "warning"
-    | "bluegray"
-    | "orange"
-    | "teal"
-    | "cyan"
-    | "purple"
-    | "pink"
-    | (string & {});
+  | "primary"
+  | "accent"
+  | "info"
+  | "success"
+  | "danger"
+  | "warning"
+  | "bluegray"
+  | "orange"
+  | "teal"
+  | "cyan"
+  | "purple"
+  | "pink"
+  | (string & {});
 
   cols?: Cols;
   data?: any;
@@ -48,3 +48,4 @@ interface FormControlProps extends ReactProps {
 }
 
 type Cols = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+

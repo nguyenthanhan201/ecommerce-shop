@@ -7,6 +7,7 @@ import { Roboto } from "@next/font/google";
 import { DefaultSeo, NextSeo } from "next-seo";
 import { Fragment } from "react";
 import { Provider } from "react-redux";
+import "../src/i18n/i18n";
 import "../src/sass/index.scss";
 import Page404 from "./404";
 
