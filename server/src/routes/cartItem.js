@@ -3,7 +3,7 @@ const router = express.Router();
 
 const cartItemController = require("../app/controllers/CartItemController");
 
-router.get("/:id", cartItemController.show);
+router.get("/:id", cartItemController.getCartItemsByIdAuth);
 router.post("/create", cartItemController.create);
 router.post("/delete", cartItemController.delete);
 router.post("/clear-cart", cartItemController.clearCart);

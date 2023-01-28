@@ -26,7 +26,12 @@ class AuthsController {
     // check auth exists
     Auth.findOne({ email: auth.email })
       .then((data) => {
-        if (data) return res.json({ data });
+        if (data)
+          return res.json({
+            name: data.name,
+            email: data.email,
+            _id: data._id,
+          });
 
         return res.status(400).json({ message: "User is not exits" });
       })

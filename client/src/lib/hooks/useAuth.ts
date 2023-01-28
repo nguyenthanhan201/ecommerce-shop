@@ -13,7 +13,8 @@ function useAuth() {
       // console.log("👌 ~ user", user);
       if (!user) return dispatch(setAuthSlice(undefined));
       return AuthServices.getUserByEmail(user.displayName || "", user.email || "").then((res) => {
-        const { name, email, _id } = res.data;
+        // console.log("👌 ~ res", res)
+        const { name, email, _id } = res;
         dispatch(
           setAuthSlice({
             name,

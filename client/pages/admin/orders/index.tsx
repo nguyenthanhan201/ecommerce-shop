@@ -111,6 +111,7 @@ const Page = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [orders, setOrders] = useState<any>([]);
+  // console.log("👌 ~ orders", orders);
 
   const convertOrdersToExcel = () => {
     if (orders.length <= 0) return;
@@ -183,7 +184,6 @@ const Page = () => {
 
   return (
     <Box m="20px">
-      {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Orders" subtitle="Welcome to orders dashboard" />
         {ButtonExcel}

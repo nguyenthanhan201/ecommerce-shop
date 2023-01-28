@@ -5,7 +5,9 @@ import { ColorModeContext, useMode } from "@/lib/theme/theme";
 import { ThemeProvider } from "@mui/material";
 import { Roboto } from "@next/font/google";
 import { DefaultSeo, NextSeo } from "next-seo";
-import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Provider } from "react-redux";
 import "../src/i18n/i18n";
 import "../src/sass/index.scss";
@@ -26,6 +28,14 @@ function MyApp({ Component, pageProps }: Props) {
   const layoutProps = Component.LayoutProps ? Component.LayoutProps : {};
   const [theme, colorMode] = useMode();
   const statusNetWork = useNetWork();
+  const router = useRouter();
+  const { locale } = router;
+  // console.log("👌 ~ locale", locale);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [locale]);
 
   if (!statusNetWork) return <Page404 />;
   return (

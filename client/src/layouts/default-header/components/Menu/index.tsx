@@ -7,6 +7,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { useTheme } from "@mui/material";
+import { setCookie } from "cookies-next";
 import Link from "next/link";
 import React, { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -55,11 +56,17 @@ const Menu = ({ handleLogout }: MenuProps) => {
           data: [
             {
               title: "Tiếng Việt",
-              func: () => i18n.changeLanguage("vi"),
+              func: () => {
+                i18n.changeLanguage("vi");
+                setCookie("NEXT_LOCALE", "vi");
+              },
             },
             {
               title: "Tiếng Anh",
-              func: () => i18n.changeLanguage("en"),
+              func: () => {
+                i18n.changeLanguage("en");
+                setCookie("NEXT_LOCALE", "en");
+              },
             },
           ],
         },

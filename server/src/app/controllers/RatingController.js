@@ -36,14 +36,16 @@ class RatingController {
     Rating.find({ idProduct })
       .then((rating) => {
         Rating.populate(rating, { path: "idAuth" }, function (err, rating) {
-          Rating.populate(
-            rating,
-            { path: "idProduct" },
-            function (err, rating) {
-              if (err) return res.status(400).json({ error: err });
-              res.json(rating);
-            }
-          );
+          if (err) return res.status(400).json({ error: err });
+          res.json(rating);
+          // Rating.populate(
+          //   rating,
+          //   { path: "idProduct" },
+          //   function (err, rating) {
+          //     if (err) return res.status(400).json({ error: err });
+          //     res.json(rating);
+          //   }
+          // );
         });
       })
       .catch((err) => {

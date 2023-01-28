@@ -77,6 +77,10 @@ const nextConfig = {
   //   );
   //   return config;
   // },
+  i18n: {
+    locales: ["vi", "en"],
+    defaultLocale: "vi",
+  },
 };
 
 // const withBundleAnalyzer = require('@next/bundle-analyzer')({

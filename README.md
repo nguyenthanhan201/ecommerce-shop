@@ -17,6 +17,7 @@ Button Select Quantity: https://codepen.io/tgeorgetom/pen/qyJLjz
 Creative Page Scroll Progress Bar: https://www.youtube.com/watch?v=qYFkQa0Bbq0
 Responsive Contact Us Page Design using Html CSS: https://www.youtube.com/watch?v=gggB0Nq5vBk
 Search Filter React js Tutorial - using Hooks | React js Search Bar | React Tutorials for Beginners: https://www.youtube.com/watch?v=GomD1Udf4WQ
+Adding a service worker into your Next.js application: https://dev.to/josedonato/adding-a-service-worker-into-your-next-js-application-1dib
 
 # fix node_module:
 rm -rf node_modules 

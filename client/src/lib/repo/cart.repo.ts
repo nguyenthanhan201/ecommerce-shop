@@ -16,7 +16,7 @@ export class CartRepository {
     return res;
   };
 
-  async getCartItems(idAuth: string) {
+  async getCartItemsByIdAuth(idAuth: string) {
     const res = await get(`/cart-item/${idAuth}`);
     return res;
   };

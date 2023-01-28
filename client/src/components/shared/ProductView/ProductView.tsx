@@ -88,6 +88,7 @@ const ProductView = ({ product }: ProductViewProps) => {
   };
 
   const check = () => {
+    console.log("oki");
     const toastErr = (msg: string) => toast.error(msg);
     if (color === undefined) {
       toastErr("Vui lòng chọn màu!");

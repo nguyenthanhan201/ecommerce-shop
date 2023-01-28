@@ -4,7 +4,7 @@ import { setCartItemsSlice } from '../slices/cartItems';
 import { GET_CART_ITEMS } from '../types';
 
 export function* getCartItemsSaga(action: any): any {
-  const cartItems = yield CartServices.getCartItems(action.payload);
+  const cartItems = yield CartServices.getCartItemsByIdAuth(action.payload);
   // console.log("👌 ~ cartItems", cartItems)
   yield put(setCartItemsSlice(cartItems === "undefined" ? null : cartItems))
 }

@@ -7,7 +7,11 @@ const path = require("path");
 const route = require("./src/routes/index.js");
 const db = require("./src/config/db");
 const cors = require("cors");
+const compression = require("compression");
+// const os = require("os");
 require("dotenv").config();
+
+// process.env.UV_THREADPOOL_SIZE = os.cpus().length;
 
 // Connect to DB
 db.connect();
@@ -15,6 +19,7 @@ db.connect();
 app.use(cors());
 // config này giúp dùng static file
 // app.use(express.static(path.join(__dirname, "./src/public")));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -36,6 +41,21 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "./src/resources", "views"));
 
+app.use(
+  compression({
+    level: 6,
+    // threshold: 100 * 1024,
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) {
+        // don't compress responses with this request header
+        return false;
+      }
+
+      // fallback to standard filter function
+      return compression.filter(req, res);
+    },
+  })
+);
 // Routes init
 route(app);
 
