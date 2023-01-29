@@ -1,4 +1,3 @@
-import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authentication } from "../../config/firebase.config";
@@ -9,25 +8,26 @@ function useAuth() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(authentication, (user) => {
-      // console.log("👌 ~ user", user);
-      if (!user) return dispatch(setAuthSlice(undefined));
-      return AuthServices.getUserByEmail(user.displayName || "", user.email || "").then((res) => {
-        // console.log("👌 ~ res", res)
-        const { name, email, _id } = res;
-        dispatch(
-          setAuthSlice({
-            name,
-            email,
-            _id
-          })
-        );
-      }).catch((err) => {
-        console.log("err", err);
+    (async function unsubscribe() {
+      const { onAuthStateChanged } = await import("firebase/auth");
+      onAuthStateChanged(authentication, (user) => {
+        // console.log("👌 ~ user", user);
+        if (!user) return dispatch(setAuthSlice(undefined));
+        return AuthServices.getUserByEmail(user.displayName || "", user.email || "").then((res) => {
+          // console.log("👌 ~ res", res)
+          const { name, email, _id } = res;
+          dispatch(
+            setAuthSlice({
+              name,
+              email,
+              _id
+            })
+          );
+        }).catch((err) => {
+          console.log("err", err);
+        });
       });
-    });
-
-    return unsubscribe;
+    })()
   }, [dispatch]);
 }
 

@@ -1,12 +1,12 @@
 import Img from "@/components/shared/Img/Img";
 import { RootState } from "@/lib/redux/store";
 import { AuthServices } from "@/lib/repo/auth.repo";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Avatar, Badge, useTheme } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import { signOut } from "firebase/auth";
 import { useAppSelector } from "lib/hooks/useAppSelector";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -65,12 +65,13 @@ const Defaultheader = () => {
     setIsShowMenu((prevState) => !prevState);
   }, []);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
     if (!auth.email) return;
-    const promise1 = signOut(authentication);
-    const promise2 = AuthServices.logout(auth.email);
-    const promise3 = localStorage.setItem("token", "null");
-    Promise.all([promise1, promise2, promise3]).catch((err) => {
+    const { signOut } = await import("firebase/auth");
+    const promise1 = await signOut(authentication);
+    const promise2 = await AuthServices.logout(auth.email);
+    const promise3 = await localStorage.setItem("token", "null");
+    await Promise.all([promise1, promise2, promise3]).catch((err) => {
       console.log(err);
       alert(err);
     });
@@ -85,7 +86,7 @@ const Defaultheader = () => {
           </div>
           <div className="header_menu_left" ref={menuLeft}>
             <div className="header_menu_left_close" onClick={menuToggle}>
-              <i className="bx bx-chevron-left"></i>
+              <KeyboardArrowLeftIcon fontSize="inherit" />
             </div>
             {mainNav.map((item, index) => (
               <div

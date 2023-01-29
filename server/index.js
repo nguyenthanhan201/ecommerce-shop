@@ -5,7 +5,7 @@ const methodOverride = require("method-override");
 const { engine } = require("express-handlebars");
 const path = require("path");
 const route = require("./src/routes/index.js");
-const db = require("./src/config/db");
+const dbMongo = require("./src/config/db/init.mongo");
 const cors = require("cors");
 const compression = require("compression");
 // const os = require("os");
@@ -13,8 +13,8 @@ require("dotenv").config();
 
 // process.env.UV_THREADPOOL_SIZE = os.cpus().length;
 
-// Connect to DB
-db.connect();
+// Connect to MongoDB
+dbMongo.connect();
 
 app.use(cors());
 // config này giúp dùng static file

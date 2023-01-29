@@ -1,14 +1,16 @@
 import { AuthServices } from "@/lib/repo/auth.repo";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
 import { authentication } from "../../../config/firebase.config";
 
 const LoginPage = () => {
   const router = useRouter();
 
-  const googleSignIn = () => {
-    const googleAuthProvider = new GoogleAuthProvider();
-    signInWithPopup(authentication, googleAuthProvider)
+  const googleSignIn = async () => {
+    const { signInWithPopup, GoogleAuthProvider } = await import(
+      "firebase/auth"
+    );
+
+    await signInWithPopup(authentication, new GoogleAuthProvider())
       .then((result) => {
         AuthServices.login(result.user.email!)
           .then((res) => {

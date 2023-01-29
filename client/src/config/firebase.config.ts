@@ -27,3 +27,4 @@ const storage = getStorage(firebaseApp);
 const authentication = getAuth(firebaseApp);
 
 export { storage, authentication };
+
