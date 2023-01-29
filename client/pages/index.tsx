@@ -3,7 +3,6 @@ import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 import { ProductServices } from "@/lib/repo/product.repo";
 
-
 export default function Page({ products }: any) {
   return <HomePage products={products} />;
 }
@@ -11,7 +10,7 @@ Page.Layout = DefaultLayout;
 
 export async function getServerSideProps() {
   const products = await ProductServices.getAll(true)
-    .then((res) => res)
+    .then((res) => res.data)
     .catch((err) => err);
   const seo = useSEO("Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi", {
     description: "Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi",

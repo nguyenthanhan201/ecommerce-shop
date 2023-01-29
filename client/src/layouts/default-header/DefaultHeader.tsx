@@ -65,7 +65,7 @@ const Defaultheader = () => {
     setIsShowMenu((prevState) => !prevState);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     if (!auth.email) return;
     const promise1 = signOut(authentication);
     const promise2 = AuthServices.logout(auth.email);
@@ -74,7 +74,7 @@ const Defaultheader = () => {
       console.log(err);
       alert(err);
     });
-  };
+  }, [auth?.email]);
 
   return (
     <div className={`header ${headerShrink && "shrink"}`}>

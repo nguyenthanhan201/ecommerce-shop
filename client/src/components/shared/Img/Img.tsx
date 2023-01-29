@@ -12,7 +12,7 @@ declare type LayoutValue = typeof VALID_LAYOUT_VALUES[number];
 //   JSX.IntrinsicElements["img"]["style"]
 // >;
 type Props = {
-  id?:string
+  id?: string;
   src: string;
   alt: string;
   width?: number | undefined;
@@ -49,15 +49,17 @@ const Img = ({
   priority,
   loading,
   onClick,
+  ...props
 }: Props) => {
   return (
     <Image
+      {...props}
       id={id}
       objectPosition={objectPosition}
       layout={layout && layout}
       loading={loading || "lazy"}
       placeholder={hasNotplaceholder ? undefined : "blur"}
-      blurDataURL={"/images/favicon.png"}
+      blurDataURL="/images/favicon.png"
       loader={myLoader}
       src={
         compress

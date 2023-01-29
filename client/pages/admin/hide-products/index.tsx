@@ -140,9 +140,9 @@ const Page = () => {
   const handleShowProduct = (id: string) => {
     toast.promise(
       "Hiện sản phẩm thành công",
-      ProductServices.unhideProduct(id).then(() => {
-        dispatch({ type: GET_HIDE_PRODUCTS });
-      }),
+      ProductServices.unhideProduct(id).then(() =>
+        dispatch({ type: GET_HIDE_PRODUCTS })
+      ),
       "Hiện sản phẩm thất bại"
     );
   };

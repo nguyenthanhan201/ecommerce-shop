@@ -8,10 +8,13 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { useTheme } from "@mui/material";
 import { setCookie } from "cookies-next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useContext, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const MenuChild = dynamic(() => import("../MenuChild"), { ssr: false });
 type MenuProps = {
   handleLogout: () => void;
 };
@@ -25,6 +28,8 @@ type MenuItemsProps = {
 };
 
 const Menu = ({ handleLogout }: MenuProps) => {
+  const router = useRouter();
+  const { pathname, asPath, query } = router;
   const { i18n } = useTranslation();
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -59,6 +64,7 @@ const Menu = ({ handleLogout }: MenuProps) => {
               func: () => {
                 i18n.changeLanguage("vi");
                 setCookie("NEXT_LOCALE", "vi");
+                router.replace({ pathname, query }, asPath, { locale: "vi" });
               },
             },
             {
@@ -66,6 +72,7 @@ const Menu = ({ handleLogout }: MenuProps) => {
               func: () => {
                 i18n.changeLanguage("en");
                 setCookie("NEXT_LOCALE", "en");
+                router.replace({ pathname, query }, asPath, { locale: "en" });
               },
             },
           ],
@@ -142,27 +149,10 @@ const Menu = ({ handleLogout }: MenuProps) => {
         </div>
         <div className="dropdown-expand">
           {childrenItems.length !== 0 && (
-            <>
-              <p
-                className="dropdown_item"
-                onClick={() => setIsChangedDropdown(false)}
-              >
-                <ArrowBackIosNewOutlinedIcon
-                  sx={{ fontSize: "80% !important" }}
-                />
-                <span>
-                  Quay lai
-                  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-                </span>
-              </p>
-              {childrenItems[0].map((item: any, index: number) => {
-                return (
-                  <p className="dropdown_item" key={index} onClick={item.func}>
-                    <span>{item.title}</span>
-                  </p>
-                );
-              })}
-            </>
+            <MenuChild
+              childrenItems={childrenItems}
+              setIsChangedDropdown={setIsChangedDropdown}
+            />
           )}
         </div>
       </div>

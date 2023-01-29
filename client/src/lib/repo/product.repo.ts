@@ -4,7 +4,7 @@ import { CrudRepository } from "./crud.repo";
 
 export class ProductRepository extends CrudRepository<Product> {
   apiName = 'products';
-  displayName = 'Product';
+  displayName = 'Products';
 
   async createProduct(product: Product) {
     const res = await post('/products/store', product);

@@ -4,12 +4,26 @@ const ItemOrder = require("../models/ItemOrder");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const Rating = require("../models/Rating");
+const RedisController = require("./RedisController");
 
 class OrderController {
-  getAllOrder(req, res) {
-    Order.find()
-      .sort({ createdAt: -1 })
-      .then((orders) => res.json(orders));
+  async getAllOrder(req, res) {
+    try {
+      const results = await Order.find()
+        .sort({ createdAt: -1 })
+        .then((orders) => orders);
+      await RedisController.setPromise({
+        key: "order",
+        value: JSON.stringify(results),
+      });
+      res.json({
+        fromCache: false,
+        data: results,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(404).send("Data unavailable");
+    }
   }
 
   getOrdersByIdAuth(req, res, next) {
@@ -234,9 +248,11 @@ class OrderController {
                 // lưu order thành công thì xóa cartItem
                 CartItem.deleteMany({
                   idAuth,
-                }).then(() => {
-                  res.json({ message: "Order success" });
-                });
+                }).then(() =>
+                  RedisController.deletePromise({ key: "order" }).then(() =>
+                    res.json({ message: "Order success" })
+                  )
+                );
               } else {
                 res.status(400).json({ message: "Order fail" });
               }

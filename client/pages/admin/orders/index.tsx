@@ -136,10 +136,18 @@ const Page = () => {
   };
 
   useEffect(() => {
+    if(!auth?.email) return;
     OrderServices.getAll()
-      .then((res) => setOrders(res))
+      .then((res) => {
+        // console.log("👌 ~ res", res);
+        setOrders(res.data);
+      })
       .catch((err) => {
-        if (err.response.data.error.name === "TokenExpiredError" && auth) {
+        console.log("👌 ~ err", err);
+        if (
+          err.response.data.error.name === "TokenExpiredError" &&
+          auth?.email
+        ) {
           toast.promise(
             "Làm mới access token thành công. Làm mới trang để tiếp tục",
             AuthServices.token(auth?.email)
@@ -153,7 +161,7 @@ const Page = () => {
           );
         }
       });
-  }, [auth]);
+  }, [auth?.email]);
 
   const ButtonExcel = useMemo(() => {
     if (!convertOrdersToExcel()) return null;

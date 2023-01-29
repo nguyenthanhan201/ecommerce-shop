@@ -1,8 +1,24 @@
+const RedisController = require("../../app/controllers/RedisController");
 const Product = require("../models/Product");
 
 class ProductsController {
-  getAllProduct(req, res) {
-    Product.find({ deletedAt: null }).then((products) => res.json(products));
+  async getAllProduct(req, res) {
+    try {
+      const results = await Product.find({ deletedAt: null }).then(
+        (products) => products
+      );
+      await RedisController.setPromise({
+        key: "products",
+        value: JSON.stringify(results),
+      });
+      res.json({
+        fromCache: false,
+        data: results,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(404).send("Data unavailable");
+    }
   }
 
   hideProducts(req, res) {
@@ -28,7 +44,7 @@ class ProductsController {
       });
   }
 
-  update(req, res) {
+  updateProductByIdProduct(req, res) {
     delete req.body._id, // delete req.body._id để tránh lỗi khi update
       console.log(req.body, req.params.id);
     Product.updateOne(
@@ -39,8 +55,10 @@ class ProductsController {
       req.body
     )
       .then(() =>
-        res.json({
-          message: "Update thành công",
+        RedisController.deletePromise({ key: "products" }).then(() => {
+          res.json({
+            message: "Update thành công",
+          });
         })
       )
       .catch((err) => {
@@ -48,7 +66,7 @@ class ProductsController {
       });
   }
 
-  hide(req, res) {
+  hideProductByIdProduct(req, res) {
     Product.updateOne(
       {
         _id: req.params.id,
@@ -58,8 +76,10 @@ class ProductsController {
       }
     )
       .then(() =>
-        res.json({
-          message: "Ẩn thành công",
+        RedisController.deletePromise({ key: "products" }).then(() => {
+          res.json({
+            message: "Ẩn thành công",
+          });
         })
       )
       .catch((err) => {
@@ -67,7 +87,7 @@ class ProductsController {
       });
   }
 
-  unhide(req, res) {
+  unhideProductByIdProduct(req, res) {
     Product.updateOne(
       {
         _id: req.params.id,
@@ -77,8 +97,10 @@ class ProductsController {
       }
     )
       .then(() =>
-        res.json({
-          message: "Khôi phục thành công",
+        RedisController.deletePromise({ key: "products" }).then(() => {
+          res.json({
+            message: "Hiện thành công",
+          });
         })
       )
       .catch((err) => {
@@ -88,11 +110,13 @@ class ProductsController {
 
   destroy(req, res) {
     Product.deleteOne({ _id: req.params.id })
-      .then(() => {
-        res.json({
-          message: "Xóa thành công",
-        });
-      })
+      .then(() =>
+        RedisController.deletePromise({ key: "products" }).then(() =>
+          res.json({
+            message: "Xóa thành công",
+          })
+        )
+      )
       .catch((err) => {
         return res.status(400).json({ error: err });
       });
@@ -118,11 +142,11 @@ class ProductsController {
         $inc: { views: 1 },
       }
     )
-      .then(() => {
+      .then(
         res.json({
           message: "Update views thành công",
-        });
-      })
+        })
+      )
       .catch((err) => {
         return res.status(400).json({ error: err });
       });

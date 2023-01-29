@@ -46,7 +46,7 @@ const CatalogPage = () => {
 
   useEffect(() => {
     ProductServices.getAll().then((res) =>
-      setProductList([...res, ...productList])
+      setProductList([...res.data, ...productList])
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

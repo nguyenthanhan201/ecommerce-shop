@@ -116,16 +116,17 @@
   flex-direction: column;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 50%;
   width: 85%;
   height: 100%;
-  padding: 50px 20px 50px 50px;
+  padding: 50px 20px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transform: translateX(-50%);
 
   & h2 {
     color: $txt-main-color;

@@ -130,9 +130,9 @@ const Page = () => {
   const hideProduct = (id: string) => {
     toast.promise(
       "Ẩn sản phẩm thành công",
-      ProductServices.hideProduct(id).then(() => {
-        dispatch({ type: GET_PRODUCTS });
-      }),
+      ProductServices.hideProduct(id).then(() =>
+        dispatch({ type: GET_PRODUCTS })
+      ),
       "Ẩn sản phẩm thất bại"
     );
   };

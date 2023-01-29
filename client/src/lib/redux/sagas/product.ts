@@ -5,7 +5,7 @@ import { GET_HIDE_PRODUCTS, GET_PRODUCTS } from "../types";
 
 export function* getProductsSaga(): any {
   const products = yield ProductServices.getAll();
-  yield put(setProductsSlice(products));
+  yield put(setProductsSlice(products.data));
 }
 export function* getHideProductsSaga(): any {
   try {

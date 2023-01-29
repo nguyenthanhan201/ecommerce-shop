@@ -100,7 +100,7 @@ const HeroSliderItem = ({ item, active, index }: any) => {
           alt="oki"
           layout="fill"
           loading={
-            item.path === "/catalog/ao-thun-dinosaur-01" ? "eager" : "lazy"
+            item.path === "/catalog/ao-thun-dinosaur-01" ? "eager" : undefined
           }
           sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 50vw,
