@@ -1,4 +1,4 @@
-import ProductDetailPage from "@/components/index/catalog/components/ProductDetail";
+import ProductDetailPage from "@/components/index/product-detail/ProductDetailPage";
 import DefaultLayout from "@/layouts/default-layout/DefaultLayout";
 import { useSEO } from "@/lib/hooks/useSeo";
 import { NextPageContext } from "next";

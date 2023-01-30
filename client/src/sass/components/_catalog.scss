@@ -11,7 +11,7 @@
     @include table {
       width: max-content;
       height: 100vh;
-      background-color: $main-bg;
+      background-color: var(--main-bg);
       padding: 1rem;
       position: fixed;
       left: 0;

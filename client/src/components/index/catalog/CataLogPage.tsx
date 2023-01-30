@@ -1,14 +1,22 @@
 import Button from "@/components/shared/Button";
-import CheckBox from "@/components/shared/CheckBox";
-import { memo, useEffect, useRef, useState } from "react";
 import InfinityList from "@/components/shared/InfinityList";
 import { ProductServices } from "@/lib/repo/product.repo";
-import { category, colors, productData, size } from "@/utils/index";
+import { productData } from "@/utils/index";
+import { memo, useEffect, useRef, useState } from "react";
+import CatalogFilter from "./components/CatalogFilter";
+
+export type FilterType = {
+  category: string[];
+  color: string[];
+  size: string[];
+  prices: number[][];
+};
 
 const initFilter = {
   category: [],
   color: [],
   size: [],
+  prices: [],
 };
 
 const CatalogPage = () => {
@@ -16,15 +24,20 @@ const CatalogPage = () => {
   // console.log("👌 ~ productList", productList);
   const [products, setProducts] = useState(productList);
   // console.log("👌 ~ products", products);
-  const [filter, setFilter] = useState<any>(initFilter);
-  const filterRef = useRef<any>(null);
+  const [filter, setFilter] = useState<FilterType>(initFilter);
+  // console.log("👌 ~ filter", filter);
 
   useEffect(() => {
     (function updateProducts() {
       let temp = productList;
 
       if (filter.category.length > 0) {
-        temp = temp.filter((e) => filter.category.includes(e.categorySlug));
+        temp = temp.filter((e) => {
+          const check = filter.category.find(
+            (category) => e.categorySlug === category
+          );
+          return check !== undefined;
+        });
       }
 
       if (filter.color.length > 0) {
@@ -40,6 +53,15 @@ const CatalogPage = () => {
           return check !== undefined;
         });
       }
+
+      if (filter.prices.length > 0) {
+        temp = temp.filter((e) => {
+          const check = filter.prices.find((price) => {
+            return Number(e.price) >= price[0] && Number(e.price) <= price[1];
+          });
+          return check !== undefined;
+        });
+      }
       setProducts(temp);
     })();
   }, [filter, productList]);
@@ -51,52 +73,14 @@ const CatalogPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filterSelect = (type: any, checked: any, item: any) => {
-    if (checked) {
-      switch (type) {
-        case "CATEGORY":
-          setFilter({
-            ...filter,
-            category: [...filter.category, item.categorySlug],
-          });
-          break;
-        case "COLOR":
-          setFilter({ ...filter, color: [...filter.color, item.color] });
-          break;
-        case "SIZE":
-          setFilter({ ...filter, size: [...filter.size, item.size] });
-          break;
-        default:
-      }
-    } else {
-      switch (type) {
-        case "CATEGORY":
-          const newCategory = filter.category.filter(
-            (e: any) => e !== item.categorySlug
-          );
-          setFilter({ ...filter, category: newCategory });
-          break;
-        case "COLOR":
-          const newColor = filter.color.filter((e: any) => e !== item.color);
-          setFilter({ ...filter, color: newColor });
-          break;
-        case "SIZE":
-          const newSize = filter.size.filter((e: any) => e !== item.size);
-          setFilter({ ...filter, size: newSize });
-          break;
-        default:
-      }
-    }
-  };
-
-  const clearFilter = () => setFilter(initFilter);
-
-  const showHideFilter = () => filterRef.current.classList.toggle("active");
-
   return (
     <>
       <div className="catalog">
-        <div className="catalog_filter" ref={filterRef}>
+        <CatalogFilter
+          filter={filter}
+          setFilter={setFilter}
+        />
+        {/* <div className="catalog_filter" ref={filterRef}>
           <div
             className="catalog_filter_close"
             onClick={() => showHideFilter()}
@@ -158,12 +142,7 @@ const CatalogPage = () => {
               </Button>
             </div>
           </div>
-        </div>
-        <div className="catalog_filter_toggle">
-          <Button size="sm" onClick={() => showHideFilter()}>
-            bộ lọc
-          </Button>
-        </div>
+        </div> */}
         <div className="catalog_content">
           <InfinityList data={products as any} />
         </div>
