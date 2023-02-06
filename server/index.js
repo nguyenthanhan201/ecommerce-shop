@@ -8,6 +8,7 @@ const route = require("./src/routes/index.js");
 const dbMongo = require("./src/config/db/init.mongo");
 const cors = require("cors");
 const compression = require("compression");
+const { Worker } = require("worker_threads");
 // const os = require("os");
 require("dotenv").config();
 
@@ -44,7 +45,7 @@ app.set("views", path.join(__dirname, "./src/resources", "views"));
 app.use(
   compression({
     level: 6,
-    // threshold: 100 * 1024,
+    threshold: 100 * 1024,
     filter: (req, res) => {
       if (req.headers["x-no-compression"]) {
         // don't compress responses with this request header
@@ -56,7 +57,27 @@ app.use(
     },
   })
 );
+
+// Test worker threads
+// app.get("/", (req, res) => {
+//   const worker = new Worker("./src/workers/getProductsWorker.js");
+//   worker.on("message", (data) => {
+//     res.json(data);
+//   });
+// });
 // Routes init
 route(app);
+
+// const autocannon = require("autocannon");
+
+// autocannon(
+//   {
+//     url: "http://localhost:8080",
+//     connections: 10, //default
+//     pipelining: 1, // default
+//     duration: 10, // default
+//   },
+//   console.log
+// );
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));

@@ -10,7 +10,10 @@ Page.Layout = DefaultLayout;
 
 export async function getServerSideProps() {
   const products = await ProductServices.getAll(true)
-    .then((res) => res.data)
+    .then((res) => {
+      // console.log("👌 ~ res", res);
+      return res.data;
+    })
     .catch((err) => err);
   const seo = useSEO("Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi", {
     description: "Dịch vụ đặt sản phẩm trực tuyến và giao hàng tận nơi",
@@ -26,6 +29,13 @@ export async function getServerSideProps() {
       })
     ),
   };
+  // return {
+  //   redirect: {
+  //     permanent: false,
+  //     destination: "/login",
+  //   },
+  //   props:{},
+  // };
 }
 
 // <!-- HTML Meta Tags -->

@@ -63,7 +63,9 @@ const Menu = ({ handleLogout }: MenuProps) => {
               title: "Tiếng Việt",
               func: () => {
                 i18n.changeLanguage("vi");
-                setCookie("NEXT_LOCALE", "vi");
+                setCookie("NEXT_LOCALE", "vi", {
+                  maxAge: 365 * 24 * 60 * 60,
+                });
                 router.replace({ pathname, query }, asPath, { locale: "vi" });
               },
             },
@@ -71,7 +73,9 @@ const Menu = ({ handleLogout }: MenuProps) => {
               title: "Tiếng Anh",
               func: () => {
                 i18n.changeLanguage("en");
-                setCookie("NEXT_LOCALE", "en");
+                setCookie("NEXT_LOCALE", "en", {
+                  maxAge: 365 * 24 * 60 * 60,
+                });
                 router.replace({ pathname, query }, asPath, { locale: "en" });
               },
             },
@@ -100,7 +104,7 @@ const Menu = ({ handleLogout }: MenuProps) => {
         func: () => handleLogout(),
       },
     ];
-  }, [handleLogout]);
+  }, [handleLogout, theme]);
 
   const childrenItems = useMemo(() => {
     if (selectedTypeChild === null) return [];

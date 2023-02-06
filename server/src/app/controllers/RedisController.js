@@ -5,7 +5,7 @@ class RedisController {
     return await new Promise((resolve, reject) => {
       // EX: accepts a value with the cache duration in seconds
       // NX: when set to true, it ensures that the set() method should only set a key that doesn’t already exist in Redis.
-      client.set(key, value, (err, reply) => {
+      client.set(key, value, "EX", 604800, "NX", (err, reply) => {
         return err ? reject(err) : resolve(reply);
       });
     });

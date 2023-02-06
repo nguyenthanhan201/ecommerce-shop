@@ -1,6 +1,8 @@
 const RedisController = require("../../app/controllers/RedisController");
 const Product = require("../models/Product");
+const { Worker, isMainThread } = require("node:worker_threads");
 
+// the main thread creates a worker thread and sends it a message. The worker thread then receives the message, logs it, and sends a message back to the main thread. The main thread receives the message from the worker thread and logs it.
 class ProductsController {
   async getAllProduct(req, res) {
     try {

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { authentication } from "../../config/firebase.config";
 import { setAuthSlice } from "../redux/slices/auth";
 import { AuthServices } from "../repo/auth.repo";
+import { useAppDispatch } from "./useAppDispatch";
 
 function useAuth() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async function unsubscribe() {
@@ -13,7 +13,7 @@ function useAuth() {
       onAuthStateChanged(authentication, (user) => {
         // console.log("👌 ~ user", user);
         if (!user) return dispatch(setAuthSlice(undefined));
-        return AuthServices.getUserByEmail(user.displayName || "", user.email || "").then((res) => {
+        return AuthServices.getUserByEmail(String(user.displayName), String(user.email)).then((res) => {
           // console.log("👌 ~ res", res)
           const { name, email, _id } = res;
           dispatch(
@@ -23,9 +23,10 @@ function useAuth() {
               _id
             })
           );
-        }).catch((err) => {
+        }).catch((err: any) => {
           console.log("err", err);
-        });
+        })
+
       });
     })()
   }, [dispatch]);

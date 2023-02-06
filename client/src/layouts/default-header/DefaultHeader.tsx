@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { authentication } from "../../config/firebase.config";
 import { mainNav } from "../../utils/fake-data/header-navs";
 
@@ -22,8 +22,12 @@ const Menu = dynamic(() => import("./components/Menu"), { ssr: false });
 const Defaultheader = () => {
   const theme = useTheme();
   const { t } = useTranslation("header");
-  const cartItems = useAppSelector((state: RootState) => state.cartItems);
-  const auth = useSelector((state: any) => state.auth.auth);
+  const { cartItems } = useAppSelector(
+    (state: RootState) => state,
+    shallowEqual
+  );
+  const auth = useAppSelector((state) => state.auth.auth, shallowEqual);
+  // console.log("👌 ~ auth", auth);
   const router = useRouter();
   const activeNav = mainNav.findIndex((e) => e.path === router.pathname);
   const menuLeft = useRef<any>(null);
@@ -66,7 +70,7 @@ const Defaultheader = () => {
   }, []);
 
   const handleLogout = useCallback(async () => {
-    if (!auth.email) return;
+    if (!auth?.email) return;
     const { signOut } = await import("firebase/auth");
     const promise1 = await signOut(authentication);
     const promise2 = await AuthServices.logout(auth.email);
