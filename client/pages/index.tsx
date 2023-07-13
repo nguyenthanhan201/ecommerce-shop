@@ -11,7 +11,7 @@ Page.Layout = DefaultLayout;
 export async function getServerSideProps() {
   const products = await ProductServices.getAll(true)
     .then((res) => {
-      // console.log("👌 ~ res", res);
+      console.log("👌 ~ res", res);
       return res.data;
     })
     .catch((err) => err);
