@@ -7,5 +7,5 @@ interface RouteInfo {
 }
 
 export const routers: RouteInfo[] = [
-  { path: '/product', method: RequestMethod.GET },
+  { path: 'product/getAllProducts', method: RequestMethod.GET },
 ];

@@ -1,8 +1,10 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { routers } from 'src/constants/getRedisCacheRouters';
 import { DatabaseModule, GlobalHttpModule, RedisModule } from 'src/libs/common';
 import { LogResponseMiddleware } from 'src/middlewares/logResponse.middleware';
+import { RedisMiddleware } from 'src/middlewares/redis.middleware';
 import { ProductModule } from './product/product.module';
 import { ScrapperModule } from './scrapper/scrapper.module';
 import { SearchModule } from './search/search.module';
@@ -30,6 +32,6 @@ import { SearchModule } from './search/search.module';
 export class AppModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(LogResponseMiddleware).forRoutes('*');
-    // consumer.apply(RedisMiddleware).forRoutes(...routers);
+    consumer.apply(RedisMiddleware).forRoutes(...routers);
   }
 }

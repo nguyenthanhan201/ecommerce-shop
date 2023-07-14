@@ -8,6 +8,10 @@ import { MongooseModule } from '@nestjs/mongoose';
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
         autoCreate: true,
+        // connectionFactory: (connection) => {
+        //   connection.plugin(slug);
+        //   return connection;
+        // },
       }),
       inject: [ConfigService],
     }),
