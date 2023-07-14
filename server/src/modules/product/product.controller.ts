@@ -10,8 +10,8 @@ export class ProductController {
     return this.productService.all();
   }
 
-  @Get(':key')
-  getCache() {
-    return this.productService.all();
-  }
+  // @Get(':key')
+  // getCache() {
+  //   return this.productService.all();
+  // }
 }

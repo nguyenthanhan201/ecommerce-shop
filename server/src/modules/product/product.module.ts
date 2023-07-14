@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SearchModule } from '../search/search.module';
 import { ProductController } from './product.controller';
 import { ProductSchema } from './product.model';
 import { ProductService } from './product.service';
@@ -7,10 +8,7 @@ import { ProductService } from './product.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
-    // HttpModule.register({
-    //   timeout: 5000,
-    //   maxRedirects: 5,
-    // }),
+    SearchModule,
   ],
   controllers: [ProductController],
   providers: [ProductService],
