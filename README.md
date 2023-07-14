@@ -21,12 +21,6 @@ Search Filter React js Tutorial - using Hooks | React js Search Bar | React Tuto
 Adding a service worker into your Next.js application: https://dev.to/josedonato/adding-a-service-worker-into-your-next-js-application-1dib
 Adding redis: https://www.digitalocean.com/community/tutorials/how-to-implement-caching-in-node-js-using-redis
 
-# fix node_module:
-
-rm -rf node_modules
-
-rm -rf package-lock.json
-
 # run analyze is done on build when env var is set
 
 ANALYZE=true npm run build

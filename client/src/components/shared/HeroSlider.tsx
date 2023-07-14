@@ -41,6 +41,7 @@ const HeroSlider = ({ data, timeOut, auto, control }: HeroSliderProps) => {
 
   return (
     <div className="hero-slider">
+      <div></div>
       {data.map((item, index: number) => (
         <HeroSliderItem
           key={index}
