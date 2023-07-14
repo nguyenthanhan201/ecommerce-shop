@@ -6,6 +6,7 @@ import { DatabaseModule, GlobalHttpModule, RedisModule } from 'src/libs/common';
 import { LogResponseMiddleware } from 'src/middlewares/logResponse.middleware';
 import { RedisMiddleware } from 'src/middlewares/redis.middleware';
 import { ProductModule } from './product/product.module';
+import { ScrapperModule } from './scrapper/scrapper.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductModule } from './product/product.module';
     RedisModule,
     DatabaseModule,
     ProductModule,
+    ScrapperModule,
   ],
   controllers: [],
   providers: [],

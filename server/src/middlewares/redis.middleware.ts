@@ -21,7 +21,7 @@ export class RedisMiddleware implements NestMiddleware {
         next();
       }
     } catch (err) {
-      console.log("err auth middleware", err);
+      // console.log("err auth middleware", err);
       return res.status(400).json({ error: err });
     }
   }
